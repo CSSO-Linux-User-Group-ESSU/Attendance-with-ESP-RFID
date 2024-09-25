@@ -1,14 +1,12 @@
-from django.shortcuts import render
-
-# Create your views here.
+from django.contrib import messages
 import openpyxl
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import UploadFileForm
-from .models import Student
+from .models import Student, Attendance
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-
+from datetime import time
 
 
 def upload_file(request):
@@ -31,6 +29,51 @@ def upload_file(request):
 
     return render(request, 'attendance_app/upload.html', {'form': form})
 
+def control_panel(request):
+    if request.method=="POST":
+        admin = request.POST.get("admin")
+        password = request.POST.get("password")
+        if admin=="gabriel" and password=="gabriel":
+            return render(request, 'attendance_app/control_panel.html')
+        else:
+            messages.error(request,"Wrong admin or password")
+            return redirect("index")
+    return redirect("index")
+
+def index(request):
+    return render(request, 'attendance_app/index.html')
+
+
+def dashboard(request):
+    # Define the time ranges for morning and afternoon
+    morning_start = time(0, 0, 0)
+    morning_end = time(11, 59, 59)
+    afternoon_start = time(12, 0, 0)
+
+    all_records = Attendance.objects.all().order_by('-date_attended')
+
+    morning_records = []
+    afternoon_records = []
+    seen_students_morning = set()
+    seen_students_afternoon = set()
+
+    for record in all_records:
+        if morning_start <= record.date_attended.time() <= morning_end:
+            if record.student not in seen_students_morning:
+                morning_records.append(record)
+                seen_students_morning.add(record.student)
+        elif record.date_attended.time() >= afternoon_start:
+            if record.student not in seen_students_afternoon:
+                afternoon_records.append(record)
+                seen_students_afternoon.add(record.student)
+
+    context = {
+        "morning_records": morning_records,
+        "afternoon_records": afternoon_records
+    }
+
+    return render(request, 'attendance_app/dashboard.html', context)
+
 @csrf_exempt
 def api_attendance(request):
     if request.method == 'POST':
@@ -38,6 +81,7 @@ def api_attendance(request):
         card_uid = data.get('card_uid')
         try:
             student1 = Student.objects.get(card_uid=card_uid)
+            Attendance.objects.create(student=student1)
             return JsonResponse({'status': 'success', 'student': str(student1)}, status=201)
         except Student.DoesNotExist:
             return JsonResponse({'status': 'error', 'student': 'Student not found'}, status=404)
