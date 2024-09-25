@@ -5,6 +5,10 @@ import openpyxl
 from django.shortcuts import render
 from .forms import UploadFileForm
 from .models import Student
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
 
 
 def upload_file(request):
@@ -26,3 +30,16 @@ def upload_file(request):
         form = UploadFileForm()
 
     return render(request, 'attendance_app/upload.html', {'form': form})
+
+@csrf_exempt
+def api_attendance(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        card_uid = data.get('card_uid')
+        try:
+            student1 = Student.objects.get(card_uid=card_uid)
+            return JsonResponse({'status': 'success', 'student': str(student1)}, status=201)
+        except Student.DoesNotExist:
+            return JsonResponse({'status': 'error', 'student': 'Student not found'}, status=404)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+
