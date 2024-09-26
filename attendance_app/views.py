@@ -33,7 +33,8 @@ def control_panel(request):
     if request.method=="POST":
         admin = request.POST.get("admin")
         password = request.POST.get("password")
-        if admin=="gabriel" and password=="gabriel":
+        if admin=="gabriel" and \
+                password=="gabriel":
             return render(request, 'attendance_app/control_panel.html')
         else:
             messages.error(request,"Wrong admin or password")
