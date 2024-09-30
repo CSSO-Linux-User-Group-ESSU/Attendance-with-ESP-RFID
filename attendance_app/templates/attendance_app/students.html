@@ -1,0 +1,16 @@
+{% extends "attendance_app/control_panel.html" %}
+
+{% block content %}
+    <h2>Students</h2>
+    <ul>
+        {% for student in students %}
+        <li>
+            <p>{{ student.student_id}} | {{student.last_name}}, {{student.first_name}}, {{student.middle_name}}</p>
+            <p><a href="{% url 'student_attendance' student.id %}">See attendance for this student</a></p>
+        </li>
+        {% empty %}
+        <p>No students registered to {{ user.username }}</p>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}

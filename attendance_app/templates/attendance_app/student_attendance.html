@@ -1,0 +1,15 @@
+{% extends "attendance_app/control_panel.html" %}
+
+{% block content %}
+    <h4>Student: {{student.last_name}}, {{student.first_name}}, {{student.middle_name}}</h4>
+    <ul>
+        {% for attendance in attendances %}
+        <li>
+            <p>Attendance at {{attendance.date_attended}}</p>
+        </li>
+        {% empty %}
+        <p>No attendance for this student</p>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}

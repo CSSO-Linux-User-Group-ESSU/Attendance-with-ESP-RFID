@@ -8,5 +8,7 @@ urlpatterns = [
     path("api/",views.api_attendance, name='api_attendance'),
     path("control_panel/",views.control_panel, name='control_panel'),
     path("dashboard/",views.dashboard, name='dashboard'),
+    path('students/',views.students, name='students'),
+    path('student_attendance/<int:student_id>/',views.student_attendance, name='student_attendance'),
     path("",views.index, name='index')
 ]

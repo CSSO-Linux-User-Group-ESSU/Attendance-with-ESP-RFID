@@ -1,3 +1,5 @@
+from lib2to3.fixes.fix_input import context
+
 from django.contrib import messages
 import openpyxl
 from django.shortcuts import render, redirect
@@ -7,6 +9,15 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.contrib.auth import authenticate, login, logout
+
+
+def students(request):
+
+    students = Student.objects.filter(owner=request.user)
+
+    context = {"students":students}
+
+    return render(request, 'attendance_app/students.html', context)
 
 
 def upload_file(request):
@@ -20,8 +31,10 @@ def upload_file(request):
             for row in sheet.iter_rows(min_row=2, values_only=True):
                 card_uid, last_name, first_name, middle_name, student_id = row
 
-                if not Student.objects.filter(card_uid=card_uid).exists():
-                    Student.objects.create(card_uid=card_uid, last_name=last_name, first_name=first_name, middle_name=middle_name, student_id=student_id)
+                if not Student.objects.filter(card_uid=str(card_uid).upper()).exists():
+
+                    Student.objects.create(owner=request.user,card_uid=str(card_uid).upper(), last_name=str(last_name).upper(), \
+                                           first_name=str(first_name).upper(), middle_name=str(middle_name).upper(), student_id=student_id)
 
             return render(request, 'attendance_app/success.html')
     else:
@@ -48,17 +61,32 @@ def control_panel(request):
             return redirect("index")
     return render(request, 'attendance_app/control_panel.html')
 
+
+def student_attendance(request, student_id):
+    student = Student.objects.get(id=student_id)
+    attendances = student.attendance_set.all().order_by("-date_attended")
+
+    context = {"attendances":attendances, "student":student}
+
+    return render(request, 'attendance_app/student_attendance.html',context)
+
+
 def index(request):
     return render(request, 'attendance_app/index.html')
 
 
 def dashboard(request):
 
-    all_records = Attendance.objects.all().order_by('-date_attended')
+    user = request.user
+    students = user.student_set.all()
+    attendances = []
+    for student in students:
+        attendances.extend(student.attendance_set.all())
+    # all_records = Attendance.objects.all().order_by('-date_attended')
 
 
     context = {
-        "records": all_records
+        "records": attendances
     }
 
     return render(request, 'attendance_app/dashboard.html', context)
@@ -68,8 +96,9 @@ def api_attendance(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         card_uid = data.get('card_uid')
+        print(request.user)
         try:
-            student1 = Student.objects.get(card_uid=card_uid)
+            student1 = Student.objects.get(card_uid=str(card_uid).upper())
             Attendance.objects.create(student=student1)
             return JsonResponse({'status': 'success', 'student': str(student1)}, status=201)
         except Student.DoesNotExist:
