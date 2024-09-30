@@ -4,13 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance System</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'attendance_app/css/control_panel.css' %}">
 </head>
 <body>
-    <h1>Welcome to the Attendance System</h1>
-    <ul>
-        <li><a href="{% url 'upload_file' %}">Click here to upload file</a></li>
-        <li><a href="/admin/">Click here to go to admin</a></li>
-        <li><a href="{% url 'dashboard' %}">Click here to see dashboard</a></li>
-    </ul>
+    <div class="container">
+        <header>
+            <h1>Attendance System</h1>
+            <div class="user-info">
+                {% if user.is_authenticated %}
+                    <p>Logged in as: {{ user.username }} | <a href="{% url 'logout' %}">Logout</a></p>
+                {% else %}
+                    <p>You are not logged in. <a href="{% url 'index' %}">Login</a></p>
+                {% endif %}
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="{% url 'upload_file' %}">Upload File</a></li>
+                <li><a href="/admin/">Admin Panel</a></li>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            </ul>
+        </nav>
+
+
+        <section class="content">
+            {% block content %}
+            <p>Select an option from the navigation above to proceed.</p>
+            {% endblock %}
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 ESSU Attendance System. All Rights Reserved.</p>
+    </footer>
 </body>
 </html>

@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from datetime import time
+from django.contrib.auth import authenticate, login, logout
 
 
 def upload_file(request):
@@ -29,17 +30,27 @@ def upload_file(request):
 
     return render(request, 'attendance_app/upload.html', {'form': form})
 
+
+def go_back(request):
+    return redirect("control_panel")
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
+
 def control_panel(request):
     if request.method=="POST":
-        admin = request.POST.get("admin")
+        admin = request.POST.get("username")
         password = request.POST.get("password")
-        if admin=="gabriel" and \
-                password=="gabriel":
+        user = authenticate(request, username=admin,password=password)
+
+        if user is not None:
+            login(request, user)
             return render(request, 'attendance_app/control_panel.html')
         else:
             messages.error(request,"Wrong admin or password")
             return redirect("index")
-    return redirect("index")
+    return render(request, 'attendance_app/control_panel.html')
 
 def index(request):
     return render(request, 'attendance_app/index.html')

@@ -6,5 +6,10 @@
 </head>
 <body>
     <h1>File uploaded successfully!</h1>
+
+    <form action="{% url 'go_back' %}" method="post">
+        {% csrf_token %}
+        <button class="back-btn" type="submit">Go Back</button>
+    </form>
 </body>
 </html>
