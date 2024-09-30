@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Page</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'attendance_app/css/style.css' %}"> </head>
+    <title>Login</title>
 <body>
 
-    <div class="login-container">
-        <h1>Login Now</h1>
-        <form action="control_panel/" method="post">
-            {% csrf_token %}
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+    <h1>Login User</h1>
+    <form action="control_panel/" method="post">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+        <button type="submit">LOGIN</button>
+    </form>
 
-            <button type="submit">LOGIN</button>
-        </form>
-
-    </div>
 </body>
 </html>

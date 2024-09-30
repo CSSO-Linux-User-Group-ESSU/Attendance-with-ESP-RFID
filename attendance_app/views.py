@@ -6,7 +6,6 @@ from .models import Student, Attendance
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from datetime import time
 from django.contrib.auth import authenticate, login, logout
 
 
@@ -31,9 +30,6 @@ def upload_file(request):
     return render(request, 'attendance_app/upload.html', {'form': form})
 
 
-def go_back(request):
-    return redirect("control_panel")
-
 def logout_view(request):
     logout(request)
     return redirect('index')
@@ -57,31 +53,12 @@ def index(request):
 
 
 def dashboard(request):
-    # Define the time ranges for morning and afternoon
-    morning_start = time(0, 0, 0)
-    morning_end = time(11, 59, 59)
-    afternoon_start = time(12, 0, 0)
 
     all_records = Attendance.objects.all().order_by('-date_attended')
 
-    morning_records = []
-    afternoon_records = []
-    seen_students_morning = set()
-    seen_students_afternoon = set()
-
-    for record in all_records:
-        if morning_start <= record.date_attended.time() <= morning_end:
-            if record.student not in seen_students_morning:
-                morning_records.append(record)
-                seen_students_morning.add(record.student)
-        elif record.date_attended.time() >= afternoon_start:
-            if record.student not in seen_students_afternoon:
-                afternoon_records.append(record)
-                seen_students_afternoon.add(record.student)
 
     context = {
-        "morning_records": morning_records,
-        "afternoon_records": afternoon_records
+        "records": all_records
     }
 
     return render(request, 'attendance_app/dashboard.html', context)

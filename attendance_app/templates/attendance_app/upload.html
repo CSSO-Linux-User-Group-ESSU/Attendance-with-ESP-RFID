@@ -1,14 +1,10 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <div class="container">
-        <h1>Upload an Excel File</h1>
-        <form method="post" enctype="multipart/form-data" class="upload-form">
-            {% csrf_token %}
-            <div class="form-group">
-                {{ form.as_p }}
-            </div>
-            <button type="submit" class="btn-upload">Upload</button>
-        </form>
-    </div>
-{% endblock %}
+    <h3>Upload Data</h3>
+    <form method="post" enctype="multipart/form-data" class="upload-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+{% endblock content %}
