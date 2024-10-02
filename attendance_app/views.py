@@ -1,5 +1,3 @@
-from lib2to3.fixes.fix_input import context
-
 from django.contrib import messages
 import openpyxl
 from django.shortcuts import render, redirect
@@ -18,6 +16,18 @@ def students(request):
     context = {"students":students}
 
     return render(request, 'attendance_app/students.html', context)
+
+
+def delete_student(request, student_id):
+    student = Student.objects.get(id=student_id)
+
+    Student.objects.filter(id=student_id).delete()
+    name = f"{student.last_name}, {student.first_name}, {student.middle_name}"
+
+    context = {"name":name}
+
+
+    return render(request, "attendance_app/delete_student.html", context)
 
 
 def upload_file(request):
@@ -82,7 +92,6 @@ def dashboard(request):
     attendances = []
     for student in students:
         attendances.extend(student.attendance_set.all())
-    # all_records = Attendance.objects.all().order_by('-date_attended')
 
 
     context = {
