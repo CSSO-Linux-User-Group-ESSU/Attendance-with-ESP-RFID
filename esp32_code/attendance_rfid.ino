@@ -2,6 +2,7 @@
 #include <HTTPClient.h>
 #include <SPI.h>
 #include <MFRC522.h>
+#include <Arduino_JSON.h>
 
 #define SS_PIN 5
 #define RST_PIN 0
@@ -17,6 +18,11 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 const char* ssid = "Montes_family_EXT";
 const char* password = "0123456789";
 const char* serverName = "http://192.168.1.104:8000/api/";
+const char* csrfUrl = "http://192.168.1.104:8000/csrf/";
+
+String Username;
+String Password;
+String EventID;
 
 void setup() {
   pinMode(redPin, OUTPUT);
@@ -33,9 +39,42 @@ void setup() {
   }
 
   Serial.println("Connected to WiFi");
+  getCSRFToken();
 }
 
+void getCSRFToken() {
+    if (WiFi.status() == WL_CONNECTED) {
+        HTTPClient http;
+        http.begin(csrfUrl);
+        int httpResponseCode = http.GET();
+
+        if (httpResponseCode > 0) {
+            String response = http.getString();
+            Serial.println("CSRF Response: " + response);
+            JSONVar jsonResponse = JSON.parse(response);
+            if (JSON.typeof(jsonResponse) == "undefined") {
+                Serial.println("Parsing input failed!");
+                return;
+            }
+            Username = (const char*)jsonResponse["username"];
+            Password = (const char*)jsonResponse["password"];
+            EventID = (const char*)jsonResponse["event_id"];
+            Serial.println("User: " + Username);
+            Serial.println("Password: " + Password);
+            Serial.println("Event ID: " + EventID);
+
+        } else {
+            Serial.print("Error on getting CSRF Token: ");
+            Serial.println(httpResponseCode);
+        }
+        http.end();
+    }
+}
+
+
 void loop() {
+  getCSRFToken();
+  delay(3000);
   if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial())
     return;
 
@@ -53,7 +92,8 @@ void loop() {
     http.begin(serverName);
     http.addHeader("Content-Type", "application/json");
 
-    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\"}";
+    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"event_id\":\"" + EventID + "\"}";
+    Serial.println("JsonPayload:"+jsonPayload);
     int httpResponseCode = http.POST(jsonPayload);
 
     if (httpResponseCode > 0) {
@@ -68,7 +108,7 @@ void loop() {
         noTone(buzzerPin);
         delay(500);
         digitalWrite(bluePin, LOW);
-        
+
       }else{
         digitalWrite(redPin, HIGH);
         tone(buzzerPin,1000);
@@ -83,5 +123,6 @@ void loop() {
     http.end();
   }
 
-  delay(3000);  // Delay to avoid multiple scans for the same card
+  // delay(3000);  // Delay to avoid multiple scans for the same card
+  // getCSRFToken();
 }
