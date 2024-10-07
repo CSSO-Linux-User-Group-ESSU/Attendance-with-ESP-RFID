@@ -1,15 +1,22 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <h4>Event:{{event.name}}</h4>
-    <h4>Venue:{{event.where}}</h4>
-    <h4>When:{{event.when}}</h4>
-    <p>"{{event.description}}"</p>
+    <h2>Event:{{event.name}}</h2>
     <hr>
 
+    <p>Device associated with Event:{{event.device}}</p>
+    <form method="post" action="{% url 'event' event.id %}">
+      {% csrf_token %}
+      <label>Device for this event</label>
+      <input name="device" id="device" required type="text">
 
-    <h4>Current attendance:</h4>
-    <p>Swipe your id for attendance</p>
+      <button type="submit">Save</button>
+    </form>
+
+    <hr>
+
+    <h3>Attendances</h3>
+    <section>
 
         <h3>Morning:</h3>
         <ul>
@@ -28,5 +35,7 @@
                 <li>No attendances for afternoon.</li>
             {% endfor %}
         </ul>
+    </section>
+
 
 {% endblock content %}
