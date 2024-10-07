@@ -1,6 +1,7 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
+    <p><a href="{%url 'students' %}"><-Go back</a></p>
     <h4>Student: {{student.last_name}}, {{student.first_name}}, {{student.middle_name}}</h4>
     <ul>
         {% for attendance in attendances %}

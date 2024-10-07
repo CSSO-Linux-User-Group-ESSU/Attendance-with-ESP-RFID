@@ -1,6 +1,7 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
+  <p><a href="{%url 'students' %}"><-Go back</a></p>
   <h2>Add Student</h2>
   <br>
   <form method="post" action="{% url 'add_student' %}">

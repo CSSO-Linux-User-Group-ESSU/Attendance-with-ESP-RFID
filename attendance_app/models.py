@@ -1,3 +1,5 @@
+from importlib.util import module_for_loader
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -14,22 +16,10 @@ class Student(models.Model):
     def __str__(self):
         return f"{self.last_name}, {self.first_name}, {self.middle_name}"
 
-# class ESSUEvent(models.Model):
-#     name = models.CharField(max_length=100)
-#     when = models.CharField(max_length=100)
-#     where = models.CharField(max_length=200)
-#     description = models.TextField()
-#
-#
-#     def __str__(self):
-#         return self.name
 
 class Event(models.Model):
-    name = models.CharField(max_length=100)
-    when = models.CharField(max_length=100)
-    where = models.CharField(max_length=200)
-    description = models.TextField()
-
+    name = models.CharField(max_length=200)
+    device = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
@@ -43,5 +33,7 @@ class Attendance(models.Model):
 
     def __str__(self):
         return f"{self.student} - {self.date_attended}"
+
+
 
 

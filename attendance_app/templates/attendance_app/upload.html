@@ -1,6 +1,7 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
+    <p><a href="{%url 'students' %}"><-Go back</a></p>
     <h2>Add Students from file</h2>
     <form method="post" enctype="multipart/form-data" class="upload-form">
         {% csrf_token %}

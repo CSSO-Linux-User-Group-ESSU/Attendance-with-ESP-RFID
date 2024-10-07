@@ -8,7 +8,7 @@
         <h4>Attendances Log:</h4>
         <ul>
             {% for record in records %}
-                <li>{{record.event.name}} | {{ record.student.student_id }} | {{ record.student.last_name }} | {{ record.student.first_name }} | {{ record.student.middle_name }} | {{ record.date_attended }}</li>
+                <li>{{ record.student.student_id }} | {{ record.student.last_name }} | {{ record.student.first_name }} | {{ record.student.middle_name }} | {{ record.date_attended }}</li>
             {% empty %}
                 <li>No attendance records available.</li>
             {% endfor %}

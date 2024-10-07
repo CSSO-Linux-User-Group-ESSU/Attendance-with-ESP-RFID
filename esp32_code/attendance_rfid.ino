@@ -13,16 +13,14 @@ int buzzerPin = 15;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
-// const char* ssid = "ITLAB-CSSO-Officers-Network";
-// const char* password = "1234567890";
-const char* ssid = "Montes_family_EXT";
-const char* password = "0123456789";
-const char* serverName = "http://192.168.1.104:8000/api/";
-const char* csrfUrl = "http://192.168.1.104:8000/csrf/";
+String ssid;;
+String password;
+// const char* ssid = "Montes_family_EXT";
+// const char* password = "0123456789";
+// const char* serverName = "http://192.168.1.104:8000/api/";
+String serverName;
+String deviceName;
 
-String Username;
-String Password;
-String EventID;
 
 void setup() {
   pinMode(redPin, OUTPUT);
@@ -30,6 +28,46 @@ void setup() {
   Serial.begin(115200);
   SPI.begin();
   mfrc522.PCD_Init();
+
+  Serial.println("Enter DeviceName:");
+  while(Serial.available()==0){
+
+  }
+
+
+  deviceName = Serial.readString();
+  deviceName.trim();
+
+  Serial.println("Enter SSID:");
+  while(Serial.available()==0){
+
+  }
+
+
+  ssid = Serial.readString();
+  ssid.trim();
+
+  Serial.println("Enter Password:");
+  while(Serial.available()==0){
+
+  }
+
+
+  password = Serial.readString();
+  password.trim();
+
+  Serial.println("Enter url:");
+  while(Serial.available()==0){
+
+  }
+
+
+  serverName = Serial.readString();
+  serverName.trim();
+
+  Serial.println("SSID:"+ssid);
+  Serial.println("Password:"+password);
+  Serial.println("Url:"+serverName);
 
   WiFi.begin(ssid, password);
 
@@ -39,42 +77,24 @@ void setup() {
   }
 
   Serial.println("Connected to WiFi");
-  getCSRFToken();
+  digitalWrite(bluePin,HIGH);
+  tone(buzzerPin,1000);
+  delay(50);
+  noTone(buzzerPin);
+  tone(buzzerPin,1000);
+  delay(50);
+  noTone(buzzerPin);
+  tone(buzzerPin,1000);
+  delay(50);
+  noTone(buzzerPin);
+  delay(200);
+  digitalWrite(bluePin,LOW);
 }
 
-void getCSRFToken() {
-    if (WiFi.status() == WL_CONNECTED) {
-        HTTPClient http;
-        http.begin(csrfUrl);
-        int httpResponseCode = http.GET();
 
-        if (httpResponseCode > 0) {
-            String response = http.getString();
-            Serial.println("CSRF Response: " + response);
-            JSONVar jsonResponse = JSON.parse(response);
-            if (JSON.typeof(jsonResponse) == "undefined") {
-                Serial.println("Parsing input failed!");
-                return;
-            }
-            Username = (const char*)jsonResponse["username"];
-            Password = (const char*)jsonResponse["password"];
-            EventID = (const char*)jsonResponse["event_id"];
-            Serial.println("User: " + Username);
-            Serial.println("Password: " + Password);
-            Serial.println("Event ID: " + EventID);
-
-        } else {
-            Serial.print("Error on getting CSRF Token: ");
-            Serial.println(httpResponseCode);
-        }
-        http.end();
-    }
-}
 
 
 void loop() {
-  getCSRFToken();
-  delay(3000);
   if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial())
     return;
 
@@ -88,11 +108,12 @@ void loop() {
   Serial.println("Card UID: " + cardUID);
 
   if (WiFi.status() == WL_CONNECTED) {
+    // getINFO();
     HTTPClient http;
     http.begin(serverName);
     http.addHeader("Content-Type", "application/json");
 
-    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"event_id\":\"" + EventID + "\"}";
+    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"device\":\""+deviceName+"\"}";
     Serial.println("JsonPayload:"+jsonPayload);
     int httpResponseCode = http.POST(jsonPayload);
 
@@ -123,6 +144,6 @@ void loop() {
     http.end();
   }
 
-  // delay(3000);  // Delay to avoid multiple scans for the same card
+  delay(3000);
   // getCSRFToken();
 }
