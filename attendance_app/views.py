@@ -2,13 +2,16 @@ from django.contrib import messages
 import openpyxl
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from .forms import UploadFileForm, StudentForm
-from .models import Student, Attendance, Event
+from .forms import UploadFileForm, StudentForm, EventForm, DeviceForm
+from .models import Student, Attendance, Event, Device
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
 import pytz
 import json
+
+
+#TODO duplicate attendances
 
 
 def students(request):
@@ -21,6 +24,22 @@ def students(request):
 
 
 
+def date_attendance(request):
+
+    if request.method=="POST":
+        date = request.POST.get("date")
+        attendances = Attendance.objects.all()
+        attendance_for_date = []
+        for attendance in attendances:
+            date_attended = str(attendance.date_attended).split()[0]
+            if date==date_attended:
+                attendance_for_date.append(attendance)
+        return render(request,"attendance_app/date_attendance.html",{"date":date, "attendances":attendance_for_date})
+    
+    return render(request,"attendance_app/date_attendance.html")
+
+
+
 
 def delete_student(request, student_id):
     student = Student.objects.get(id=student_id)
@@ -29,7 +48,6 @@ def delete_student(request, student_id):
     name = f"{student.last_name}, {student.first_name}, {student.middle_name}"
 
     context = {"name":name}
-
 
     return render(request, "attendance_app/delete_student.html", context)
 
@@ -44,13 +62,15 @@ def upload_file(request):
 
             for row in sheet.iter_rows(min_row=2, values_only=True):
                 card_uid, last_name, first_name, middle_name, student_id = row
+                if None in row:
+                    continue
 
                 if not Student.objects.filter(card_uid=str(card_uid).upper()).exists():
 
                     Student.objects.create(owner=request.user,card_uid=str(card_uid).upper(), last_name=str(last_name).upper(),
                                            first_name=str(first_name).upper(), middle_name=str(middle_name).upper(), student_id=student_id)
 
-            return render(request, 'attendance_app/success.html')
+            return redirect('students')
     else:
         form = UploadFileForm()
 
@@ -139,32 +159,32 @@ def get_morning_afternoon(attendances):
 
     return morning_attendances, afternoon_attendances
 
-def attendance_today(request):
-
-    user = request.user
-    students = user.student_set.all()
-    attendances = []
-    for student in students:
-        attendances.extend(student.attendance_set.all())
-
-    current_utc = datetime.now(pytz.utc)
-    timezone = pytz.timezone("Asia/Manila")
-    current_local = current_utc.astimezone(timezone)
-
-    attendances_today = []
-    for attendance in attendances:
-        if str(attendance.date_attended).split(" ")[0] == str(current_local).split(" ")[0]:
-            attendances_today.append(attendance)
-
-
-    morning_attendances, afternoon_attendances = get_morning_afternoon(attendances_today)
-
-    context = {
-        "morning": morning_attendances,
-        "afternoon":afternoon_attendances
-    }
-
-    return render(request, 'attendance_app/attendance_today.html', context)
+# def attendance_today(request):
+#
+#     user = request.user
+#     students = user.student_set.all()
+#     attendances = []
+#     for student in students:
+#         attendances.extend(student.attendance_set.all())
+#
+#     current_utc = datetime.now(pytz.utc)
+#     timezone = pytz.timezone("Asia/Manila")
+#     current_local = current_utc.astimezone(timezone)
+#
+#     attendances_today = []
+#     for attendance in attendances:
+#         if str(attendance.date_attended).split(" ")[0] == str(current_local).split(" ")[0]:
+#             attendances_today.append(attendance)
+#
+#
+#     morning_attendances, afternoon_attendances = get_morning_afternoon(attendances_today)
+#
+#     context = {
+#         "morning": morning_attendances,
+#         "afternoon":afternoon_attendances
+#     }
+#
+#     return render(request, 'attendance_app/attendance_today.html', context)
 
 def add_student(request):
     if request.method != "POST":
@@ -193,18 +213,43 @@ def events(request):
 
 def event(request, event_id):
     event1 = Event.objects.get(id=event_id)
-    attendances = []
 
-    if request.method=="POST":
-        event1.device=request.POST.get("device")
-        event1.save()
-
-        attendances = Attendance.objects.filter(event=Event.objects.filter(device=request.POST.get("device"))[0])
+    attendances = Attendance.objects.filter(event=event1)
 
 
     morning, afternoon = get_morning_afternoon(attendances)
 
     return render(request, "attendance_app/event.html",{"event":event1, "morning":morning, "afternoon":afternoon})
+
+
+def add_event(request):
+    if request.method != "POST":
+        form = EventForm()
+    else:
+        form = EventForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("events")
+
+    return render(request, "attendance_app/add_event.html",{"form":form})
+
+
+def devices(request):
+    devices1 = Device.objects.all()
+
+    return render(request, "attendance_app/devices.html",{"devices":devices1})
+
+
+def add_device(request):
+    if request.method != "POST":
+        form = DeviceForm()
+    else:
+        form = DeviceForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("devices")
+
+    return render(request, "attendance_app/add_device.html",{"form":form})
 
 
 #TODO filter the students with the owner
@@ -213,13 +258,17 @@ def api_attendance(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         card_uid = data.get("card_uid")
-        device1 = data.get("device")
 
         try:
             student1 = Student.objects.get(card_uid=str(card_uid).upper())
-            event1 = Event.objects.filter(device=device1)[0]
+            device1 = Device.objects.get(name=data.get("device"))
+            event1 = Event.objects.get(device=device1)
             Attendance.objects.create(student=student1,event=event1)
             return JsonResponse({'status': 'success', 'student': str(student1)}, status=201)
         except Student.DoesNotExist:
             return JsonResponse({'status': 'error', 'student': 'Student not found'}, status=404)
+        except Event.DoesNotExist:
+            return JsonResponse({'status': 'error', 'student': 'Event not found'}, status=404)
+        except Device.DoesNotExist:
+            return JsonResponse({'status': 'error', 'student': 'Device not found'}, status=404)
     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)

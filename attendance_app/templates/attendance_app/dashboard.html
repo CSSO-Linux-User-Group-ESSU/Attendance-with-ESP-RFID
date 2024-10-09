@@ -3,12 +3,19 @@
 {% block content %}
     <section>
         <h2>Attendance</h2>
-        <p><a href="{% url 'attendance_today' %}">See attendances today</a></p>
 
-        <h4>Attendances Log:</h4>
+        <form method="post" action="{% url 'date_attendance' %}">
+            {% csrf_token %}
+            <label>Select Date</label>
+            <br>
+            <input type="date" id="date" name="date">
+            <button type="submit">Go to Date</button>
+        </form>
+
+        <h4>All logs:</h4>
         <ul>
             {% for record in records %}
-                <li>{{ record.student.student_id }} | {{ record.student.last_name }} | {{ record.student.first_name }} | {{ record.student.middle_name }} | {{ record.date_attended }}</li>
+                <li>{{record.event.name}} |{{ record.student.student_id }} | {{ record.student.last_name }} | {{ record.student.first_name }} | {{ record.student.middle_name }} | {{ record.date_attended }}</li>
             {% empty %}
                 <li>No attendance records available.</li>
             {% endfor %}

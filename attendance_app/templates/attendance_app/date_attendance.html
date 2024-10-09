@@ -1,0 +1,17 @@
+{% extends "attendance_app/control_panel.html" %}
+
+{% block content %}
+    <p><a href="{%url 'dashboard' %}"><-Go back</a></p>
+    <h2>Attendance</h2>
+    <p>Date:{{date}}</p>
+
+
+    <ul>
+        {% for record in attendances %}
+        <li>{{ record.student.student_id }} | {{ record.student.last_name }} | {{ record.student.first_name }} | {{ record.student.middle_name }} | {{ record.date_attended }}</li>
+        {% empty %}
+        <li>No Attendance for this date</li>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}

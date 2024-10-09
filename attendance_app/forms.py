@@ -1,5 +1,5 @@
 from django import forms
-from .models import Student
+from .models import Student, Event, Device
 
 
 class UploadFileForm(forms.Form):
@@ -18,3 +18,14 @@ class StudentForm(forms.ModelForm):
             'first_name': 'First Name',
             'student_id': 'Student ID',
         }
+
+
+class DeviceForm(forms.ModelForm):
+    class Meta:
+        model = Device
+        fields = ['name']
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ['device', 'name']

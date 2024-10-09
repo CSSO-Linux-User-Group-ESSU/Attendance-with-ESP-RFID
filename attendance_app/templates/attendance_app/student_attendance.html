@@ -6,7 +6,7 @@
     <ul>
         {% for attendance in attendances %}
         <li>
-            <p>Attendance at {{attendance.date_attended}}</p>
+            <p>Attendance at {{attendance.date_attended}} | {{attendance.event.name}}</p>
         </li>
         {% empty %}
         <p>No attendance for this student</p>

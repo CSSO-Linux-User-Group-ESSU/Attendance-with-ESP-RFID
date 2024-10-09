@@ -13,7 +13,7 @@
             <p>{{ student.student_id}} | {{student.last_name}}, {{student.first_name}}, {{student.middle_name}}</p>
             <p>
                 <a href="{% url 'student_attendance' student.id %}">See attendance for this student</a> -
-                <a href="{% url 'delete_student' student.id %}">Delete this student</a>
+                <a href="{% url 'delete_student' student.id %}">Remove Student</a>
             </p>
         </li>
         {% empty %}

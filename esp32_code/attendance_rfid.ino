@@ -10,6 +10,7 @@
 int bluePin = 2;
 int redPin = 22;
 int buzzerPin = 15;
+int yellowPin = 13;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
@@ -25,6 +26,7 @@ String deviceName;
 void setup() {
   pinMode(redPin, OUTPUT);
   pinMode(bluePin, OUTPUT);
+  pinMode(yellowPin, OUTPUT);
   Serial.begin(115200);
   SPI.begin();
   mfrc522.PCD_Init();
@@ -34,7 +36,7 @@ void setup() {
 
   }
 
-
+  
   deviceName = Serial.readString();
   deviceName.trim();
 
@@ -43,7 +45,7 @@ void setup() {
 
   }
 
-
+  
   ssid = Serial.readString();
   ssid.trim();
 
@@ -52,7 +54,7 @@ void setup() {
 
   }
 
-
+  
   password = Serial.readString();
   password.trim();
 
@@ -61,7 +63,7 @@ void setup() {
 
   }
 
-
+  
   serverName = Serial.readString();
   serverName.trim();
 
@@ -129,7 +131,7 @@ void loop() {
         noTone(buzzerPin);
         delay(500);
         digitalWrite(bluePin, LOW);
-
+        
       }else{
         digitalWrite(redPin, HIGH);
         tone(buzzerPin,1000);
@@ -140,10 +142,17 @@ void loop() {
     } else {
       Serial.print("Error on sending POST: ");
       Serial.println(httpResponseCode);
+      Serial.println("Server may be down.");
+      digitalWrite(yellowPin, HIGH);
+      tone(buzzerPin,800);
+      delay(300);
+      noTone(buzzerPin);
+      tone(buzzerPin,800);
+      delay(300);
+      noTone(buzzerPin);
+      digitalWrite(yellowPin, LOW);
     }
     http.end();
+    
   }
-
-  delay(3000);
-  // getCSRFToken();
 }

@@ -3,6 +3,10 @@
 {% block content %}
     <h2>Events:</h2>
 
+    <p>
+        <a href="{% url 'add_event' %}">Add New Event</a>
+    </p>
+
     <ul>
         {% for event in events %}
         <li><a href="{% url 'event' event.id %}">{{ event.name }}</a></li>

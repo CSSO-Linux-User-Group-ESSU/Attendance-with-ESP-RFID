@@ -1,17 +1,11 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
+    <p><a href="{% url 'events' %}"><- Go Back</a></p>
     <h2>Event:{{event.name}}</h2>
     <hr>
 
-    <p>Device associated with Event:{{event.device}}</p>
-    <form method="post" action="{% url 'event' event.id %}">
-      {% csrf_token %}
-      <label>Device for this event</label>
-      <input name="device" id="device" required type="text">
-
-      <button type="submit">Save</button>
-    </form>
+    <p>Device associated with Event:{{event.device.name}}</p>
 
     <hr>
 

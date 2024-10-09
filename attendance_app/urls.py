@@ -12,9 +12,12 @@ urlpatterns = [
     path('students/',views.students, name='students'),
     path('student_attendance/<int:student_id>/',views.student_attendance, name='student_attendance'),
     path('delete_student/<int:student_id>/',views.delete_student, name='delete_student'),
-    path('attendance_today/',views.attendance_today, name='attendance_today'),
+    path('date_attendance/',views.date_attendance, name='date_attendance'),
     path('add_student/',views.add_student, name='add_student'),
-    path("events",views.events, name='events'),
+    path("events/",views.events, name='events'),
+    path("add_event/",views.add_event, name='add_event'),
     path("event/<int:event_id>/",views.event, name='event'),
+    path("devices/",views.devices, name='devices'),
+    path("add_device/",views.add_device, name='add_device'),
     path("",views.index, name='index')
 ]

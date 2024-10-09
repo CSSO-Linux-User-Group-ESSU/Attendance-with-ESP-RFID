@@ -1,0 +1,20 @@
+{% extends "attendance_app/control_panel.html" %}
+
+{% block content %}
+    <h2>Devices</h2>
+
+    <p>
+        <a href="{% url 'add_device' %}">Add New Device</a>
+    </p>
+
+    <ul>
+        {% for device in devices %}
+        <li>
+            <p>{{ device.name }}</p>
+        </li>
+        {% empty %}
+        <p>No devices</p>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}
