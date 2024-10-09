@@ -1,0 +1,15 @@
+{% extends "attendance_app/control_panel.html" %}
+
+{% block content %}
+<p><a href="{% url 'event' event.id %}"><- Go Back</a></p>
+  <h2>Add Day to Attendance</h2>
+  <br>
+  <form method="post" action="{% url 'event' event.id %}">
+    {% csrf_token %}
+    <label>Enter Date</label>
+    <input type="date" id="date" name="date">
+    <br>
+    <button type="submit">Add</button>
+  </form>
+
+{% endblock content %}

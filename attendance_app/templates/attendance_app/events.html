@@ -1,15 +1,15 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <h2>Events:</h2>
+    <h2>Attendance:</h2>
 
     <p>
-        <a href="{% url 'add_event' %}">Add New Event</a>
+        <a href="{% url 'add_event' %}">Add New Attendance</a>
     </p>
 
     <ul>
         {% for event in events %}
-        <li><a href="{% url 'event' event.id %}">{{ event.name }}</a></li>
+        <li>{{ event.name }} | {{event.instructor}} | {{ event.device }} | <a href="{% url 'event' event.id %}">View</a></li>
         {% empty %}
         <li>No events</li>
         {% endfor %}

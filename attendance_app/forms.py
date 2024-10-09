@@ -23,9 +23,10 @@ class StudentForm(forms.ModelForm):
 class DeviceForm(forms.ModelForm):
     class Meta:
         model = Device
-        fields = ['name']
+        fields = ['name','token']
 
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['device', 'name']
+        fields = ['device', 'name', 'instructor']
+

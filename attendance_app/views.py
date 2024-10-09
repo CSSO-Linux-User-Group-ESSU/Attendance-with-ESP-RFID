@@ -1,9 +1,11 @@
+from enum import unique
+from django.utils.dateformat import DateFormat
 from django.contrib import messages
 import openpyxl
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from .forms import UploadFileForm, StudentForm, EventForm, DeviceForm
-from .models import Student, Attendance, Event, Device, SecurityToken
+from .models import Student, Attendance, Event, Device, SecurityToken, Day
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
@@ -34,11 +36,10 @@ def date_attendance(request):
             date_attended = str(attendance.date_attended).split()[0]
             if date==date_attended:
                 attendance_for_date.append(attendance)
+
         return render(request,"attendance_app/date_attendance.html",{"date":date, "attendances":attendance_for_date})
     
     return render(request,"attendance_app/date_attendance.html")
-
-
 
 
 def delete_student(request, student_id):
@@ -50,6 +51,14 @@ def delete_student(request, student_id):
     context = {"name":name}
 
     return render(request, "attendance_app/delete_student.html", context)
+
+
+def delete_device(request, device_id):
+    device = Device.objects.get(id=device_id)
+
+    events = device.event_set.all()
+
+    return render(request, "attendance_app/delete_device",{"device":device,"events":events})
 
 
 def upload_file(request):
@@ -97,6 +106,20 @@ def control_panel(request):
     return render(request, 'attendance_app/control_panel.html')
 
 
+def attendance_for_today(request, day_id):
+    day = Day.objects.get(id=day_id)
+    event1 = day.event
+    attendances = day.attendance_set.all()
+
+    unique_att = get_unique_attendances(attendances)
+
+    context = {"day":day,
+               "event":event1,
+               "attendances":unique_att}
+
+    return render(request, "attendance_app/attendance_for_today.html", context)
+
+
 def student_attendance(request, student_id):
     student = Student.objects.get(id=student_id)
     attendances = student.attendance_set.all().order_by("-date_attended")
@@ -123,6 +146,7 @@ def dashboard(request):
     for student in students:
         attendances.extend(student.attendance_set.all())
 
+
     # for attendance in attendances:
     #     print(attendance.date_attended)
 
@@ -143,9 +167,7 @@ def is_morning(date):
 
 
 def get_morning_afternoon(attendances):
-    # current_utc = datetime.now(pytz.utc)
     timezone = pytz.timezone("Asia/Manila")
-    # current_local = current_utc.astimezone(timezone)
 
 
     morning_attendances = []
@@ -159,32 +181,7 @@ def get_morning_afternoon(attendances):
 
     return morning_attendances, afternoon_attendances
 
-# def attendance_today(request):
-#
-#     user = request.user
-#     students = user.student_set.all()
-#     attendances = []
-#     for student in students:
-#         attendances.extend(student.attendance_set.all())
-#
-#     current_utc = datetime.now(pytz.utc)
-#     timezone = pytz.timezone("Asia/Manila")
-#     current_local = current_utc.astimezone(timezone)
-#
-#     attendances_today = []
-#     for attendance in attendances:
-#         if str(attendance.date_attended).split(" ")[0] == str(current_local).split(" ")[0]:
-#             attendances_today.append(attendance)
-#
-#
-#     morning_attendances, afternoon_attendances = get_morning_afternoon(attendances_today)
-#
-#     context = {
-#         "morning": morning_attendances,
-#         "afternoon":afternoon_attendances
-#     }
-#
-#     return render(request, 'attendance_app/attendance_today.html', context)
+
 
 def add_student(request):
     if request.method != "POST":
@@ -211,15 +208,39 @@ def events(request):
     return render(request, "attendance_app/events.html",{"events":events1})
 
 
+def get_unique_attendances(attendances):
+    unique_attendances = {}
+
+    for attendance in attendances:
+        if attendance.student.student_id in unique_attendances.keys():
+            continue
+
+        unique_attendances[attendance.student.student_id]=attendance
+
+
+    unique_attendances1 = [i for i in unique_attendances.values()]
+
+    return unique_attendances1
+
+
 def event(request, event_id):
     event1 = Event.objects.get(id=event_id)
 
-    attendances = Attendance.objects.filter(event=event1)
+
+    if request.method=="POST":
+        Day.objects.create(date=request.POST.get("date"),event=event1)
+
+    days = event1.day_set.all()
+
+    return render(request, "attendance_app/event.html", {'days':days, "event":event1})
 
 
-    morning, afternoon = get_morning_afternoon(attendances)
+def add_day(request, event_id):
 
-    return render(request, "attendance_app/event.html",{"event":event1, "morning":morning, "afternoon":afternoon})
+    event1 = Event.objects.get(id=event_id)
+
+
+    return render(request, "attendance_app/add_day.html", {"event":event1})
 
 
 def add_event(request):
@@ -261,11 +282,20 @@ def api_attendance(request):
         token1 = data.get("token")
 
         try:
+
+            #get the date for the attendance
+            current_utc = datetime.now(pytz.utc)
+            timezone = pytz.timezone("Asia/Manila")
+            current_local = str(current_utc.astimezone(timezone)).split()[0]
+
+
             student1 = Student.objects.get(card_uid=str(card_uid).upper())
             token2 = SecurityToken.objects.get(token=token1)
             device1 = Device.objects.get(name=data.get("device"),token=token2)
             event1 = Event.objects.get(device=device1)
-            Attendance.objects.create(student=student1,event=event1)
+            date1 = Day.objects.get(date=current_local, event=event1)
+
+            Attendance.objects.create(student=student1,event=event1,day=date1)
             return JsonResponse({'status': 'success', 'student': str(student1)}, status=201)
         except Student.DoesNotExist:
             return JsonResponse({'status': 'error', 'student': 'Student not found'}, status=404)
@@ -273,4 +303,6 @@ def api_attendance(request):
             return JsonResponse({'status': 'error', 'student': 'Event not found'}, status=404)
         except Device.DoesNotExist:
             return JsonResponse({'status': 'error', 'student': 'Device not found'}, status=404)
+        except Day.DoesNotExist:
+            return JsonResponse({'status': 'error', 'student': 'Day not registered'}, status=404)
     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)

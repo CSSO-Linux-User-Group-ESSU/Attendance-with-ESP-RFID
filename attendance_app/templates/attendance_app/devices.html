@@ -10,7 +10,10 @@
     <ul>
         {% for device in devices %}
         <li>
-            <p>{{ device.name }}</p>
+            <p>
+                {{ device.name }} -
+                <a href="{% url 'delete_device' device.id %}">Remove device</a>
+            </p>
         </li>
         {% empty %}
         <p>No devices</p>

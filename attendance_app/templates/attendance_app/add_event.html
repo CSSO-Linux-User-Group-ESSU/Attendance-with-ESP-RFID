@@ -2,7 +2,7 @@
 
 {% block content %}
 <p><a href="{% url 'events' %}"><- Go Back</a></p>
-  <h2>New Event</h2>
+  <h2>New Attendance</h2>
   <br>
   <form method="post" action="{% url 'add_event' %}">
     {% csrf_token %}

@@ -1,0 +1,17 @@
+{% extends "attendance_app/control_panel.html" %}
+
+{% block content %}
+
+    <p><a href="{%url 'devices' %}"><-Go back</a></p>
+
+    <p>Successfully deleted device: {{device.name}}</p>
+    <p>Also deleted events associated with device:</p>
+    <ul>
+      {% for event in events %}
+      <li>{{event.name}}</li>
+      {% empty %}
+      <li>No event associated with device</li>
+      {% endfor %}
+    </ul>
+
+{% endblock content %}

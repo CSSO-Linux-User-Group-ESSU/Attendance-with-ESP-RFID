@@ -2,34 +2,22 @@
 
 {% block content %}
     <p><a href="{% url 'events' %}"><- Go Back</a></p>
-    <h2>Event:{{event.name}}</h2>
-    <hr>
 
-    <p>Device associated with Event:{{event.device.name}}</p>
+    <p><a href="{% url 'add_day' event.id %}">Add Day</a></p>
 
-    <hr>
+    <h2>Attendance:{{event.name}}</h2>
 
-    <h3>Attendances</h3>
-    <section>
-
-        <h3>Morning:</h3>
-        <ul>
-            {% for record in morning %}
-                <li>{{ record.student.student_id }} | {{ record.student.last_name }} | {{ record.student.first_name }} | {{ record.student.middle_name }} | {{ record.date_attended }}</li>
-            {% empty %}
-                <li>No attendances for morning.</li>
-            {% endfor %}
-        </ul>
-        <br>
-        <h3>Afternoon:</h3>
-        <ul>
-            {% for record in afternoon %}
-                <li>{{ record.student.student_id }} | {{ record.student.last_name }} | {{ record.student.first_name }} | {{ record.student.middle_name }} | {{ record.date_attended }}</li>
-            {% empty %}
-                <li>No attendances for afternoon.</li>
-            {% endfor %}
-        </ul>
-    </section>
+    <ul>
+        {% for day in days%}
+        <li>
+            <p>
+                {{day.date}} | <a href="{% url 'attendance_for_today' day.id %}">View</a>
+            </p>
+        </li>
+        {% empty %}
+        <li>No dates for this event</li>
+        {% endfor %}
+    </ul>
 
 
 {% endblock content %}
