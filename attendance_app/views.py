@@ -3,7 +3,7 @@ import openpyxl
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from .forms import UploadFileForm, StudentForm, EventForm, DeviceForm
-from .models import Student, Attendance, Event, Device
+from .models import Student, Attendance, Event, Device, SecurityToken
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
@@ -258,10 +258,12 @@ def api_attendance(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         card_uid = data.get("card_uid")
+        token1 = data.get("token")
 
         try:
             student1 = Student.objects.get(card_uid=str(card_uid).upper())
-            device1 = Device.objects.get(name=data.get("device"))
+            token2 = SecurityToken.objects.get(token=token1)
+            device1 = Device.objects.get(name=data.get("device"),token=token2)
             event1 = Event.objects.get(device=device1)
             Attendance.objects.create(student=student1,event=event1)
             return JsonResponse({'status': 'success', 'student': str(student1)}, status=201)

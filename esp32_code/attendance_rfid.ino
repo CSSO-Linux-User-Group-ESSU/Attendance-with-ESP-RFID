@@ -23,7 +23,11 @@ String serverName;
 String deviceName;
 
 
+String token1 = "fhdhjdkdsjcncjdhchdjdjdsjdw3@@!!#^^4682eqryoxuewrozcbvmalajurpd";
+
+
 void setup() {
+  token1.trim();
   pinMode(redPin, OUTPUT);
   pinMode(bluePin, OUTPUT);
   pinMode(yellowPin, OUTPUT);
@@ -115,7 +119,7 @@ void loop() {
     http.begin(serverName);
     http.addHeader("Content-Type", "application/json");
 
-    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"device\":\""+deviceName+"\"}";
+    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"device\":\""+deviceName+"\",\"token\":\"" + token1 + "\"}";
     Serial.println("JsonPayload:"+jsonPayload);
     int httpResponseCode = http.POST(jsonPayload);
 
@@ -155,4 +159,5 @@ void loop() {
     http.end();
     
   }
+  // getCSRFToken();
 }
