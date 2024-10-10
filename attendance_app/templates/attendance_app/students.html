@@ -1,24 +1,43 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <h2>Students</h2>
+    <h2 class="attendance_dashboard_h2">Students</h2>
 
     <p>
-        <a href="{% url 'add_student' %}">Add a Student</a> -
-        <a href="{% url 'upload_file' %}">Add from a file</a>
+        <a href="{% url 'add_student' %}" class="back-link">Add a Student</a>
+        <a href="{% url 'upload_file' %}" class="back-link">Add from a file</a>
     </p>
-    <ul>
-        {% for student in students %}
-        <li>
-            <p>{{ student.student_id}} | {{student.last_name}}, {{student.first_name}}, {{student.middle_name}}</p>
-            <p>
-                <a href="{% url 'student_attendance' student.id %}">See attendance for this student</a> -
-                <a href="{% url 'delete_student' student.id %}">Remove Student</a>
-            </p>
-        </li>
-        {% empty %}
-        <p>No students registered to {{ user.username }}</p>
-        {% endfor %}
-    </ul>
+    <table class="table1">
+        <thead>
+            <tr>
+                <th>Card UID</th>
+                <th>Student ID</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+             {% for student in students %}
+             <tr>
+                 <td>{{student.card_uid}}</td>
+                 <td>{{ student.student_id}}</td>
+                 <td>{{ student.last_name}}</td>
+                 <td>{{ student.first_name}}</td>
+                 <td>{{ student.middle_name}}</td>
+                 <td>
+                     <a href="{% url 'student_attendance' student.id %}" class="view-btn">Logs</a>
+                     <a href="{% url 'delete_student' student.id %}" class="view-btn">Remove</a>
+                 </td>
+             </tr>
+             {% empty %}
+             <tr>
+                 <td colspan="6">No Students</td>
+             </tr>
+             {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock content %}

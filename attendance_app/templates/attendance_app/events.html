@@ -1,18 +1,36 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <h2>Attendance:</h2>
+    <h2 class="attendance_dashboard_h2">Attendances</h2>
 
     <p>
-        <a href="{% url 'add_event' %}">Add New Attendance</a>
+        <a href="{% url 'add_event' %}" class="back-link">Add New Attendance</a>
     </p>
 
-    <ul>
-        {% for event in events %}
-        <li>{{ event.name }} | {{event.instructor}} | {{ event.device }} | <a href="{% url 'event' event.id %}">View</a></li>
-        {% empty %}
-        <li>No events</li>
-        {% endfor %}
-    </ul>
+    <table class="table1">
+        <thead>
+            <tr>
+                <th>Event/Subject Name</th>
+                <th>Organizer/Instructor</th>
+                <th>Associated Device</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr>
+                <td>{{event.name}}</td>
+                <td>{{event.instructor}}</td>
+                <td>{{event.device}}</td>
+                <td><a href="{% url 'event' event.id %}" class="view-btn">View</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No attendance records available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 
 {% endblock content %}

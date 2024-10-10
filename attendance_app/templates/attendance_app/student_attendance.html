@@ -1,16 +1,27 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <p><a href="{%url 'students' %}"><-Go back</a></p>
-    <h4>Student: {{student.last_name}}, {{student.first_name}}, {{student.middle_name}}</h4>
-    <ul>
-        {% for attendance in attendances %}
-        <li>
-            <p>Attendance at {{attendance.date_attended}} | {{attendance.event.name}}</p>
-        </li>
-        {% empty %}
-        <p>No attendance for this student</p>
-        {% endfor %}
-    </ul>
+    <p><a href="{%url 'students' %}" class="back-link">Go back</a></p>
+    <h4 class="all_logs_h4">Student: {{student.last_name}}, {{student.first_name}}, {{student.middle_name}}</h4>
+    <table class="table1">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Event/Subject Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendance in attendances %}
+            <tr>
+                <td>{{attendance.date_attended}}</td>
+                <td>{{attendance.event.name}}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No logs for this student</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock content %}

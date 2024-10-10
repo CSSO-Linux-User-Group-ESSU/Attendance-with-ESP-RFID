@@ -1,37 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance System</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'attendance_app/css/style.css' %}">
 </head>
 <body>
+    <div class="wrapper">
     <header>
         <h3>Attendance System</h3>
             {% if user.is_authenticated %}
-                <p>Logged in as: {{ user.username }} | <a href="{% url 'logout' %}">Logout</a></p>
+                <a href="{% url 'logout' %}">Logout</a>
             {% else %}
-                <p>You are not logged in. <a href="{% url 'index' %}">Login</a></p>
+                <a href="{% url 'index' %}">Login</a>
             {% endif %}
     </header>
-    <hr>
-
-    <p>
-        <a href="{% url 'dashboard' %}">History</a> -
-        <a href="{% url 'events' %}">Attendance</a> -
-        <a href="{% url 'devices' %}">Devices</a> -
-        <a href="{% url 'students' %}">Students</a>
-
-    </p>
-    <hr>
 
 
-    {% block content %}
-    {% endblock content %}
 
-    <hr>
-    <footer>
+
+
+    <div class="main-content">
+        <div class="div2">
+            <a href="{% url 'dashboard' %}">History</a>
+            <a href="{% url 'events' %}">Attendance</a>
+            <a href="{% url 'devices' %}">Devices</a>
+            <a href="{% url 'students' %}">Students</a>
+        </div>
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+
+
+    <footer class="footer2">
         <p>&copy; 2024 ESSU Attendance System. All Rights Reserved.</p>
     </footer>
+    </div>
 </body>
 </html>

@@ -1,17 +1,37 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <p><a href="{%url 'event' event.id %}"><-Go back</a></p>
-    <h2>{{event.name}}</h2>
-    <p>Date:{{day.date}}</p>
+    <p><a href="{%url 'event' event.id %}" class="back-link">Go back</a></p>
+    <h2 class="attendance_dashboard_h2">{{event.name}}</h2>
 
+    <h4 class="all_logs_h4">Recorded Student Attendance: {{top}}/{{below}}</h4>
+    <p class="all_logs_h4">Date:{{day.date}}</p>
 
-    <ul>
-        {% for record in attendances %}
-        <li>{{ record.student.student_id }} | {{ record.student.last_name }} | {{ record.student.first_name }} | {{ record.student.middle_name }} | {{ record.date_attended }}</li>
-        {% empty %}
-        <li>No Attendance for this date</li>
-        {% endfor %}
-    </ul>
+    <table class="table1">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Date Attended</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in attendances %}
+            <tr>
+                <td>{{record.student.student_id}}</td>
+                <td>{{record.student.last_name}}</td>
+                <td>{{record.student.first_name}}</td>
+                <td>{{record.student.middle_name}}</td>
+                <td>{{record.date_attended}}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No attendance for this date.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock content %}

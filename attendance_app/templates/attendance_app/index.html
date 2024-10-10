@@ -4,30 +4,30 @@
     <title>Login</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'attendance_app/css/style.css' %}">
+</head>
 <body>
 
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="h11">Login</h1>
+            <form action="control_panel/" method="post" class="form1">
 
-    <div class="container">
-        <h1 class="h11">Login User</h1>
-        <form action="control_panel/" method="post" class="form1">
+                {% csrf_token %}
 
-            {% csrf_token %}
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required class="input-field">
+                    <br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required class="input-field">
+                    <br>
 
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required class="input-field">
-                <br>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required class="input-field">
-                <br>
+                    <button type="submit" class="login-btn">LOGIN</button>
 
-                <button type="submit" class="login-btn">LOGIN</button>
+            </form>
+        </div>
 
-        </form>
-    </div>
-
-    <div class="footer-container1">
-        <footer class="footer1">
-            ESSU Attendance System
+        <footer class="footer2">
+            <p>&copy; 2024 ESSU Attendance System. All Rights Reserved.</p>
         </footer>
     </div>
 

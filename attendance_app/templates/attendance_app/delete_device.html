@@ -2,16 +2,28 @@
 
 {% block content %}
 
-    <p><a href="{%url 'devices' %}"><-Go back</a></p>
+    <p><a href="{%url 'devices' %}" class="back-link">Go back</a></p>
 
-    <p>Successfully deleted device: {{device.name}}</p>
-    <p>Also deleted events associated with device:</p>
-    <ul>
-      {% for event in events %}
-      <li>{{event.name}}</li>
-      {% empty %}
-      <li>No event associated with device</li>
-      {% endfor %}
-    </ul>
+    <p class="all_logs_h4">Successfully deleted: {{device.name}}</p>
+    <p class="all_logs_h4">Also deleted attendances associated with device:</p>
+
+    <table class="table1">
+        <thead>
+            <tr>
+                <th>Event/Subject Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr>
+                <td>{{event.name}}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="1">No attendances for this device</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock content %}

@@ -37,7 +37,7 @@ def date_attendance(request):
             if date==date_attended:
                 attendance_for_date.append(attendance)
 
-        return render(request,"attendance_app/date_attendance.html",{"date":date, "attendances":attendance_for_date})
+        return render(request,"attendance_app/date_attendance.html",{"date":str(date), "attendances":attendance_for_date})
     
     return render(request,"attendance_app/date_attendance.html")
 
@@ -56,9 +56,16 @@ def delete_student(request, student_id):
 def delete_device(request, device_id):
     device = Device.objects.get(id=device_id)
 
-    events = device.event_set.all()
+    events1 = device.event_set.all()
 
-    return render(request, "attendance_app/delete_device",{"device":device,"events":events})
+    context = {"device": device, "events": events1}
+
+    Device.objects.filter(id=device_id).delete()
+
+
+
+
+    return render(request, "attendance_app/delete_device.html",context)
 
 
 def upload_file(request):
@@ -74,6 +81,9 @@ def upload_file(request):
                 if None in row:
                     continue
 
+
+                #if not already in database
+                #create Student
                 if not Student.objects.filter(card_uid=str(card_uid).upper()).exists():
 
                     Student.objects.create(owner=request.user,card_uid=str(card_uid).upper(), last_name=str(last_name).upper(),
@@ -103,7 +113,7 @@ def control_panel(request):
         else:
             messages.error(request,"Wrong admin or password")
             return redirect("index")
-    return render(request, 'attendance_app/control_panel.html')
+    return redirect("index")
 
 
 def attendance_for_today(request, day_id):
@@ -115,7 +125,9 @@ def attendance_for_today(request, day_id):
 
     context = {"day":day,
                "event":event1,
-               "attendances":unique_att}
+               "attendances":unique_att,
+               "top":len(unique_att),
+               "below":len(Student.objects.all())}
 
     return render(request, "attendance_app/attendance_for_today.html", context)
 
@@ -305,4 +317,6 @@ def api_attendance(request):
             return JsonResponse({'status': 'error', 'student': 'Device not found'}, status=404)
         except Day.DoesNotExist:
             return JsonResponse({'status': 'error', 'student': 'Day not registered'}, status=404)
+        except SecurityToken.DoesNotExist:
+            return JsonResponse({'status': 'error', 'student': 'Token not recognized'}, status=404)
     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)

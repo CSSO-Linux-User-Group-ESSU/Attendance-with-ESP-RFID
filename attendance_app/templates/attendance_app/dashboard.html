@@ -1,25 +1,50 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <section>
-        <h2>Attendance</h2>
+    <h2 class="attendance_dashboard_h2">Attendance History</h2>
 
-        <form method="post" action="{% url 'date_attendance' %}">
-            {% csrf_token %}
-            <label>Select Date</label>
-            <br>
-            <input type="date" id="date" name="date">
-            <button type="submit">Go to Date</button>
-        </form>
+    <form method="post" action="{% url 'date_attendance' %}">
+        {% csrf_token %}
+        <label class="form_label1">Select Date</label>
+        <br>
+        <input class="form_input1" type="date" id="date" name="date">
+        <button class="form_button1" type="submit">Go to Date</button>
+    </form>
 
-        <h4>All logs:</h4>
-        <ul>
+    <h4 class="all_logs_h4">All logs:</h4>
+    <table class="table1">
+        <thead>
+            <tr>
+                <th>Event/Subject Name</th>
+                <th>Student ID</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Date Attended</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for record in records %}
-                <li>{{record.event.name}} |{{ record.student.student_id }} | {{ record.student.last_name }} | {{ record.student.first_name }} | {{ record.student.middle_name }} | {{ record.date_attended }}</li>
+                <tr>
+                    <td>{{ record.event.name }}</td>
+                    <td>{{ record.student.student_id }}</td>
+                    <td>{{ record.student.last_name }}</td>
+                    <td>{{ record.student.first_name }}</td>
+                    <td>{{ record.student.middle_name }}</td>
+                    <td>{{ record.date_attended }}</td>
+                </tr>
             {% empty %}
-                <li>No attendance records available.</li>
+                <tr>
+                    <td colspan="6">No attendance records available.</td>
+                </tr>
             {% endfor %}
-        </ul>
-    </section>
+        </tbody>
+    </table>
+
+    <script>
+        const today = new Date().toISOString().split('T')[0];
+
+        document.getElementById('date').value = today;
+    </script>
 
 {% endblock content %}

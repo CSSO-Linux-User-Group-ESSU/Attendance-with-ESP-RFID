@@ -1,10 +1,14 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-<p><a href="{% url 'events' %}"><- Go Back</a></p>
-  <h2>New Attendance</h2>
-  <br>
-  <form method="post" action="{% url 'add_event' %}">
+  <p><a href="{% url 'events' %}" class="back-link">Go Back</a></p>
+  <div class="container">
+    <h2 class="attendance_dashboard_h2">New Attendance</h2>
+  </div>
+
+
+
+  <form method="post" action="{% url 'add_event' %}" class="form-container">
     {% csrf_token %}
     {{form.as_p}}
     <button type="submit">Add</button>

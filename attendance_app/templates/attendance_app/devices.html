@@ -1,23 +1,31 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <h2>Devices</h2>
+    <h2 class="attendance_dashboard_h2">Devices</h2>
 
     <p>
-        <a href="{% url 'add_device' %}">Add New Device</a>
+        <a href="{% url 'add_device' %}" class="back-link">Add New Device</a>
     </p>
 
-    <ul>
-        {% for device in devices %}
-        <li>
-            <p>
-                {{ device.name }} -
-                <a href="{% url 'delete_device' device.id %}">Remove device</a>
-            </p>
-        </li>
-        {% empty %}
-        <p>No devices</p>
-        {% endfor %}
-    </ul>
+    <table class="table1">
+        <thead>
+            <tr>
+                <th>Device</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for device in devices %}
+            <tr>
+                <td>{{device.name}}</td>
+                <td><a href="{% url 'delete_device' device.id %}" class="view-btn">Remove</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No devices</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock content %}
