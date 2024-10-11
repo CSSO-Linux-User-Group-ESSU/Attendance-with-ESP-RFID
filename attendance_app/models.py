@@ -34,7 +34,7 @@ class Device(models.Model):
 #can be classes
 class Event(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     instructor = models.CharField(max_length=200)
 
 

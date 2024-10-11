@@ -8,6 +8,17 @@
 <body>
 
     <div class="wrapper">
+        {% if messages %}
+            <div class="container">
+                {% for message in messages %}
+                    <div>
+                        {{ message }}
+                        <button onclick="this.parentElement.style.display='none';">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <div class="container">
             <h1 class="h11">Login</h1>
             <form action="control_panel/" method="post" class="form1">

@@ -1,6 +1,17 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
+    {% if messages %}
+        <div class="container">
+            {% for message in messages %}
+                <div>
+                    {{ message }}
+                    <button onclick="this.parentElement.style.display='none';">&times;</button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <p>
         <a href="{% url 'events' %}" class="back-link">Go Back</a>
         <a href="{% url 'add_day' event.id %}" class="back-link">Add New Date</a>
@@ -9,6 +20,8 @@
 
 
     <h2 class="attendance_dashboard_h2">{{event.name}}</h2>
+
+
 
 
      <table class="table1">
