@@ -106,7 +106,8 @@ def control_panel(request):
 
         if user is not None:
             login(request, user)
-            return render(request, 'attendance_app/control_panel.html')
+            events1 = Event.objects.all()
+            return render(request, 'attendance_app/events.html',{"events":events1})
         else:
             messages.error(request,"Wrong admin or password")
             return redirect("index")
@@ -237,7 +238,14 @@ def event(request, event_id):
 
 
     if request.method=="POST":
-        Day.objects.create(date=request.POST.get("date"),event=event1)
+        day, created = Day.objects.get_or_create(date=request.POST.get("date"), event=event1)
+
+        if created:
+            pass
+        else:
+            messages.error(request,"Date already exists")
+            days = event1.day_set.all()
+            return render(request, "attendance_app/event.html", {'days':days, "event":event1})
 
     days = event1.day_set.all()
 

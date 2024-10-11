@@ -42,7 +42,7 @@ class Event(models.Model):
         return self.name
 
 class Day(models.Model):
-    date = models.DateField()
+    date = models.DateField(unique=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
 
