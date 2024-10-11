@@ -40,7 +40,6 @@ void setup() {
 
   }
 
-  
   deviceName = Serial.readString();
   deviceName.trim();
 
@@ -49,7 +48,6 @@ void setup() {
 
   }
 
-  
   ssid = Serial.readString();
   ssid.trim();
 
@@ -58,19 +56,19 @@ void setup() {
 
   }
 
-  
   password = Serial.readString();
   password.trim();
+
 
   Serial.println("Enter url:");
   while(Serial.available()==0){
 
   }
 
-  
   serverName = Serial.readString();
   serverName.trim();
 
+  Serial.println("DeviceName:"+deviceName);
   Serial.println("SSID:"+ssid);
   Serial.println("Password:"+password);
   Serial.println("Url:"+serverName);

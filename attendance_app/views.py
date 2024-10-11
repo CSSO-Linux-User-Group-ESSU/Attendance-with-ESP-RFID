@@ -309,7 +309,7 @@ def delete_day(request, day_id):
 def api_attendance(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        card_uid = data.get("c2q1ard_uid")
+        card_uid = data.get("card_uid")
         token1 = data.get("token")
 
         try:
