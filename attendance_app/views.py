@@ -1,8 +1,6 @@
-from enum import unique
-from django.utils.dateformat import DateFormat
 from django.contrib import messages
 import openpyxl
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.views.decorators.csrf import csrf_exempt
 from .forms import UploadFileForm, StudentForm, EventForm, DeviceForm
 from .models import Student, Attendance, Event, Device, SecurityToken, Day
@@ -13,7 +11,6 @@ import pytz
 import json
 
 
-#TODO duplicate attendances
 
 
 def students(request):
@@ -285,12 +282,26 @@ def add_device(request):
     return render(request, "attendance_app/add_device.html",{"form":form})
 
 
-#TODO filter the students with the owner
+
+
+def delete_event(request, event_id):
+    Event.objects.get(id=event_id).delete()
+
+    return redirect("events")
+
+
+def delete_day(request, day_id):
+
+    Day.objects.get(id=day_id).delete()
+
+    return redirect("events")
+
+
 @csrf_exempt
 def api_attendance(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        card_uid = data.get("card_uid")
+        card_uid = data.get("c2q1ard_uid")
         token1 = data.get("token")
 
         try:

@@ -10,7 +10,7 @@
     <table class="table1">
         <thead>
             <tr>
-                <th>Event/Subject Name</th>
+                <th>Event/Subject</th>
                 <th>Organizer/Instructor</th>
                 <th>Associated Device</th>
                 <th>Action</th>
@@ -22,7 +22,11 @@
                 <td>{{event.name}}</td>
                 <td>{{event.instructor}}</td>
                 <td>{{event.device}}</td>
-                <td><a href="{% url 'event' event.id %}" class="view-btn">View</a></td>
+                <td>
+                    <a href="{% url 'event' event.id %}" class="view-btn">View</a>
+                    <a href="{% url 'delete_event' event.id %}" class="view-btn">Remove</a>
+                </td>
+
             </tr>
             {% empty %}
             <tr>

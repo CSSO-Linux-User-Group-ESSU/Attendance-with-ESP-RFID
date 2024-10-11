@@ -8,7 +8,7 @@
 
 
 
-    <h2 class="attendance_dasboard_h2">{{event.name}}</h2>
+    <h2 class="attendance_dashboard_h2">{{event.name}}</h2>
 
 
      <table class="table1">
@@ -22,7 +22,10 @@
             {% for day in days %}
             <tr>
                 <td>{{day.date}}</td>
-                <td><a href="{% url 'attendance_for_today' day.id %}" class="view-btn">View</a></td>
+                <td>
+                    <a href="{% url 'attendance_for_today' day.id %}" class="view-btn">View</a>
+                    <a href="{% url 'delete_day' day.id %}" class="view-btn">Remove</a>
+                </td>
             </tr>
             {% empty %}
             <tr>

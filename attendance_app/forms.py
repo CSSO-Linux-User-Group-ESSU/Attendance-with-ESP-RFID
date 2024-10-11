@@ -32,6 +32,6 @@ class EventForm(forms.ModelForm):
 
         labels = {
             "device": "Device",
-            "name":"Event/Subject Name",
+            "name":"Event/Subject",
             "instructor":"Organizer/Instructor"
         }
