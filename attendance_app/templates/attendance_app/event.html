@@ -13,8 +13,8 @@
     {% endif %}
 
     <p>
-        <a href="{% url 'events' %}" class="back-link">Go Back</a>
-        <a href="{% url 'add_day' event.id %}" class="back-link">Add New Date</a>
+        <a href="{% url 'attendance_app:events' %}" class="back-link">Go Back</a>
+        <a href="{% url 'attendance_app:add_day' event.id %}" class="back-link">Add New Date</a>
     </p>
 
 
@@ -36,8 +36,8 @@
             <tr>
                 <td>{{day.date}}</td>
                 <td>
-                    <a href="{% url 'attendance_for_today' day.id %}" class="view-btn">View</a>
-                    <a href="{% url 'delete_day' day.id %}" class="view-btn">Remove</a>
+                    <a href="{% url 'attendance_app:attendance_for_today' day.id %}" class="view-btn">View</a>
+                    <a href="{% url 'attendance_app:delete_day' day.id %}" class="view-btn">Remove</a>
                 </td>
             </tr>
             {% empty %}

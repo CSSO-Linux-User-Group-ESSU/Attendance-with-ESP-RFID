@@ -14,7 +14,7 @@
     <h2 class="attendance_dashboard_h2">Attendances</h2>
 
     <p>
-        <a href="{% url 'add_event' %}" class="back-link">Add New Attendance</a>
+        <a href="{% url 'attendance_app:add_event' %}" class="back-link">Add New Attendance</a>
     </p>
 
     <table class="table1">
@@ -33,8 +33,8 @@
                 <td>{{event.instructor}}</td>
                 <td>{{event.device}}</td>
                 <td>
-                    <a href="{% url 'event' event.id %}" class="view-btn">View</a>
-                    <a href="{% url 'delete_event' event.id %}" class="view-btn">Remove</a>
+                    <a href="{% url 'attendance_app:event' event.id %}" class="view-btn">View</a>
+                    <a href="{% url 'attendance_app:delete_event' event.id %}" class="view-btn">Remove</a>
                 </td>
 
             </tr>

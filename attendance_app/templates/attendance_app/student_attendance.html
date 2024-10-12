@@ -1,7 +1,7 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <p><a href="{%url 'students' %}" class="back-link">Go back</a></p>
+    <p><a href="{%url 'attendance_app:students' %}" class="back-link">Go back</a></p>
     <h4 class="all_logs_h4">Student: {{student.last_name}}, {{student.first_name}}, {{student.middle_name}}</h4>
     <table class="table1">
         <thead>

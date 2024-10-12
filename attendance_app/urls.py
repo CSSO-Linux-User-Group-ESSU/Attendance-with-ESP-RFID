@@ -3,6 +3,8 @@ from django.urls import path
 from . import views
 
 
+
+app_name = "attendance_app"
 urlpatterns = [
     path('upload/',views.upload_file, name='upload_file'),
     path('logout/',views.logout_view, name='logout'),

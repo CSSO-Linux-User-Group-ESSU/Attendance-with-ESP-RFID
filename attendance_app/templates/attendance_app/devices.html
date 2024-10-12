@@ -4,7 +4,7 @@
     <h2 class="attendance_dashboard_h2">Devices</h2>
 
     <p>
-        <a href="{% url 'add_device' %}" class="back-link">Add New Device</a>
+        <a href="{% url 'attendance_app:add_device' %}" class="back-link">Add New Device</a>
     </p>
 
     <table class="table1">
@@ -18,7 +18,7 @@
             {% for device in devices %}
             <tr>
                 <td>{{device.name}}</td>
-                <td><a href="{% url 'delete_device' device.id %}" class="view-btn">Remove</a></td>
+                <td><a href="{% url 'attendance_app:delete_device' device.id %}" class="view-btn">Remove</a></td>
             </tr>
             {% empty %}
             <tr>

@@ -4,8 +4,8 @@
     <h2 class="attendance_dashboard_h2">Students</h2>
 
     <p>
-        <a href="{% url 'add_student' %}" class="back-link">Add a Student</a>
-        <a href="{% url 'upload_file' %}" class="back-link">Add from a file</a>
+        <a href="{% url 'attendance_app:add_student' %}" class="back-link">Add a Student</a>
+        <a href="{% url 'attendance_app:upload_file' %}" class="back-link">Add from a file</a>
     </p>
     <table class="table1">
         <thead>
@@ -28,8 +28,8 @@
                  <td>{{ student.first_name}}</td>
                  <td>{{ student.middle_name}}</td>
                  <td>
-                     <a href="{% url 'student_attendance' student.id %}" class="view-btn">Logs</a>
-                     <a href="{% url 'delete_student' student.id %}" class="view-btn">Remove</a>
+                     <a href="{% url 'attendance_app:student_attendance' student.id %}" class="view-btn">Logs</a>
+                     <a href="{% url 'attendance_app:delete_student' student.id %}" class="view-btn">Remove</a>
                  </td>
              </tr>
              {% empty %}

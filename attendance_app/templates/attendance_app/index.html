@@ -21,7 +21,7 @@
 
         <div class="container">
             <h1 class="h11">Login</h1>
-            <form action="control_panel/" method="post" class="form1">
+            <form action="{% url 'attendance_app:control_panel' %}" method="post" class="form1">
 
                 {% csrf_token %}
 

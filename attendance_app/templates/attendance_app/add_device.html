@@ -1,13 +1,13 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-  <p><a href="{% url 'devices' %}" class="back-link">Go Back</a></p>
+  <p><a href="{% url 'attendance_app:devices' %}" class="back-link">Go Back</a></p>
   <div class="container">
     <h2 class="attendance_dashboard_h2">New Device</h2>
   </div>
 
 
-  <form method="post" action="{% url 'add_device' %}" class="form-container">
+  <form method="post" action="{% url 'attendance_app:add_device' %}" class="form-container">
     {% csrf_token %}
     {{form.as_p}}
     <button type="submit">Add</button>
