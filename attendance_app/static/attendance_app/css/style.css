@@ -189,7 +189,7 @@ header {
 header h3 {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);  /* Centers the title */
+    transform: translateX(-50%);
     margin: 0;
     font-size: 24px;
 }
