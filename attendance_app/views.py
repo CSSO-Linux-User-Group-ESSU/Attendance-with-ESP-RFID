@@ -1,8 +1,7 @@
 from django.contrib import messages
-import openpyxl
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from .forms import UploadFileForm, StudentForm, EventForm, DeviceForm
+from .forms import EventForm, DeviceForm
 from .models import Student, Attendance, Event, Device, SecurityToken, Day
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
@@ -10,16 +9,6 @@ from datetime import datetime
 import pytz
 import json
 
-
-
-
-def students(request):
-
-    students = Student.objects.filter(owner=request.user)
-
-    context = {"students":students}
-
-    return render(request, 'attendance_app/students.html', context)
 
 
 
@@ -39,17 +28,6 @@ def date_attendance(request):
     return render(request,"attendance_app/date_attendance.html")
 
 
-def delete_student(request, student_id):
-    student = Student.objects.get(id=student_id)
-
-    Student.objects.filter(id=student_id).delete()
-    name = f"{student.last_name}, {student.first_name}, {student.middle_name}"
-
-    context = {"name":name}
-
-    return render(request, "attendance_app/delete_student.html", context)
-
-
 def delete_device(request, device_id):
     device = Device.objects.get(id=device_id)
 
@@ -65,37 +43,10 @@ def delete_device(request, device_id):
     return render(request, "attendance_app/delete_device.html",context)
 
 
-def upload_file(request):
-    if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            excel_file = request.FILES['files']
-            wb = openpyxl.load_workbook(excel_file)
-            sheet = wb.active
-
-            for row in sheet.iter_rows(min_row=2, values_only=True):
-                card_uid, last_name, first_name, middle_name, student_id = row
-                if None in row:
-                    continue
-
-
-                #if not already in database
-                #create Student
-                if not Student.objects.filter(card_uid=str(card_uid).upper()).exists():
-
-                    Student.objects.create(owner=request.user,card_uid=str(card_uid).upper(), last_name=str(last_name).upper(),
-                                           first_name=str(first_name).upper(), middle_name=str(middle_name).upper(), student_id=student_id)
-
-            return redirect('students')
-    else:
-        form = UploadFileForm()
-
-    return render(request, 'attendance_app/upload.html', {'form': form})
-
-
 def logout_view(request):
     logout(request)
-    return redirect('index')
+    return redirect('attendance_app:index')
+
 
 def control_panel(request):
     if request.method=="POST":
@@ -110,8 +61,8 @@ def control_panel(request):
             return render(request, 'attendance_app/events.html',{"events":events1})
         else:
             messages.error(request,"Wrong admin or password")
-            return redirect("index")
-    return redirect("index")
+            return redirect('attendance_app:index')
+    return redirect('attendance_app:index')
 
 
 def attendance_for_today(request, day_id):
@@ -130,36 +81,18 @@ def attendance_for_today(request, day_id):
     return render(request, "attendance_app/attendance_for_today.html", context)
 
 
-def student_attendance(request, student_id):
-    student = Student.objects.get(id=student_id)
-    attendances = student.attendance_set.all().order_by("-date_attended")
-
-    context = {"attendances":attendances, "student":student}
-
-    return render(request, 'attendance_app/student_attendance.html',context)
-
-
 def index(request):
     return render(request, 'attendance_app/index.html')
-
 
 
 def get_info(request):
     global CurrentUser
     return JsonResponse({'username': CurrentUser[0], "password":CurrentUser[1], 'event_id':CurrentUser[2]})
 
+
 def dashboard(request):
 
-    user = request.user
-    students = user.student_set.all()
-    attendances = []
-    for student in students:
-        attendances.extend(student.attendance_set.all())
-
-
-    # for attendance in attendances:
-    #     print(attendance.date_attended)
-
+    attendances = Attendance.objects.all()
     context = {
         "records": attendances
     }
@@ -167,7 +100,6 @@ def dashboard(request):
     return render(request, 'attendance_app/dashboard.html', context)
 
 
-#helper function
 def is_morning(date):
     time = str(date).split()[1]
 
@@ -190,26 +122,6 @@ def get_morning_afternoon(attendances):
             afternoon_attendances.append(attendance)
 
     return morning_attendances, afternoon_attendances
-
-
-
-def add_student(request):
-    if request.method != "POST":
-        form = StudentForm()
-    else:
-        form = StudentForm(data=request.POST)
-        if form.is_valid():
-            new_student = form.save(commit=False)
-            new_student.owner = request.user
-            new_student.last_name = new_student.last_name.upper()
-            new_student.first_name = new_student.first_name.upper()
-            new_student.middle_name = new_student.middle_name.upper()
-            new_student.card_uid = new_student.card_uid.upper()
-
-            new_student.save()
-            return redirect("students")
-
-    return render(request, "attendance_app/add_student.html",{"form":form})
 
 
 def events(request):
@@ -267,7 +179,7 @@ def add_event(request):
         form = EventForm(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect("events")
+            return redirect("attendance_app:events")
 
     return render(request, "attendance_app/add_event.html",{"form":form})
 
@@ -285,7 +197,7 @@ def add_device(request):
         form = DeviceForm(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect("devices")
+            return redirect("attendance_app:devices")
 
     return render(request, "attendance_app/add_device.html",{"form":form})
 
@@ -295,14 +207,14 @@ def add_device(request):
 def delete_event(request, event_id):
     Event.objects.get(id=event_id).delete()
 
-    return redirect("events")
+    return redirect("attendance_app:events")
 
 
 def delete_day(request, day_id):
 
     Day.objects.get(id=day_id).delete()
 
-    return redirect("events")
+    return redirect("attendance_app:events")
 
 
 @csrf_exempt
