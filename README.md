@@ -31,6 +31,15 @@ venv\Scripts\activate
 ```bash
 pip install -r requirements.txt
 ```
+## Migrate and collectstatic
+
+```bash
+python manage.py makemigrations attendance_app
+python manage.py makemigrations student_app
+python manage.py migrate
+python manage.py collectstatic
+```
+
 ## Run server
 
 ```bash
