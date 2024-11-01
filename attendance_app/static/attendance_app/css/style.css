@@ -256,6 +256,11 @@ header a {
     margin-top: 10px;
 }
 
+.login-btn:hover {
+    transition: background-color 0.3s;
+    background-color:#466aa6;
+}
+
 
 .h11 {
     text-align: center;
