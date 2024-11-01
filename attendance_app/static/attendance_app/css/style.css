@@ -1,7 +1,7 @@
 
 
 
-.button1_hover:hover{
+.nav-buttons:hover{
     transition: background-color 0.3s;
     background-color:#466aa6;
 }

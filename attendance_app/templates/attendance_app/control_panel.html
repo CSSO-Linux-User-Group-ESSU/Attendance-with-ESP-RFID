@@ -22,10 +22,10 @@
 
     <div class="main-content">
         <div class="div2">
-            <a class=button1_hover href="{% url 'attendance_app:dashboard' %}">History</a>
-            <a class=button1_hover href="{% url 'attendance_app:events' %}">Attendance</a>
-            <a class=button1_hover href="{% url 'attendance_app:devices' %}">Devices</a>
-            <a class=button1_hover href="{% url 'student_app:students' %}">Students</a>
+            <a class=nav-buttons href="{% url 'attendance_app:dashboard' %}">History</a>
+            <a class=nav-buttons href="{% url 'attendance_app:events' %}">Attendance</a>
+            <a class=nav-buttons href="{% url 'attendance_app:devices' %}">Devices</a>
+            <a class=nav-buttons href="{% url 'student_app:students' %}">Students</a>
         </div>
         {% block content %}
         {% endblock content %}
