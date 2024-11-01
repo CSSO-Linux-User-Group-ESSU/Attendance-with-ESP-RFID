@@ -254,10 +254,10 @@ header a {
     font-size: 16px;
     cursor: pointer;
     margin-top: 10px;
+    transition: background-color 0.3s;
 }
 
 .login-btn:hover {
-    transition: background-color 0.3s;
     background-color:#466aa6;
 }
 
