@@ -3,7 +3,7 @@
 
 ![alt text](https://github.com/CSSO-Linux-User-Group-ESSU/Attendance-with-ESP-RFID/blob/main/my_page.png?raw=true)
 
-# Getting Started and Instaling
+# Getting Started and Installing
 ## Clone repository
 
 ```bash
