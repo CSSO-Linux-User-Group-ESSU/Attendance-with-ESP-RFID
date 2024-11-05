@@ -10,7 +10,7 @@ from datetime import datetime
 import pytz
 import json
 
-def signin(request):
+def signup(request):
 
     if request.method=="POST":
         username = request.POST["username"]
@@ -21,20 +21,25 @@ def signin(request):
 
         if password != password2:
             messages.error(request, "Wrong password confirmation")
-            return redirect("attendance_app:signin")
+            return redirect("attendance_app:signup")
         
 
-        _, created = User.objects.get_or_create(username=username,email=email, password=password)
+        user, created = User.objects.get_or_create(username=username,email=email)
+
 
         if created:
+            user.set_password(password)
+            user.is_staff = True
+            user.is_superuser = True
+            user.save()
             messages.success(request, "User created")
             return render(request, "attendance_app/index.html")
 
         else:
             messages.error(request,"User already exists")
-            return redirect("attendance_app:signin")
+            return redirect("attendance_app:signup")
 
-    return render(request, "attendance_app/signin.html")
+    return render(request, "attendance_app/signup.html")
 
 
 def date_attendance(request):
@@ -55,16 +60,11 @@ def date_attendance(request):
 
 def delete_device(request, device_id):
     device = Device.objects.get(id=device_id)
-
     events1 = device.event_set.all()
 
     context = {"device": device, "events": events1}
 
     Device.objects.filter(id=device_id).delete()
-
-
-
-
     return render(request, "attendance_app/delete_device.html",context)
 
 
@@ -78,7 +78,6 @@ def control_panel(request):
         admin = request.POST.get("username")
         password = request.POST.get("password")
         user = authenticate(request, username=admin,password=password)
-
 
         if user is not None:
             login(request, user)

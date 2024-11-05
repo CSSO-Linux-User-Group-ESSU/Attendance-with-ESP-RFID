@@ -14,8 +14,8 @@
         </header>
 
         <div class="container">
-            <h1 class="h11">Sign in</h1>
-            <form action="{% url 'attendance_app:signin' %}" method="post" class="form1">
+            <h1 class="h11">Create account</h1>
+            <form action="{% url 'attendance_app:signup' %}" method="post" class="form1">
 
                 {% csrf_token %}
 
