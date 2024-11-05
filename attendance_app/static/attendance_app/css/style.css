@@ -1,4 +1,10 @@
 
+
+.logo{
+    width: 200px;
+    filter: drop-shadow(0 0 4em #313cffaa);
+}
+
 .form1 input{
     font-family: Arial;
     font-weight: bold;
@@ -38,12 +44,13 @@
     border-radius: 5px;
     font-family: Arial, sans-serif;
     font-size: 16px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s filter 0.3s ease;
     margin-bottom: 20px;
 }
 
 .back-link:hover {
     background-color: #45a049;
+    filter: drop-shadow(0 0 4em #313cffaa);
 }
 
 .back-link:before {
@@ -185,6 +192,7 @@
 html, body {
     height: 100%;
     margin: 0;
+    background-color: #e7e6e6;
 }
 
 
@@ -346,10 +354,11 @@ header a {
     font-size: 16px;
     cursor: pointer;
     margin-top: 10px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s filter 0.3s ease;
 }
 
 .form-container button:hover {
+    filter: drop-shadow(0 0 4em #313cffaa);
     background-color: #45a049;
 }
 
