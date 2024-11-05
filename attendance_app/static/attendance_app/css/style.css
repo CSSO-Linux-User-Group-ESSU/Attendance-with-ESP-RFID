@@ -1,5 +1,12 @@
 
+.form1 input{
+    font-family: Arial;
+    font-weight: bold;
+}
 
+.form1 a{
+    text-decoration: underline;
+}
 
 
 .nav-buttons{
