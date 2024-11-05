@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'attendance_app/css/style.css' %}">
+</head>
+<body>
+
+    <div class="wrapper">
+        
+        <header>
+            <h3>Attendance System</h3>
+        </header>
+
+        <div class="container">
+            <h1 class="h11">Sign in</h1>
+            <form action="{% url 'attendance_app:control_panel' %}" method="post" class="form1">
+
+                {% csrf_token %}
+
+                    <input type="text" id="username" name="username" required class="input-field" placeholder="Your Username">
+                    <br>
+                    <input type="password" id="password" name="password" required class="input-field" placeholder="Your Password">
+                    <br>
+                    <input type="password" id="password" name="password" required class="input-field" placeholder="Confirm Password">
+                    <br>
+
+                    <button type="submit" class="login-btn">Create Account</button>
+
+            </form>
+            
+        </div>
+
+        <footer class="footer2">
+            <p>&copy; 2024 ESSU Attendance System. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

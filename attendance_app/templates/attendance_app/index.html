@@ -24,7 +24,7 @@
 
         <div class="container">
             <h1 class="h11">Login</h1>
-            <form action="{% url 'attendance_app:control_panel' %}" method="post" class="form-container">
+            <form action="{% url 'attendance_app:control_panel' %}" method="post" class="form1">
 
                 {% csrf_token %}
 
@@ -36,7 +36,7 @@
                     <button type="submit" class="login-btn">LOGIN</button>
 
             </form>
-            <p>Don't have an account? <i><a href="{% url 'attendance_app:index' %}">Sign in</a></i></p>
+            <p>Don't have an account? <i><a href="{% url 'attendance_app:signin' %}">Sign in</a></i></p>
             
         </div>
 

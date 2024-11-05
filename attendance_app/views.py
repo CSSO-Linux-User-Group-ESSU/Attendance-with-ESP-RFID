@@ -10,6 +10,8 @@ import pytz
 import json
 
 
+def signin(request):
+    return render(request, "attendance_app/signin.html")
 
 
 def date_attendance(request):

@@ -6,6 +6,7 @@ from . import views
 
 app_name = "attendance_app"
 urlpatterns = [
+    path('signin/',views.signin, name='signin'),
     path('logout/',views.logout_view, name='logout'),
     path("api/",views.api_attendance, name='api_attendance'),
     path("control_panel/",views.control_panel, name='control_panel'),
