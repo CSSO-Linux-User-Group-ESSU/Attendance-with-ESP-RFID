@@ -13,6 +13,11 @@
     transition: background-color 0.3s, opacity 0.15s;
 }
 
+.nav-active{
+    background-color:#466aa6;
+    opacity: 0.5;
+}
+
 .nav-buttons:hover{
     background-color:#466aa6;
     opacity: 0.5;

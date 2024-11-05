@@ -22,10 +22,10 @@
 
     <div class="main-content">
         <div class="div2">
-            <a class=nav-buttons href="{% url 'attendance_app:dashboard' %}">History</a>
-            <a class=nav-buttons href="{% url 'attendance_app:events' %}">Attendance</a>
-            <a class=nav-buttons href="{% url 'attendance_app:devices' %}">Devices</a>
-            <a class=nav-buttons href="{% url 'student_app:students' %}">Students</a>
+            <a class="nav-buttons" href="{% url 'attendance_app:dashboard' %}">History</a>
+            <a class="nav-buttons" href="{% url 'attendance_app:events' %}">Attendance</a>
+            <a class="nav-buttons" href="{% url 'attendance_app:devices' %}">Devices</a>
+            <a class="nav-buttons" href="{% url 'student_app:students' %}">Students</a>
         </div>
         {% block content %}
         {% endblock content %}
@@ -37,5 +37,7 @@
         <p>&copy; 2024 ESSU Attendance System. All Rights Reserved.</p>
     </footer>
     </div>
+
+    <script src="{% static 'attendance_app/js/control_panel.js' %}"></script>
 </body>
 </html>
