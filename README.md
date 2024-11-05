@@ -1,7 +1,9 @@
 # ESSU Attendance System with RFID
 * made with django framework and esp32 for rfid processing
-
-![alt text](https://github.com/CSSO-Linux-User-Group-ESSU/Attendance-with-ESP-RFID/blob/main/my_page.png?raw=true)
+* login page
+![alt text](https://github.com/CSSO-Linux-User-Group-ESSU/Attendance-with-ESP-RFID/blob/main/login_page.png?raw=true)
+* main content
+![alt text](https://github.com/CSSO-Linux-User-Group-ESSU/Attendance-with-ESP-RFID/blob/main/dashboard_page.png?raw=true)
 
 # Getting Started and Installing
 ## Clone repository
