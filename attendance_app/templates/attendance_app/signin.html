@@ -15,15 +15,17 @@
 
         <div class="container">
             <h1 class="h11">Sign in</h1>
-            <form action="{% url 'attendance_app:control_panel' %}" method="post" class="form1">
+            <form action="{% url 'attendance_app:signin' %}" method="post" class="form1">
 
                 {% csrf_token %}
 
                     <input type="text" id="username" name="username" required class="input-field" placeholder="Your Username">
                     <br>
+                    <input type="email" id="email" name="email" required class="input-field" placeholder="Your Email">
+                    <br>
                     <input type="password" id="password" name="password" required class="input-field" placeholder="Your Password">
                     <br>
-                    <input type="password" id="password" name="password" required class="input-field" placeholder="Confirm Password">
+                    <input type="password" id="password2" name="password2" required class="input-field" placeholder="Confirm Password">
                     <br>
 
                     <button type="submit" class="login-btn">Create Account</button>

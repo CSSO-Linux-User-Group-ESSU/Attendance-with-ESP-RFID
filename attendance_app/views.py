@@ -5,12 +5,35 @@ from .forms import EventForm, DeviceForm
 from .models import Student, Attendance, Event, Device, SecurityToken, Day
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from datetime import datetime
 import pytz
 import json
 
-
 def signin(request):
+
+    if request.method=="POST":
+        username = request.POST["username"]
+        email = request.POST["email"]
+        password = request.POST["password"]
+        password2 = request.POST["password2"]
+
+
+        if password != password2:
+            messages.error(request, "Wrong password confirmation")
+            return redirect("attendance_app:signin")
+        
+
+        _, created = User.objects.get_or_create(username=username,email=email, password=password)
+
+        if created:
+            messages.success(request, "User created")
+            return render(request, "attendance_app/index.html")
+
+        else:
+            messages.error(request,"User already exists")
+            return redirect("attendance_app:signin")
+
     return render(request, "attendance_app/signin.html")
 
 
