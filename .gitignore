@@ -3,3 +3,4 @@ db.sqlite3
 .idea
 *.pyc
 attendance_app/migrations
+student_app/migrations
