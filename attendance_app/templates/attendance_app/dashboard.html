@@ -7,7 +7,7 @@
         {% csrf_token %}
         <label class="form_label1">Select Date</label>
         <br>
-        <input class="form_input1" type="date" id="date" name="date">
+        <input class="form_input1" type="date" id="date" name="date" required>
         <button class="form_button1" type="submit">Go to Date</button>
     </form>
 
@@ -41,10 +41,5 @@
         </tbody>
     </table>
 
-    <script>
-        const today = new Date().toISOString().split('T')[0];
-
-        document.getElementById('date').value = today;
-    </script>
 
 {% endblock content %}

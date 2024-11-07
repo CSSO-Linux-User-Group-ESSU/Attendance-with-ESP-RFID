@@ -59,13 +59,8 @@ def date_attendance(request):
 
 
 def delete_device(request, device_id):
-    device = Device.objects.get(id=device_id)
-    events1 = device.event_set.all()
-
-    context = {"device": device, "events": events1}
-
     Device.objects.filter(id=device_id).delete()
-    return render(request, "attendance_app/delete_device.html",context)
+    return redirect("attendance_app:devices")
 
 
 def logout_view(request):
@@ -202,20 +197,21 @@ def add_event(request):
 
 def devices(request):
     devices1 = Device.objects.all()
+    form = DeviceForm()
 
-    return render(request, "attendance_app/devices.html",{"devices":devices1})
+    return render(request, "attendance_app/devices.html",{"devices":devices1,"form":form})
 
 
 def add_device(request):
     if request.method != "POST":
-        form = DeviceForm()
+        pass
     else:
         form = DeviceForm(data=request.POST)
         if form.is_valid():
             form.save()
             return redirect("attendance_app:devices")
 
-    return render(request, "attendance_app/add_device.html",{"form":form})
+    return render(request, "attendance_app/devices.html")
 
 
 

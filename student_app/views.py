@@ -7,8 +7,11 @@ import openpyxl
 def students(request):
 
     students = Student.objects.all()
+    form = StudentForm()
+    form1 = UploadFileForm()
 
-    context = {"students":students}
+    context = {"students":students, "form":form, "form1":form1}
+
 
     return render(request, 'student_app/students.html', context)
 
@@ -45,7 +48,7 @@ def upload_file(request):
     else:
         form = UploadFileForm()
 
-    return render(request, 'student_app/upload.html', {'form': form})
+    return redirect("student_app:students")
 
 
 def student_attendance(request, student_id):
@@ -60,6 +63,7 @@ def student_attendance(request, student_id):
 def add_student(request):
     if request.method != "POST":
         form = StudentForm()
+        form1 = UploadFileForm()
     else:
         form = StudentForm(data=request.POST)
         if form.is_valid():
@@ -72,4 +76,4 @@ def add_student(request):
             new_student.save()
             return redirect("student_app:students")
 
-    return render(request, "student_app/add_student.html",{"form":form})
+    return render(request, "student_app/students.html",{"form":form,"form1":form1})
