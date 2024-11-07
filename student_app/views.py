@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from .models import Student
 from .forms import UploadFileForm, StudentForm
 import openpyxl
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def students(request):
 
     students = Student.objects.all()
@@ -15,14 +17,14 @@ def students(request):
 
     return render(request, 'student_app/students.html', context)
 
-
+@login_required
 def delete_student(request, student_id):
 
     Student.objects.filter(id=student_id).delete()
 
     return redirect("student_app:students")
 
-
+@login_required
 def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
@@ -50,7 +52,7 @@ def upload_file(request):
 
     return redirect("student_app:students")
 
-
+@login_required
 def student_attendance(request, student_id):
     student = Student.objects.get(id=student_id)
     attendances = student.attendance_set.all().order_by("-date_attended")
@@ -59,7 +61,7 @@ def student_attendance(request, student_id):
 
     return render(request, 'student_app/student_attendance.html',context)
 
-
+@login_required
 def add_student(request):
     if request.method != "POST":
         form = StudentForm()

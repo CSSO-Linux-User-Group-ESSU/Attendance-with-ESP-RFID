@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from datetime import datetime
 import pytz
 import json
+from django.contrib.auth.decorators import login_required
+
 
 def signup(request):
 
@@ -41,7 +43,7 @@ def signup(request):
 
     return render(request, "attendance_app/signup.html")
 
-
+@login_required
 def date_attendance(request):
 
     if request.method=="POST":
@@ -57,17 +59,17 @@ def date_attendance(request):
     
     return render(request,"attendance_app/date_attendance.html")
 
-
+@login_required
 def delete_device(request, device_id):
     Device.objects.filter(id=device_id).delete()
     return redirect("attendance_app:devices")
 
-
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('attendance_app:index')
 
-
+@login_required
 def control_panel(request):
     if request.method=="POST":
         admin = request.POST.get("username")
@@ -84,7 +86,7 @@ def control_panel(request):
             return redirect('attendance_app:index')
     return redirect('attendance_app:index')
 
-
+@login_required
 def attendance_for_today(request, day_id):
     day = Day.objects.get(id=day_id)
     event1 = day.event
@@ -104,12 +106,7 @@ def attendance_for_today(request, day_id):
 def index(request):
     return render(request, 'attendance_app/index.html')
 
-
-def get_info(request):
-    global CurrentUser
-    return JsonResponse({'username': CurrentUser[0], "password":CurrentUser[1], 'event_id':CurrentUser[2]})
-
-
+@login_required
 def dashboard(request):
 
     attendances = Attendance.objects.all()
@@ -143,14 +140,14 @@ def get_morning_afternoon(attendances):
 
     return morning_attendances, afternoon_attendances
 
-
+@login_required
 def events(request):
     events1 = Event.objects.all()
     form = EventForm()
 
     return render(request, "attendance_app/events.html",{"events":events1,"form":form})
 
-
+@login_required
 def get_unique_attendances(attendances):
     unique_attendances = {}
 
@@ -166,6 +163,7 @@ def get_unique_attendances(attendances):
     return unique_attendances1
 
 
+@login_required
 def event(request, event_id):
     event1 = Event.objects.get(id=event_id)
 
@@ -183,6 +181,7 @@ def event(request, event_id):
 
     return render(request, "attendance_app/event.html", {'days':days, "event":event1})
 
+@login_required
 def add_event(request):
     if request.method != "POST":
         form = EventForm()
@@ -194,14 +193,14 @@ def add_event(request):
 
     return render(request, "attendance_app/events.html",{"form":form})
 
-
+@login_required
 def devices(request):
     devices1 = Device.objects.all()
     form = DeviceForm()
 
     return render(request, "attendance_app/devices.html",{"devices":devices1,"form":form})
 
-
+@login_required
 def add_device(request):
     if request.method != "POST":
         pass
@@ -215,13 +214,13 @@ def add_device(request):
 
 
 
-
+@login_required
 def delete_event(request, event_id):
     Event.objects.get(id=event_id).delete()
 
     return redirect("attendance_app:events")
 
-
+@login_required
 def delete_day(request, day_id):
 
     Day.objects.get(id=day_id).delete()
