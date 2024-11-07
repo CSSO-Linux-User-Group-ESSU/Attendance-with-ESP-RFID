@@ -82,7 +82,8 @@ def control_panel(request):
         if user is not None:
             login(request, user)
             events1 = Event.objects.all()
-            return render(request, 'attendance_app/events.html',{"events":events1})
+            form = EventForm()
+            return render(request, 'attendance_app/events.html',{"events":events1,"form":form})
         else:
             messages.error(request,"Wrong admin or password")
             return redirect('attendance_app:index')
@@ -150,8 +151,9 @@ def get_morning_afternoon(attendances):
 
 def events(request):
     events1 = Event.objects.all()
+    form = EventForm()
 
-    return render(request, "attendance_app/events.html",{"events":events1})
+    return render(request, "attendance_app/events.html",{"events":events1,"form":form})
 
 
 def get_unique_attendances(attendances):
@@ -172,7 +174,6 @@ def get_unique_attendances(attendances):
 def event(request, event_id):
     event1 = Event.objects.get(id=event_id)
 
-
     if request.method=="POST":
         day, created = Day.objects.get_or_create(date=request.POST.get("date"), event=event1)
 
@@ -181,20 +182,11 @@ def event(request, event_id):
         else:
             messages.error(request,"Date already exists")
             days = event1.day_set.all()
-            return render(request, "attendance_app/event.html", {'days':days, "event":event1})
+            return render(request, "attendance_app/event.html", {'days':days, "event":event1 })
 
     days = event1.day_set.all()
 
     return render(request, "attendance_app/event.html", {'days':days, "event":event1})
-
-
-def add_day(request, event_id):
-
-    event1 = Event.objects.get(id=event_id)
-
-
-    return render(request, "attendance_app/add_day.html", {"event":event1})
-
 
 def add_event(request):
     if request.method != "POST":
@@ -205,7 +197,7 @@ def add_event(request):
             form.save()
             return redirect("attendance_app:events")
 
-    return render(request, "attendance_app/add_event.html",{"form":form})
+    return render(request, "attendance_app/events.html",{"form":form})
 
 
 def devices(request):

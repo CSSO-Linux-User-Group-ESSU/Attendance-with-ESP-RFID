@@ -14,8 +14,23 @@
 
     <p>
         <a href="{% url 'attendance_app:events' %}" class="back-link">Go Back</a>
-        <a href="{% url 'attendance_app:add_day' event.id %}" class="back-link">Add New Date</a>
+        <button id="openModalBtn" class="back-link">Add New Date</button>
     </p>
+
+    
+    <div id="attendanceModal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <span id="closeModalBtn" class="close">&times;</span>
+          <h2 class="attendance_dashboard_h2">New Date to Attendance</h2>
+          <form method="post" action="{% url 'attendance_app:event' event.id %}" class="form-container">
+            {% csrf_token %}
+            <label>Enter Date</label>
+            <input type="date" id="date" name="date" required>
+        
+            <button type="submit">Add</button>
+        </form>
+        </div>
+      </div>
 
 
 
@@ -47,6 +62,8 @@
             {% endfor %}
         </tbody>
     </table>
+    {% load static %}
+    <script src="{% static 'attendance_app/js/modal.js' %}"></script>
 
 
 {% endblock content %}

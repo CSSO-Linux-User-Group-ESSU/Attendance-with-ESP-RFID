@@ -14,8 +14,20 @@
     <h2 class="attendance_dashboard_h2">Attendances</h2>
 
     <p>
-        <a href="{% url 'attendance_app:add_event' %}" class="back-link">Add New Attendance</a>
+        <button id="openModalBtn" class="back-link">Add New Attendance</button>
     </p>
+
+    <div id="attendanceModal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <span id="closeModalBtn" class="close">&times;</span>
+          <h2 class="attendance_dashboard_h2">New Attendance</h2>
+          <form method="post" action="{% url 'attendance_app:add_event' %}" class="form-container">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add</button>
+          </form>
+        </div>
+      </div>
 
     <table class="table1">
         <thead>
@@ -45,6 +57,7 @@
             {% endfor %}
         </tbody>
     </table>
-
+    {% load static %}
+    <script src="{% static 'attendance_app/js/modal.js' %}"></script>
 
 {% endblock content %}
