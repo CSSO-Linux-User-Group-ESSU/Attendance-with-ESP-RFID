@@ -6,17 +6,30 @@
 ![alt text](https://github.com/CSSO-Linux-User-Group-ESSU/Attendance-with-ESP-RFID/blob/main/dashboard_page.png?raw=true)
 
 # Getting Started and Installing
-## Clone repository
+
+## 1.) Install the necessary libraries for the esp32 
+#### Necessary libraries
+```
+<WiFi.h>
+<HTTPClient.h>
+<SPI.h>
+<MFRC522.h>
+<Arduino_JSON.h>
+```
+## 2.) Upload the code .ino into the esp32
+## 3.) Run the .ino file in Arduino IDE to configure the esp32
+
+## 4.) Clone repository
 
 ```bash
 git clone https://github.com/CSSO-Linux-User-Group-ESSU/Attendance-with-ESP-RFID.git
 ```
-## Go to Directory
+## 5.) Go to Directory
 
 ```bash
 cd Attendance-with-ESP-RFID
 ```
-## Create Virtual Environment and activate
+## 6.) Create Virtual Environment and activate
 
 On Linux/Mac
 ```bash
@@ -28,12 +41,12 @@ On Windows
 python -m venv venv
 venv\Scripts\activate
 ```
-## Install requirements
+## 7.) Install requirements
 
 ```bash
 pip install -r requirements.txt
 ```
-## Migrate and collectstatic
+## 8.) Migrate and collectstatic
 
 ```bash
 python manage.py makemigrations attendance_app
@@ -42,7 +55,7 @@ python manage.py migrate
 python manage.py collectstatic
 ```
 
-## Run server
+## 9.) Run server
 
 ```bash
 python manage.py runserver
