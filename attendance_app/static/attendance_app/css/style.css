@@ -36,6 +36,11 @@ cursor: pointer;
 
 .logo{
     width: 200px;
+    /* filter: drop-shadow(0 0 4em #313cffaa); */
+    transition: filter 0.3s;
+}
+
+.logo:hover{
     filter: drop-shadow(0 0 4em #313cffaa);
 }
 
@@ -277,9 +282,6 @@ header a {
     margin-left: 10px;
 }
 
-
-
-
 .container {
     flex-direction: column;
     display: flex;
@@ -287,6 +289,7 @@ header a {
     align-items:center;
     flex-grow: 1;
     padding: 20px;
+    background-color: #b9b9b9;
 }
 
 .form1 {
@@ -323,7 +326,7 @@ header a {
 
 .login-btn:hover {
     background-color:#466aa6;
-    box-shadow: 0 7px 15px black;
+    box-shadow: 0 0 30px rgb(0, 0, 0);
 }
 
 
