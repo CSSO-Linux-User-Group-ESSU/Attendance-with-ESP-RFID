@@ -235,10 +235,6 @@ def devices(request):
     return render(request,"attendance_app/devices.html",{"devices":devices1,"form":form})
 
 
-import requests
-from django.shortcuts import redirect, render
-from .forms import DeviceForm
-
 def add_device(request):
     if request.method == "POST":
         form = DeviceForm(request.POST)
