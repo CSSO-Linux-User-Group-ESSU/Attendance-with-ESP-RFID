@@ -13,6 +13,9 @@ class SecurityToken(models.Model):
 class Device(models.Model):
     name = models.CharField(max_length=200, unique=True)
     token = models.ForeignKey(SecurityToken, on_delete=models.CASCADE)
+    ssid = models.CharField(max_length=100)
+    password = models.CharField(max_length=200)
+    url = models.CharField(max_length=300)
 
     def __str__(self):
         return self.name
