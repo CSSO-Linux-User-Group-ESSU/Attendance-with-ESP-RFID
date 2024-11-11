@@ -25,6 +25,7 @@
     <table class="table1">
         <thead>
             <tr>
+                <th>Status</th>
                 <th>Device Name</th>
                 <th>SSID</th>
                 <th>URL</th>
@@ -34,6 +35,11 @@
         <tbody>
             {% for device in devices %}
             <tr>
+                {% if device.status %}
+                <td class="green-cells">Online</td>
+                {% else %}
+                <td class="green-cells">Offline</td>
+                {% endif %}
                 <td>{{device.name}}</td>
                 <td>{{device.ssid}}</td>
                 <td>{{device.url}}</td>

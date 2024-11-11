@@ -275,9 +275,12 @@ def api_attendance(request):
         data = json.loads(request.body)
         card_uid = data.get("card_uid")
         token1 = data.get("token")
+        ping = data.get("ping")
+
+        if str(ping)!= "None":
+            return JsonResponse({'status': 'success', 'message': 'Ping received'}, status=201)
 
         try:
-
             #get the date for the attendance
             # current_utc = datetime.now(pytz.utc)
             # timezone = pytz.timezone("Asia/Manila")

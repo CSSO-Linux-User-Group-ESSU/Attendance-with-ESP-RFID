@@ -96,6 +96,58 @@ void setup() {
 }
 
 
+void pingServer(){
+  if (WiFi.status()==WL_CONNECTED){
+    {
+    
+    HTTPClient http;
+    http.begin(serverName);
+    http.addHeader("Content-Type", "application/json");
+
+    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"device\":\""+deviceName+"\",\"token\":\"" + token1 + "\",\"ping\":\"True\"}";
+    Serial.println("JsonPayload:"+jsonPayload);
+    int httpResponseCode = http.POST(jsonPayload);
+
+    if (httpResponseCode > 0) {
+      String response = http.getString();
+      Serial.println(httpResponseCode);
+      Serial.println(response);
+      if(httpResponseCode==201){
+        digitalWrite(bluePin, HIGH);
+        tone(buzzerPin,1000);
+        delay(100);
+        tone(buzzerPin,1000);
+        noTone(buzzerPin);
+        delay(500);
+        digitalWrite(bluePin, LOW);
+        
+      }else{
+        digitalWrite(redPin, HIGH);
+        tone(buzzerPin,1000);
+        delay(500);
+        noTone(buzzerPin);
+        digitalWrite(redPin, LOW);
+      }
+    } else {
+      Serial.print("Error on sending POST: ");
+      Serial.println(httpResponseCode);
+      Serial.println("Server may be down.");
+      digitalWrite(yellowPin, HIGH);
+      tone(buzzerPin,800);
+      delay(300);
+      noTone(buzzerPin);
+      tone(buzzerPin,800);
+      delay(300);
+      noTone(buzzerPin);
+      digitalWrite(yellowPin, LOW);
+    }
+    http.end();
+    
+  }
+  }
+}
+
+
 
 
 void loop() {
@@ -117,7 +169,7 @@ void loop() {
     http.begin(serverName);
     http.addHeader("Content-Type", "application/json");
 
-    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"device\":\""+deviceName+"\",\"token\":\"" + token1 + "\"}";
+    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"device\":\""+deviceName+"\",\"token\":\"" + token1 + "\",\"ping\":\"None\"}";
     Serial.println("JsonPayload:"+jsonPayload);
     int httpResponseCode = http.POST(jsonPayload);
 
