@@ -240,14 +240,10 @@ from django.shortcuts import redirect, render
 from .forms import DeviceForm
 
 def add_device(request):
-    print("METHOD:", request.method)
-    
     if request.method == "POST":
         form = DeviceForm(request.POST)
-        print("Form submitted with POST data:", request.POST)
 
         if form.is_valid():
-            print("Form is valid.")
             device = form.save(commit=False)
             
             config_data = {
@@ -257,10 +253,7 @@ def add_device(request):
                 "apiEndpointUrl": device.apiEndpointUrl
             }
 
-            print("Config data prepared for ESP32:", config_data)
-            
             try:
-                print(f"Attempting to send config data to: {device.ip_address}/config")
                 headers = {
                     'Content-Type': 'application/json'
                 }
@@ -271,12 +264,10 @@ def add_device(request):
                     response = requests.post(f"http://{device.ip_address}/send_ip", json=config_data, headers=headers, timeout=5)
 
                     if response.status_code == 200:
-                        print("I got here!!!")
                         device.ip_address = response.json().get("ip_address")
                         device.status = True
                         device.token = SecurityToken.objects.get(id=1)
                         device.save()
-                        print("Device configured successfully. Redirecting...")
 
                         return redirect('attendance_app:devices')
                 else:
@@ -286,7 +277,6 @@ def add_device(request):
     else:
         form = DeviceForm()
             
-    print("Rendering form with errors (if any).")
     return render(request, "attendance_app/devices.html", {"form": form})
 
 
