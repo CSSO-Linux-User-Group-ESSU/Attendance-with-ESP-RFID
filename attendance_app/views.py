@@ -247,9 +247,9 @@ def ping_device(request, device_id):
     }
 
     try:
-        response = requests.get(f"http://{device.ip_address}/ping",headers=headers,json=config_data, timeout=5)
+        response = requests.post(f"http://{device.ip_address}/ping",headers=headers,json=config_data, timeout=5)
         device.status = (response.text == "pong")
-        print(response.text)
+        print("PONG:",response.text)
         device.save()
     except requests.RequestException:
         device.status = False
