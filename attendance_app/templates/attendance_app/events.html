@@ -32,6 +32,7 @@
     <table class="table1">
         <thead>
             <tr>
+                <th>Status</th>
                 <th>Event/Subject</th>
                 <th>Organizer/Instructor</th>
                 <th>Associated Device</th>
@@ -41,6 +42,7 @@
         <tbody>
             {% for event in events %}
             <tr>
+                <td>Enabled</td>
                 <td>{{event.name}}</td>
                 <td>{{event.instructor}}</td>
                 <td>{{event.device}}</td>
