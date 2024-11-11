@@ -20,7 +20,7 @@ urlpatterns = [
     path("attendance_for_today/<int:day_id>/",views.attendance_for_today, name="attendance_for_today"),
     path("add_device/",views.add_device, name='add_device'),
     path("delete_event/<int:event_id>/",views.delete_event, name='delete_event'),
-    path("delete_day/<int:day_id>/",views.delete_day, name='delete_day'),
+    path("delete_day/<int:event_id>/",views.delete_day, name='delete_day'),
     path("change_status/<int:event_id>/",views.change_status, name='change_status'),
     path("",views.index, name='index')
 ]

@@ -1,9 +1,31 @@
  
+table .red-cells{
+    background-color: red;
+    font-weight: bold;
+}
+
+table .green-cells{
+    background-color: green;
+    font-weight: bold;
+}
+
 .table1 a.red-button{
     display: inline-block;
     padding: 8px 16px;
-    background-color: rgb(255, 69, 69);
+    background-color: red;
     color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+ }
+
+ .table1 a.green-button{
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: green;
+    color: rgb(255, 255, 255);
     text-decoration: none;
     border-radius: 4px;
     font-family: Arial, sans-serif;
@@ -196,17 +218,17 @@ cursor: pointer;
     font-weight: bold;
 }
 
-.table1 tr:nth-child(even) {
+/* .table1 tr:nth-child(even) {
     background-color: #f9f9f9;
-}
+} */
 
-.table1 tr:hover {
+/* .table1 tr:hover {
     background-color: #f1f1f1;
-}
+} */
 
-.table1 td {
+/* .table1 td {
     color: #333;
-}
+} */
 
 .table1 td[colspan="6"] {
     text-align: center;

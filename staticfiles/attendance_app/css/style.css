@@ -1,4 +1,39 @@
  
+table .red-cells{
+    background-color: red;
+    font-weight: bold;
+}
+
+table .green-cells{
+    background-color: green;
+    font-weight: bold;
+}
+
+.table1 a.red-button{
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+ }
+
+ .table1 a.green-button{
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: green;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+ }
+ 
+ 
  .form_button1:hover{
     cursor: pointer;
  }
@@ -36,6 +71,11 @@ cursor: pointer;
 
 .logo{
     width: 200px;
+    /* filter: drop-shadow(0 0 4em #313cffaa); */
+    transition: filter 0.3s;
+}
+
+.logo:hover{
     filter: drop-shadow(0 0 4em #313cffaa);
 }
 
@@ -178,17 +218,17 @@ cursor: pointer;
     font-weight: bold;
 }
 
-.table1 tr:nth-child(even) {
+/* .table1 tr:nth-child(even) {
     background-color: #f9f9f9;
-}
+} */
 
-.table1 tr:hover {
+/* .table1 tr:hover {
     background-color: #f1f1f1;
-}
+} */
 
-.table1 td {
+/* .table1 td {
     color: #333;
-}
+} */
 
 .table1 td[colspan="6"] {
     text-align: center;
@@ -277,9 +317,6 @@ header a {
     margin-left: 10px;
 }
 
-
-
-
 .container {
     flex-direction: column;
     display: flex;
@@ -287,6 +324,7 @@ header a {
     align-items:center;
     flex-grow: 1;
     padding: 20px;
+    background-color: #b9b9b9;
 }
 
 .form1 {
@@ -323,7 +361,7 @@ header a {
 
 .login-btn:hover {
     background-color:#466aa6;
-    box-shadow: 0 7px 15px black;
+    box-shadow: 0 0 30px rgb(0, 0, 0);
 }
 
 

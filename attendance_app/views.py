@@ -20,11 +20,12 @@ def change_status(request, event_id):
         event.status = True
 
     event.save()
+    return redirect("attendance_app:events")
 
-    events1 = Event.objects.all()
-    form = EventForm()
+    # events1 = Event.objects.all()
+    # form = EventForm()
 
-    return render(request, "attendance_app/events.html",{"events":events1,"form":form})
+    # # return render(request, "attendance_app/events.html",{"events":events1,"form":form})
 
 
 def signup(request):
@@ -252,9 +253,18 @@ def delete_event(request, event_id):
     return redirect("attendance_app:events")
 
 
-def delete_day(request, day_id):
+def delete_day(request, event_id):
 
-    Day.objects.get(id=day_id).delete()
+    events = Event.objects.get(id=event_id)
+
+    attendances = events.attendance_set.all()
+    days = events.day_set.all()
+
+    for attendance in attendances:
+        attendance.delete()
+    
+    for day in days:
+        day.delete()
 
     return redirect("attendance_app:events")
 
@@ -277,17 +287,34 @@ def api_attendance(request):
             student1 = Student.objects.get(card_uid=str(card_uid).upper())
             token2 = SecurityToken.objects.get(token=token1)
             device1 = Device.objects.get(name=data.get("device"),token=token2)
-            event1 = Event.objects.get(device=device1)
+            event1 = []
+            for event in Event.objects.all():
+                if event.device==device1:
+                    event1.append(event)
             # date1 = Day.objects.get(date=current_local, event=event1)
 
-            Attendance.objects.create(student=student1,event=event1)
+            if len(event1) > 1:
+                events_enabled = 0
+                for event_i in event1:
+                    if event_i.status:
+                        events_enabled+=1
+                        Attendance.objects.create(student=student1,event=event_i)
+                if events_enabled == 0:
+                    return JsonResponse({'status': 'error', 'message': 'Events associated with device disabled'}, status=404)
+            else:
+                if event_i.status:
+                    Attendance.objects.create(student=student1,event=event1)
+                else:
+                    return JsonResponse({'status': 'error', 'message': 'Event disabled'}, status=404)
+                
+            #success
             return JsonResponse({'status': 'success', 'student': str(student1)}, status=201)
         except Student.DoesNotExist:
-            return JsonResponse({'status': 'error', 'student': 'Student not found'}, status=404)
+            return JsonResponse({'status': 'error', 'message': 'Student not found'}, status=404)
         except Event.DoesNotExist:
-            return JsonResponse({'status': 'error', 'student': 'Event not found'}, status=404)
+            return JsonResponse({'status': 'error', 'message': 'Event not found'}, status=404)
         except Device.DoesNotExist:
-            return JsonResponse({'status': 'error', 'student': 'Device not found'}, status=404)
+            return JsonResponse({'status': 'error', 'message': 'Device not found'}, status=404)
         except SecurityToken.DoesNotExist:
-            return JsonResponse({'status': 'error', 'student': 'Token not recognized'}, status=404)
+            return JsonResponse({'status': 'error', 'message': 'Token not recognized'}, status=404)
     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
