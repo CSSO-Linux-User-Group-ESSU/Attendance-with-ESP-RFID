@@ -89,7 +89,13 @@ def control_panel(request):
 def attendance_for_today(request, day_id):
     day = Day.objects.get(id=day_id)
     event1 = day.event
-    attendances = day.attendance_set.all()
+    # attendances = day.attendance_set.all()
+    attendances = []
+    for attendance in Attendance.objects.all():
+        # print(str(attendance.date_attended).split()[0])
+        # print(day.date)
+        if str(attendance.date_attended).split()[0] == str(day.date):
+            attendances.append(attendance)
 
     unique_att = get_unique_attendances(attendances)
 
@@ -161,20 +167,30 @@ def get_unique_attendances(attendances):
 
     return unique_attendances1
 
+#used in event view for displaying the days with attendances
+def get_days_of_attendances(attendances, event_id):
+    for attendance in attendances:
+        if attendance.event==Event.objects.get(id=event_id):
+            date = str(attendance.date_attended).split()[0]
+            event = Event.objects.get(id=event_id)
+            Day.objects.get_or_create(date=date, event=event)
 
+    
 
 def event(request, event_id):
     event1 = Event.objects.get(id=event_id)
+    get_days_of_attendances(Attendance.objects.all(), event_id)
 
-    if request.method=="POST":
-        day, created = Day.objects.get_or_create(date=request.POST.get("date"), event=event1)
+    # if request.method=="POST":
+    #     day, created = Day.objects.get_or_create(date=request.POST.get("date"), event=event1)
 
-        if created:
-            pass
-        else:
-            messages.error(request,"Date already exists")
-            days = event1.day_set.all()
-            return render(request, "attendance_app/event.html", {'days':days, "event":event1 })
+    #     if created:
+    #         pass
+    #     else:
+    #         messages.error(request,"Date already exists")
+    #         days = event1.day_set.all()
+            
+    #         return render(request, "attendance_app/event.html", {'days':days, "event":event1 })
 
     days = event1.day_set.all()
 
