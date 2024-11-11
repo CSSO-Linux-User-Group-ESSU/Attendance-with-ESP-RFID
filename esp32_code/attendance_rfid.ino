@@ -3,9 +3,10 @@
 #include <SPI.h>
 #include <MFRC522.h>
 #include <Arduino_JSON.h>
+#include <WebServer.h>
 
 
-String token1 = "fhdhjdkdsjcncjdhchdjdjdsjdw3@@!!#^^4682eqryoxuewrozcbvmalajurpd";
+WebServer server(80);
 
 #define SS_PIN 5
 #define RST_PIN 0
@@ -22,8 +23,16 @@ String password;
 // const char* ssid = "Montes_family_EXT";
 // const char* password = "0123456789";
 // const char* serverName = "http://192.168.1.104:8000/api/";
-String serverName;
+String apiEndpointUrl;
 String deviceName;
+
+
+String token1 = "fhdhjdkdsjcncjdhchdjdjdsjdw3@@!!#^^4682eqryoxuewrozcbvmalajurpd";
+
+
+void handlePing() {
+  server.send(200, "text/plain", "pong");
+}
 
 
 void setup() {
@@ -65,13 +74,14 @@ void setup() {
 
   }
 
-  serverName = Serial.readString();
-  serverName.trim();
+  apiEndpointUrl = Serial.readString();
+  apiEndpointUrl.trim();
 
   Serial.println("DeviceName:"+deviceName);
   Serial.println("SSID:"+ssid);
   Serial.println("Password:"+password);
-  Serial.println("Url:"+serverName);
+  Serial.println("Url:"+apiEndpointUrl);
+  Serial.println("IP Address:"+WiFi.localIP());
 
   WiFi.begin(ssid, password);
 
@@ -93,7 +103,12 @@ void setup() {
   noTone(buzzerPin);
   delay(200);
   digitalWrite(bluePin,LOW);
+
+  server.on("/ping", HTTP_GET, handlePing);
+  server.begin();
 }
+
+
 
 
 void loop() {
@@ -112,10 +127,10 @@ void loop() {
   if (WiFi.status() == WL_CONNECTED) {
     // getINFO();
     HTTPClient http;
-    http.begin(serverName);
+    http.begin(apiEndpointUrl);
     http.addHeader("Content-Type", "application/json");
 
-    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"device\":\""+deviceName+"\",\"token\":\"" + token1 + "\",\"ping\":\"None\"}";
+    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"device\":\""+deviceName+"\",\"token\":\"" + token1 + "\"}";
     Serial.println("JsonPayload:"+jsonPayload);
     int httpResponseCode = http.POST(jsonPayload);
 
@@ -156,4 +171,5 @@ void loop() {
     
   }
   // getCSRFToken();
+  server.handleClient();
 }

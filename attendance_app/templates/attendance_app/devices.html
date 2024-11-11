@@ -36,9 +36,15 @@
             {% for device in devices %}
             <tr>
                 {% if device.status %}
-                <td class="green-cells">Online</td>
+                <td class="green-cells">
+                    Online
+                    <!-- Want to ping here -->
+                </td>
                 {% else %}
-                <td class="green-cells">Offline</td>
+                <td class="green-cells">
+                    Offline
+                    <!-- Want to ping here -->
+                </td>
                 {% endif %}
                 <td>{{device.name}}</td>
                 <td>{{device.ssid}}</td>
