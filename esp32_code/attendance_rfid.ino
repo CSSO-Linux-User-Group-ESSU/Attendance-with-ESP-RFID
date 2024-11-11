@@ -159,17 +159,17 @@ void setup() {
       Serial.println("Connected to WiFi, IP Address: " + WiFi.localIP().toString());
     }else{
       Serial.println("No saved WiFi credentials found. Enter them manually.");
-    //Enter manually
-    // initial WiFi credentials
-    Serial.println("Enter SSID:");
-    while (Serial.available() == 0) { }
-    ssid = Serial.readString();
-    ssid.trim();
+      //Enter manually
+      // initial WiFi credentials
+      Serial.println("Enter SSID:");
+      while (Serial.available() == 0) { }
+      ssid = Serial.readString();
+      ssid.trim();
 
-    Serial.println("Enter Password:");
-    while (Serial.available() == 0) { }
-    password = Serial.readString();
-    password.trim();
+      Serial.println("Enter Password:");
+      while (Serial.available() == 0) { }
+      password = Serial.readString();
+      password.trim();
     }
     
   } else {
@@ -187,12 +187,12 @@ void setup() {
     password.trim();
   }
 
-  WiFi.begin(ssid.c_str(), password.c_str());
+  // WiFi.begin(ssid.c_str(), password.c_str());
 
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.println("Connecting to WiFi...");
-  }
+  // while (WiFi.status() != WL_CONNECTED) {
+  //   delay(500);
+  //   Serial.println("Connecting to WiFi...");
+  // }
 
   Serial.println("Connected to WiFi, IP Address: " + WiFi.localIP().toString());
   digitalWrite(bluePin, HIGH);
