@@ -235,6 +235,28 @@ def devices(request):
     return render(request,"attendance_app/devices.html",{"devices":devices1,"form":form})
 
 
+def ping_device(request, device_id):
+    device = Device.objects.get(id=device_id)
+
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    config_data = {
+        "device_name":device.name
+    }
+
+    try:
+        response = requests.get(f"http://{device.ip_address}/ping",headers=headers,json=config_data, timeout=5)
+        device.status = (response.text == "pong")
+        print(response.text)
+        device.save()
+    except requests.RequestException:
+        device.status = False
+        device.save()
+    
+    return redirect("attendance_app:devices")
+
 def add_device(request):
     if request.method == "POST":
         form = DeviceForm(request.POST)
