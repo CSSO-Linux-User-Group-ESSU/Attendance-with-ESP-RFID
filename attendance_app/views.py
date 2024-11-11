@@ -231,42 +231,69 @@ def devices(request):
     devices1 = Device.objects.all()
     form = DeviceForm()
 
-    return render(request, "attendance_app/devices.html",{"devices":devices1,"form":form})
+    return render(request,"attendance_app/devices.html",{"devices":devices1,"form":form})
 
+
+import requests
+from django.shortcuts import redirect, render
+from .forms import DeviceForm
 
 def add_device(request):
-    if request.method != "POST":
-        form = DeviceForm()
-    else:
+    print("METHOD:", request.method)
+    
+    if request.method == "POST":
         form = DeviceForm(request.POST)
+        print("Form submitted with POST data:", request.POST)
+
         if form.is_valid():
+            print("Form is valid.")
             device = form.save(commit=False)
             
             config_data = {
                 "ssid": device.ssid,
                 "password": device.password_to_ssid,
                 "device_name": device.name,
-                'apiEndpointUrl':device.apiEndpointUrl
+                "apiEndpointUrl": device.apiEndpointUrl
             }
+
+            print("Config data prepared for ESP32:", config_data)
             
             try:
-                response = requests.post(f"http://{device.api_address}/config", json=config_data, timeout=5)
+                # Print out the exact URL to verify if it's correct
+                print(f"Attempting to send config data to: {device.ip_address}/config")
+                headers = {
+                    'Content-Type': 'application/json'
+                }
+                response = requests.post(f"http://{device.ip_address}/config", json=config_data, headers=headers, timeout=120)
+
+                print(response)
                 
+                print("Received response from ESP32. Status code:", response.status_code)
+                print("Response content:", response.content)
+
                 if response.status_code == 200:
-                    # device.ip_address = response.json().get("ip_address")
+                    # Extract and print the IP address if returned
+                    device.ip_address = response.json().get("ip_address")
                     device.status = True
+                    device.token = SecurityToken.objects.get(id=1)
                     device.save()
-                    
+                    print("Device configured successfully. Redirecting...")
+
                     return redirect('attendance_app:devices')
                 else:
-                    form.add_error(None, "Failed to configure the ESP32.")
+                    print("ESP32 responded, but status code is not 200.")
+                    form.add_error(None, "Failed to configure the ESP32. Status code: {}".format(response.status_code))
             
             except requests.RequestException as e:
-                form.add_error(None, "Could not connect to ESP32.")
+                print("Exception occurred:", e)
+                form.add_error(None, "Could not connect to ESP32. Exception: {}".format(e))
+        else:
+            print("Form is invalid:", form.errors)
+    else:
+        form = DeviceForm()
             
-
-    return render(request, "attendance_app/devices.html",{"form":form})
-
+    print("Rendering form with errors (if any).")
+    return render(request, "attendance_app/devices.html", {"form": form})
 
 
 

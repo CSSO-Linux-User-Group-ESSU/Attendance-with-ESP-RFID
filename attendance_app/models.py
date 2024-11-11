@@ -16,7 +16,7 @@ class Device(models.Model):
     ssid = models.CharField(max_length=100)
     password_to_ssid = models.CharField(max_length=200)
     apiEndpointUrl = models.URLField()
-    ip_address = models.GenericIPAddressField(null=True,blank=True)
+    ip_address = models.GenericIPAddressField()
     status = models.BooleanField()
 
     def __str__(self):

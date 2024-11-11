@@ -2,8 +2,8 @@
 #include <HTTPClient.h>
 #include <SPI.h>
 #include <MFRC522.h>
-#include <Arduino_JSON.h>
 #include <WebServer.h>
+#include <ArduinoJson.h>
 
 
 WebServer server(80);
@@ -18,20 +18,77 @@ int yellowPin = 13;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
-String ssid;;
+String ssid;
 String password;
-// const char* ssid = "Montes_family_EXT";
-// const char* password = "0123456789";
-// const char* serverName = "http://192.168.1.104:8000/api/";
-String apiEndpointUrl;
-String deviceName;
-
+const char* serverName = "http://192.168.1.104:8000/api/";  // Your Django server endpoint
+const char* deviceName = "device1";
 
 String token1 = "fhdhjdkdsjcncjdhchdjdjdsjdw3@@!!#^^4682eqryoxuewrozcbvmalajurpd";
 
-
+//sending ping
 void handlePing() {
   server.send(200, "text/plain", "pong");
+}
+
+//for configuring the esp32
+void handleConfig() {
+  if (server.method() == HTTP_POST) {
+    // Allocate a JSON document to store the incoming data
+    DynamicJsonDocument doc(1024);
+
+    // Parse the JSON body
+    DeserializationError error = deserializeJson(doc, server.arg("plain"));
+
+    if (error) {
+      Serial.println("Failed to parse JSON");
+      server.send(400, "application/json", "{\"error\":\"Invalid JSON\"}");
+      return;
+    }
+
+    // Extract the ssid and password from the parsed JSON
+    String ssid = doc["ssid"];
+    String password = doc["password"];
+    serverName = doc['apiEndpointUrl'];
+    deviceName = doc['device_name'];
+
+    if (ssid.length() > 0 && password.length() > 0) {
+
+
+      String ipAddress = WiFi.localIP().toString();
+      String response = "{\"ip_address\":\"" + ipAddress + "\"}";
+      server.send(200, "application/json", response);
+
+      WiFi.begin(ssid.c_str(), password.c_str());
+
+
+      Serial.print("Connecting to new WiFi credentials...");
+      while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+      }
+
+      // Successfully connected to new WiFi, send IP address back to Django
+      Serial.println("\nNew WiFi connection established, IP Address: " + ipAddress);
+      digitalWrite(bluePin, HIGH);
+      tone(buzzerPin, 1000);
+      delay(50);
+      noTone(buzzerPin);
+      tone(buzzerPin, 1000);
+      delay(50);
+      noTone(buzzerPin);
+      tone(buzzerPin, 1000);
+      delay(50);
+      noTone(buzzerPin);
+      tone(buzzerPin, 1000);
+      delay(50);
+      noTone(buzzerPin);
+      delay(200);
+      digitalWrite(bluePin, LOW);
+      return;
+    } else {
+      server.send(400, "application/json", "{\"error\":\"Missing ssid or password\"}");
+    }
+  }
 }
 
 
@@ -44,112 +101,82 @@ void setup() {
   SPI.begin();
   mfrc522.PCD_Init();
 
-  Serial.println("Enter DeviceName:");
-  while(Serial.available()==0){
-
-  }
-
-  deviceName = Serial.readString();
-  deviceName.trim();
-
+  // initial WiFi credentials
   Serial.println("Enter SSID:");
-  while(Serial.available()==0){
-
-  }
-
+  while (Serial.available() == 0) { }
   ssid = Serial.readString();
   ssid.trim();
 
   Serial.println("Enter Password:");
-  while(Serial.available()==0){
-
-  }
-
+  while (Serial.available() == 0) { }
   password = Serial.readString();
   password.trim();
 
-
-  Serial.println("Enter url:");
-  while(Serial.available()==0){
-
-  }
-
-  apiEndpointUrl = Serial.readString();
-  apiEndpointUrl.trim();
-
-  Serial.println("DeviceName:"+deviceName);
-  Serial.println("SSID:"+ssid);
-  Serial.println("Password:"+password);
-  Serial.println("Url:"+apiEndpointUrl);
-  Serial.println("IP Address:"+WiFi.localIP());
-
-  WiFi.begin(ssid, password);
+  WiFi.begin(ssid.c_str(), password.c_str());
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(800);
+    delay(500);
     Serial.println("Connecting to WiFi...");
   }
 
-  Serial.println("Connected to WiFi");
-  digitalWrite(bluePin,HIGH);
-  tone(buzzerPin,1000);
+  Serial.println("Connected to WiFi, IP Address: " + WiFi.localIP().toString());
+  digitalWrite(bluePin, HIGH);
+  tone(buzzerPin, 1000);
   delay(50);
   noTone(buzzerPin);
-  tone(buzzerPin,1000);
+  tone(buzzerPin, 1000);
   delay(50);
   noTone(buzzerPin);
-  tone(buzzerPin,1000);
+  tone(buzzerPin, 1000);
   delay(50);
   noTone(buzzerPin);
   delay(200);
-  digitalWrite(bluePin,LOW);
+  digitalWrite(bluePin, LOW);
 
   server.on("/ping", HTTP_GET, handlePing);
+  server.on("/config", HTTP_POST, handleConfig);
   server.begin();
 }
 
-
-
-
 void loop() {
-  if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial())
-    return;
+  Serial.println(".");
+  delay(100);
+  server.handleClient();  // Handle incoming client requests
+  if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) return;
 
+  // Reading the RFID card UID
   String cardUID = "";
   for (byte i = 0; i < mfrc522.uid.size; i++) {
     cardUID.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? "0" : ""));
     cardUID.concat(String(mfrc522.uid.uidByte[i], HEX));
   }
-
   cardUID.toUpperCase();
   Serial.println("Card UID: " + cardUID);
 
   if (WiFi.status() == WL_CONNECTED) {
-    // getINFO();
+    // Send the card UID to the Django server
     HTTPClient http;
-    http.begin(apiEndpointUrl);
+    http.begin(serverName);
     http.addHeader("Content-Type", "application/json");
 
-    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"device\":\""+deviceName+"\",\"token\":\"" + token1 + "\"}";
-    Serial.println("JsonPayload:"+jsonPayload);
+    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"device\":\"" + deviceName + "\",\"token\":\"" + token1 + "\"}";
+    Serial.println("Sending JSON Payload: " + jsonPayload);
     int httpResponseCode = http.POST(jsonPayload);
 
     if (httpResponseCode > 0) {
       String response = http.getString();
-      Serial.println(httpResponseCode);
-      Serial.println(response);
-      if(httpResponseCode==201){
+      Serial.println("Server Response Code: " + String(httpResponseCode));
+      Serial.println("Server Response: " + response);
+      
+      if (httpResponseCode == 201) {
         digitalWrite(bluePin, HIGH);
-        tone(buzzerPin,1000);
+        tone(buzzerPin, 1000);
         delay(100);
-        tone(buzzerPin,1000);
         noTone(buzzerPin);
-        delay(500);
         digitalWrite(bluePin, LOW);
-        
-      }else{
+      } else {
         digitalWrite(redPin, HIGH);
-        tone(buzzerPin,1000);
+        tone(buzzerPin, 1000);
         delay(500);
         noTone(buzzerPin);
         digitalWrite(redPin, LOW);
@@ -157,19 +184,12 @@ void loop() {
     } else {
       Serial.print("Error on sending POST: ");
       Serial.println(httpResponseCode);
-      Serial.println("Server may be down.");
       digitalWrite(yellowPin, HIGH);
-      tone(buzzerPin,800);
-      delay(300);
-      noTone(buzzerPin);
-      tone(buzzerPin,800);
+      tone(buzzerPin, 800);
       delay(300);
       noTone(buzzerPin);
       digitalWrite(yellowPin, LOW);
     }
     http.end();
-    
   }
-  // getCSRFToken();
-  server.handleClient();
 }
