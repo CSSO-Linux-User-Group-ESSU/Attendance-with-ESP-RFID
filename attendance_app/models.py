@@ -15,7 +15,8 @@ class Device(models.Model):
     token = models.ForeignKey(SecurityToken, on_delete=models.CASCADE)
     ssid = models.CharField(max_length=100)
     password_to_ssid = models.CharField(max_length=200)
-    url = models.CharField(max_length=300)
+    url = models.URLField()
+    ip_address = models.GenericIPAddressField(null=True,blank=True)
     status = models.BooleanField()
 
     def __str__(self):
