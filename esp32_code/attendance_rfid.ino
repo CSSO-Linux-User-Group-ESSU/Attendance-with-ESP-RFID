@@ -4,7 +4,7 @@
 #include <MFRC522.h>
 #include <WebServer.h>
 #include <ArduinoJson.h>
-
+#include <EEPROM.h>
 
 WebServer server(80);
 
@@ -20,10 +20,16 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 
 String ssid;
 String password;
-const char* serverName = "http://192.168.1.104:8000/api/";  // Your Django server endpoint
-const char* deviceName = "device1";
-
+String serverName;  // Your Django server endpoint
+String deviceName;
 String token1 = "fhdhjdkdsjcncjdhchdjdjdsjdw3@@!!#^^4682eqryoxuewrozcbvmalajurpd";
+
+
+#define SSID_ADDR 0
+#define PASSWORD_ADDR (SSID_ADDR + 64)
+#define SERVERNAME_ADDR (PASSWORD_ADDR + 64)
+#define DEVICENAME_ADDR (SERVERNAME_ADDR + 64)
+#define EEPROM_SIZE 512
 
 //sending ping
 void handlePing() {
@@ -45,11 +51,18 @@ void handleConfig() {
       return;
     }
 
+
+
     // Extract the ssid and password from the parsed JSON
     String ssid = doc["ssid"];
     String password = doc["password"];
-    serverName = doc['apiEndpointUrl'];
-    deviceName = doc['device_name'];
+    serverName = doc["apiEndpointUrl"].as<String>();
+    deviceName = doc["device_name"].as<String>();
+
+    writeEEPROM(SSID_ADDR, ssid);
+    writeEEPROM(PASSWORD_ADDR, password);
+    writeEEPROM(SERVERNAME_ADDR, serverName);
+    writeEEPROM(DEVICENAME_ADDR, deviceName);
 
     if (ssid.length() > 0 && password.length() > 0) {
 
@@ -91,6 +104,29 @@ void handleConfig() {
   }
 }
 
+// Function to write String data to EEPROM
+void writeEEPROM(int startAddr, String data) {
+  int len = data.length();
+  for (int i = 0; i < len; i++) {
+    EEPROM.write(startAddr + i, data[i]);
+  }
+  EEPROM.write(startAddr + len, '\0');  // Null-terminate the string
+  EEPROM.commit();  // Save changes to EEPROM
+}
+
+// Function to read String data from EEPROM
+String readEEPROM(int startAddr) {
+  String data = "";
+  char c = EEPROM.read(startAddr);
+  int i = 0;
+  while (c != '\0' && i < 64) {  // Read until null-terminator or buffer size limit
+    data += c;
+    i++;
+    c = EEPROM.read(startAddr + i);
+  }
+  return data;
+}
+
 
 void setup() {
   token1.trim();
@@ -101,16 +137,55 @@ void setup() {
   SPI.begin();
   mfrc522.PCD_Init();
 
-  // initial WiFi credentials
-  Serial.println("Enter SSID:");
-  while (Serial.available() == 0) { }
-  ssid = Serial.readString();
-  ssid.trim();
+  
 
-  Serial.println("Enter Password:");
-  while (Serial.available() == 0) { }
-  password = Serial.readString();
-  password.trim();
+  EEPROM.begin(EEPROM_SIZE);
+
+  // Load saved WiFi credentials from EEPROM
+  ssid = readEEPROM(SSID_ADDR);
+  password = readEEPROM(PASSWORD_ADDR);
+  serverName = readEEPROM(SERVERNAME_ADDR);
+  deviceName = readEEPROM(DEVICENAME_ADDR);
+
+  if (ssid.length() > 0 && password.length() > 0) {
+    WiFi.begin(ssid.c_str(), password.c_str());
+    int maxAttempts = 0;
+    while (WiFi.status() != WL_CONNECTED && maxAttempts <= 15) {
+      delay(500);
+      Serial.println("Connecting to WiFi...");
+      maxAttempts += 1;
+    }
+    if (WiFi.status() == WL_CONNECTED){
+      Serial.println("Connected to WiFi, IP Address: " + WiFi.localIP().toString());
+    }else{
+      Serial.println("No saved WiFi credentials found. Enter them manually.");
+    //Enter manually
+    // initial WiFi credentials
+    Serial.println("Enter SSID:");
+    while (Serial.available() == 0) { }
+    ssid = Serial.readString();
+    ssid.trim();
+
+    Serial.println("Enter Password:");
+    while (Serial.available() == 0) { }
+    password = Serial.readString();
+    password.trim();
+    }
+    
+  } else {
+    Serial.println("No saved WiFi credentials found. Enter them manually.");
+    //Enter manually
+    // initial WiFi credentials
+    Serial.println("Enter SSID:");
+    while (Serial.available() == 0) { }
+    ssid = Serial.readString();
+    ssid.trim();
+
+    Serial.println("Enter Password:");
+    while (Serial.available() == 0) { }
+    password = Serial.readString();
+    password.trim();
+  }
 
   WiFi.begin(ssid.c_str(), password.c_str());
 
@@ -139,8 +214,6 @@ void setup() {
 }
 
 void loop() {
-  Serial.println(".");
-  delay(100);
   server.handleClient();  // Handle incoming client requests
   if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) return;
 
