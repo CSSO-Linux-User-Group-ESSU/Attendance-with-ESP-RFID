@@ -4,6 +4,9 @@
 #include <MFRC522.h>
 #include <Arduino_JSON.h>
 
+
+String token1 = "fhdhjdkdsjcncjdhchdjdjdsjdw3@@!!#^^4682eqryoxuewrozcbvmalajurpd";
+
 #define SS_PIN 5
 #define RST_PIN 0
 
@@ -21,9 +24,6 @@ String password;
 // const char* serverName = "http://192.168.1.104:8000/api/";
 String serverName;
 String deviceName;
-
-
-String token1 = "fhdhjdkdsjcncjdhchdjdjdsjdw3@@!!#^^4682eqryoxuewrozcbvmalajurpd";
 
 
 void setup() {

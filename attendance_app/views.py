@@ -239,7 +239,10 @@ def add_device(request):
     else:
         form = DeviceForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            form1 = form.save(commit=False)
+            form1.status = True
+            form1.token = SecurityToken.objects.get(id=1)
+            form1.save()
             return redirect("attendance_app:devices")
 
     return render(request, "attendance_app/devices.html")
