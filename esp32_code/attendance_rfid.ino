@@ -67,10 +67,6 @@ void handleConfig() {
     if (ssid.length() > 0 && password.length() > 0) {
 
 
-      String ipAddress = WiFi.localIP().toString();
-      String response = "{\"ip_address\":\"" + ipAddress + "\"}";
-      server.send(200, "application/json", response);
-
       WiFi.begin(ssid.c_str(), password.c_str());
 
 
@@ -79,6 +75,10 @@ void handleConfig() {
         delay(500);
         Serial.print(".");
       }
+
+      String ipAddress = WiFi.localIP().toString();
+      String response = "{\"ip_address\":\"" + ipAddress + "\"}";
+      server.send(200, "application/json", response);
 
       // Successfully connected to new WiFi, send IP address back to Django
       Serial.println("\nNew WiFi connection established, IP Address: " + ipAddress);
