@@ -6,6 +6,7 @@ from . import views
 
 app_name = "student_app"
 urlpatterns = [
+    path('get_card_uid/', views.get_card_uid, name='get_card_uid'),
     path('upload_file/',views.upload_file, name='upload_file'),
     path('students/',views.students, name='students'),
     path('student_attendance/<int:student_id>/',views.student_attendance, name='student_attendance'),

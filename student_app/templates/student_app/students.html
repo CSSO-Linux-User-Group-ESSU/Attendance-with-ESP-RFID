@@ -12,6 +12,8 @@
           <span id="closeModalBtn" class="close">&times;</span>
           <h2 class="attendance_dashboard_h2">New Student</h2>
           <form method="post" action="{% url 'student_app:add_student' %}" class="form-container">
+            <label for="card_uid">Card UID</label>
+            <input type="text" id="card_uid" name="card_uid" required />
             {% csrf_token %}
             {{form.as_p}}
             <button type="submit">Add</button>
@@ -70,5 +72,25 @@
     </table>
     {% load static %}
     <script src="{% static 'attendance_app/js/modal.js' %}"></script>
+    <script>
+        // This function will be triggered by the ESP32 when a card is scanned
+        function updateCardUID(cardUID) {
+            // Update the input field with the card UID
+            document.getElementById('card_uid').value = cardUID;
+        }
+
+        // Optionally, use setInterval or a WebSocket to listen for updates from the ESP32
+        setInterval(() => {
+            fetch('/get_card_uid') // Replace with your actual endpoint
+                .then(response => response.json())
+                .then(data => {
+                    if (data.card_uid) {
+                        updateCardUID(data.card_uid);
+                    }
+                })
+                .catch(error => console.error('Error fetching card UID:', error));
+        }, 3000); 
+
+    </script>
 
 {% endblock content %}

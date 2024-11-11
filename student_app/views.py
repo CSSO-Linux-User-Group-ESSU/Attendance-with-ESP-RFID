@@ -2,7 +2,10 @@ from django.shortcuts import render, redirect
 from .models import Student
 from .forms import UploadFileForm, StudentForm
 import openpyxl
-from django.contrib.auth.decorators import login_required
+import requests
+from django.http import JsonResponse
+from attendance_app.models import Device
+
 
 # Create your views here.
 
@@ -70,6 +73,7 @@ def add_student(request):
         form = StudentForm(data=request.POST)
         if form.is_valid():
             new_student = form.save(commit=False)
+            new_student.card_uid = str(request.POST.get("card_uid")).upper()
             new_student.last_name = new_student.last_name.upper()
             new_student.first_name = new_student.first_name.upper()
             new_student.middle_name = new_student.middle_name.upper()
@@ -79,3 +83,28 @@ def add_student(request):
             return redirect("student_app:students")
 
     return render(request, "student_app/students.html",{"form":form,"form1":form1})
+
+
+def get_card_uid(request):
+    
+    #get active devices
+    devices = Device.objects.all()
+    active = []
+    for device in devices:
+        if device.status:
+            active.append(device)
+    
+    if len(active) < 1:
+        print("No device")
+        return JsonResponse({'card_uid': 'Error'})
+
+    try:
+        response = requests.get(f"http://{active[0].ip_address}/get_card_uid",timeout=5)
+        print(response.text)
+        return JsonResponse({'card_uid': response.text})
+    except requests.RequestException as e:
+        print("Exception {}".format(e))
+        return JsonResponse({'card_uid': 'Error'})
+    
+
+    

@@ -8,10 +8,9 @@ class UploadFileForm(forms.Form):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['card_uid', 'last_name', 'middle_name', 'first_name', 'student_id']
+        fields = ['last_name', 'middle_name', 'first_name', 'student_id']
 
         labels = {
-            'card_uid': 'Card UID',
             'last_name': 'Last Name',
             'middle_name': 'Middle Name',
             'first_name': 'First Name',

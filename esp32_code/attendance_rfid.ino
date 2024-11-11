@@ -18,6 +18,7 @@ int yellowPin = 13;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
+String cardUID;
 String ssid;
 String password;
 String serverName;  // Your Django server endpoint
@@ -127,6 +128,16 @@ void handleConfig() {
   }
 }
 
+void get_card_uid(){
+  cardUID = "";
+  for (byte i = 0; i < mfrc522.uid.size; i++) {
+    cardUID.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? "0" : ""));
+    cardUID.concat(String(mfrc522.uid.uidByte[i], HEX));
+  }
+  cardUID.toUpperCase();
+  server.send(200, "text/plain",cardUID);
+}
+
 // Function to write String data to EEPROM
 void writeEEPROM(int startAddr, String data) {
   int len = data.length();
@@ -234,6 +245,7 @@ void setup() {
   server.on("/ping", HTTP_POST, handlePing);
   server.on("/config", HTTP_POST, handleConfig);
   server.on("/send_ip", HTTP_POST, sendIP);
+  server.on("/get_card_uid", HTTP_GET, get_card_uid);
   server.begin();
 }
 
@@ -242,7 +254,7 @@ void loop() {
   if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) return;
 
   // Reading the RFID card UID
-  String cardUID = "";
+  cardUID = "";
   for (byte i = 0; i < mfrc522.uid.size; i++) {
     cardUID.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? "0" : ""));
     cardUID.concat(String(mfrc522.uid.uidByte[i], HEX));
