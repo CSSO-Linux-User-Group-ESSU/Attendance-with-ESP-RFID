@@ -194,7 +194,7 @@ void setup() {
   //   Serial.println("Connecting to WiFi...");
   // }
 
-  Serial.println("Connected to WiFi, IP Address: " + WiFi.localIP().toString());
+  // Serial.println("Connected to WiFi, IP Address: " + WiFi.localIP().toString());
   digitalWrite(bluePin, HIGH);
   tone(buzzerPin, 1000);
   delay(50);
