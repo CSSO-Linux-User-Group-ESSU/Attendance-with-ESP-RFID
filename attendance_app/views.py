@@ -221,6 +221,7 @@ def add_event(request):
     else:
         form = EventForm(data=request.POST)
         if form.is_valid():
+            
             form.save()
             return redirect("attendance_app:events")
 
@@ -264,7 +265,7 @@ def add_device(request):
                 headers = {
                     'Content-Type': 'application/json'
                 }
-                response = requests.post(f"http://{device.ip_address}/config", json=config_data, headers=headers, timeout=120)
+                response = requests.post(f"http://{device.ip_address}/config", json=config_data, headers=headers, timeout=5)
 
                 print(response)
                 
@@ -342,18 +343,18 @@ def api_attendance(request):
                 if event.device==device1:
                     event1.append(event)
             # date1 = Day.objects.get(date=current_local, event=event1)
-
+            print("Events:",len(event1))
             if len(event1) > 1:
                 events_enabled = 0
                 for event_i in event1:
-                    if event_i.status:
+                    if event_i.status==True:
                         events_enabled+=1
                         Attendance.objects.create(student=student1,event=event_i)
                 if events_enabled == 0:
                     return JsonResponse({'status': 'error', 'message': 'Events associated with device disabled'}, status=404)
             else:
-                if event_i.status:
-                    Attendance.objects.create(student=student1,event=event1)
+                if event1[0].status:
+                    Attendance.objects.create(student=student1,event=event1[0])
                 else:
                     return JsonResponse({'status': 'error', 'message': 'Event disabled'}, status=404)
                 
