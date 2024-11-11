@@ -37,7 +37,7 @@ class Day(models.Model):
         return f"{str(self.date)}"
 
 class Attendance(models.Model):
-    day = models.ForeignKey(Day, on_delete=models.CASCADE)
+    # day = models.ForeignKey(Day, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     date_attended = models.DateTimeField(auto_now_add=True)

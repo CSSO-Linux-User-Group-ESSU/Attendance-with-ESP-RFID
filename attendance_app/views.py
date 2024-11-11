@@ -237,18 +237,18 @@ def api_attendance(request):
         try:
 
             #get the date for the attendance
-            current_utc = datetime.now(pytz.utc)
-            timezone = pytz.timezone("Asia/Manila")
-            current_local = str(current_utc.astimezone(timezone)).split()[0]
+            # current_utc = datetime.now(pytz.utc)
+            # timezone = pytz.timezone("Asia/Manila")
+            # current_local = str(current_utc.astimezone(timezone)).split()[0]
 
 
             student1 = Student.objects.get(card_uid=str(card_uid).upper())
             token2 = SecurityToken.objects.get(token=token1)
             device1 = Device.objects.get(name=data.get("device"),token=token2)
             event1 = Event.objects.get(device=device1)
-            date1 = Day.objects.get(date=current_local, event=event1)
+            # date1 = Day.objects.get(date=current_local, event=event1)
 
-            Attendance.objects.create(student=student1,event=event1,day=date1)
+            Attendance.objects.create(student=student1,event=event1)
             return JsonResponse({'status': 'success', 'student': str(student1)}, status=201)
         except Student.DoesNotExist:
             return JsonResponse({'status': 'error', 'student': 'Student not found'}, status=404)
@@ -256,8 +256,6 @@ def api_attendance(request):
             return JsonResponse({'status': 'error', 'student': 'Event not found'}, status=404)
         except Device.DoesNotExist:
             return JsonResponse({'status': 'error', 'student': 'Device not found'}, status=404)
-        except Day.DoesNotExist:
-            return JsonResponse({'status': 'error', 'student': 'Day not registered'}, status=404)
         except SecurityToken.DoesNotExist:
             return JsonResponse({'status': 'error', 'student': 'Token not recognized'}, status=404)
     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
