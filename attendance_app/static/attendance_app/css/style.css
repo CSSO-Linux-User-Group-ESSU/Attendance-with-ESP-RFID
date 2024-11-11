@@ -1,4 +1,17 @@
  
+.table1 a.red-button{
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: rgb(255, 69, 69);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+ }
+ 
+ 
  .form_button1:hover{
     cursor: pointer;
  }

@@ -42,13 +42,24 @@
         <tbody>
             {% for event in events %}
             <tr>
+                {% if event.status %}
                 <td>Enabled</td>
+                {% else %}
+                <td>Disabled</td>
+                {% endif %}
                 <td>{{event.name}}</td>
                 <td>{{event.instructor}}</td>
                 <td>{{event.device}}</td>
                 <td>
                     <a href="{% url 'attendance_app:event' event.id %}" class="view-btn">View</a>
-                    <a href="{% url 'attendance_app:delete_event' event.id %}" class="view-btn">Remove</a>
+                    <a href="{% url 'attendance_app:delete_event' event.id %}" class="red-button">Remove</a>
+
+                    {% if event.status %}
+                    <a href="{% url 'attendance_app:change_status' event.id %}" class="red-button">Disable</a>
+                    {% else %}
+                    <a href="{% url 'attendance_app:change_status' event.id %}" class="view-btn">Enable</a>
+                    {% endif %}
+                    
                 </td>
 
             </tr>

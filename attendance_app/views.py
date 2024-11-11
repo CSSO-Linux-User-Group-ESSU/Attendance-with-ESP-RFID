@@ -11,6 +11,22 @@ import pytz
 import json
 
 
+def change_status(request, event_id):
+    event = Event.objects.get(id=event_id)
+
+    if event.status:
+        event.status = False
+    else:
+        event.status = True
+
+    event.save()
+
+    events1 = Event.objects.all()
+    form = EventForm()
+
+    return render(request, "attendance_app/events.html",{"events":events1,"form":form})
+
+
 def signup(request):
 
     if request.method=="POST":
