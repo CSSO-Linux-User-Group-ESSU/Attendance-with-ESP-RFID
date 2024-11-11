@@ -36,6 +36,14 @@ void handlePing() {
   server.send(200, "text/plain", "pong");
 }
 
+void sendIP() {
+  if (server.method() == HTTP_POST) {
+    String ipAddress = WiFi.localIP().toString();
+    String response = "{\"ip_address\":\"" + ipAddress + "\"}";
+    server.send(200, "application/json", response);
+  }
+}
+
 //for configuring the esp32
 void handleConfig() {
   if (server.method() == HTTP_POST) {
@@ -210,6 +218,7 @@ void setup() {
 
   server.on("/ping", HTTP_GET, handlePing);
   server.on("/config", HTTP_POST, handleConfig);
+  server.on("/send_ip", HTTP_POST, sendIP);
   server.begin();
 }
 

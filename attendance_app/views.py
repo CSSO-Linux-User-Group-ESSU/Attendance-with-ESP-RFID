@@ -260,34 +260,27 @@ def add_device(request):
             print("Config data prepared for ESP32:", config_data)
             
             try:
-                # Print out the exact URL to verify if it's correct
                 print(f"Attempting to send config data to: {device.ip_address}/config")
                 headers = {
                     'Content-Type': 'application/json'
                 }
                 response = requests.post(f"http://{device.ip_address}/config", json=config_data, headers=headers, timeout=5)
-
-                print(response)
-                
-                print("Received response from ESP32. Status code:", response.status_code)
-                print("Response content:", response.content)
-
-                if response.status_code == 200:
-                    # Extract and print the IP address if returned
-                    device.ip_address = response.json().get("ip_address")
-                    device.status = True
-                    device.token = SecurityToken.objects.get(id=1)
-                    device.save()
-                    print("Device configured successfully. Redirecting...")
-
-                    return redirect('attendance_app:devices')
-                else:
-                    print("ESP32 responded, but status code is not 200.")
-                    form.add_error(None, "Failed to configure the ESP32. Status code: {}".format(response.status_code))
             
             except requests.RequestException as e:
-                print("Exception occurred:", e)
-                form.add_error(None, "Could not connect to ESP32. Exception: {}".format(e))
+                if "timeout=5)" in str(e).split():
+                    response = requests.post(f"http://{device.ip_address}/send_ip", json=config_data, headers=headers, timeout=5)
+
+                    if response.status_code == 200:
+                        print("I got here!!!")
+                        device.ip_address = response.json().get("ip_address")
+                        device.status = True
+                        device.token = SecurityToken.objects.get(id=1)
+                        device.save()
+                        print("Device configured successfully. Redirecting...")
+
+                        return redirect('attendance_app:devices')
+                else:
+                    form.add_error(None, "Could not connect to ESP32. Exception: {}".format(e))
         else:
             print("Form is invalid:", form.errors)
     else:
