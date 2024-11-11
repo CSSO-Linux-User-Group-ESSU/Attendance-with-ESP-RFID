@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from datetime import datetime
 import pytz
+import requests
 import json
 
 
@@ -235,17 +236,36 @@ def devices(request):
 
 def add_device(request):
     if request.method != "POST":
-        pass
+        form = DeviceForm()
     else:
-        form = DeviceForm(data=request.POST)
+        form = DeviceForm(request.POST)
         if form.is_valid():
-            form1 = form.save(commit=False)
-            form1.status = True
-            form1.token = SecurityToken.objects.get(id=1)
-            form1.save()
-            return redirect("attendance_app:devices")
+            device = form.save(commit=False)
+            
+            config_data = {
+                "ssid": device.ssid,
+                "password": device.password_to_ssid,
+                "device_name": device.name,
+                'apiEndpointUrl':device.apiEndpointUrl
+            }
+            
+            try:
+                response = requests.post(f"http://{device.api_address}/config", json=config_data, timeout=5)
+                
+                if response.status_code == 200:
+                    # device.ip_address = response.json().get("ip_address")
+                    device.status = True
+                    device.save()
+                    
+                    return redirect('attendance_app:devices')
+                else:
+                    form.add_error(None, "Failed to configure the ESP32.")
+            
+            except requests.RequestException as e:
+                form.add_error(None, "Could not connect to ESP32.")
+            
 
-    return render(request, "attendance_app/devices.html")
+    return render(request, "attendance_app/devices.html",{"form":form})
 
 
 
