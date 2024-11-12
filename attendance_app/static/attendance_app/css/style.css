@@ -411,6 +411,7 @@ header a {
 .form-container input[type="text"],
 .form-container input[type="date"],
 .form-container input[type="number"],
+.form-container input[type="time"],
 .form-container select {
     width: 100%;
     padding: 10px;
@@ -419,6 +420,17 @@ header a {
     border-radius: 4px;
     font-size: 16px;
     box-sizing: border-box;
+}
+
+.form-container input[type="time"] {
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #ffffff;
+}
+
+.form-container input[type="time"]:focus {
+    border-color: #4CAF50;
+    outline: none;
 }
 
 .form-container button {

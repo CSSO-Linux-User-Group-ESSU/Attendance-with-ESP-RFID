@@ -14,10 +14,17 @@ class DeviceForm(forms.ModelForm):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['device', 'name', 'instructor']
+        fields = ['device', 'name', 'instructor', 'start_time', 'stop_time']
 
         labels = {
             "device": "Device",
             "name":"Event/Subject",
-            "instructor":"Organizer/Instructor"
+            "instructor":"Organizer/Instructor",
+            "start_time":"Start Time",
+            "stop_time":"Stop Time"
+        }
+
+        widgets = {
+            'start_time': forms.TimeInput(attrs={'type': 'time'}),
+            'stop_time': forms.TimeInput(attrs={'type': 'time'})
         }

@@ -15,8 +15,8 @@ class Device(models.Model):
     token = models.ForeignKey(SecurityToken, on_delete=models.CASCADE)
     ssid = models.CharField(max_length=100)
     password_to_ssid = models.CharField(max_length=200)
-    apiEndpointUrl = models.URLField()
-    ip_address = models.GenericIPAddressField()
+    apiEndpointUrl = models.CharField(max_length=300)
+    ip_address = models.CharField(max_length=50)
     status = models.BooleanField()
 
     def __str__(self):
@@ -29,6 +29,8 @@ class Event(models.Model):
     name = models.CharField(max_length=200, unique=True)
     instructor = models.CharField(max_length=200)
     status = models.BooleanField(default=True)
+    start_time = models.TimeField()
+    stop_time = models.TimeField()
 
     def __str__(self):
         return self.name
