@@ -38,7 +38,6 @@ void handlePing() {
     
     DynamicJsonDocument doc(1024);
 
-    // Parse the JSON body
     DeserializationError error = deserializeJson(doc, server.arg("plain"));
 
     if (error) {
@@ -63,10 +62,8 @@ void sendIP() {
 //for configuring the esp32
 void handleConfig() {
   if (server.method() == HTTP_POST) {
-    // Allocate a JSON document to store the incoming data
     DynamicJsonDocument doc(1024);
 
-    // Parse the JSON body
     DeserializationError error = deserializeJson(doc, server.arg("plain"));
 
     if (error) {
@@ -77,7 +74,6 @@ void handleConfig() {
 
 
 
-    // Extract the ssid and password from the parsed JSON
     String ssid = doc["ssid"];
     String password = doc["password"];
     serverName = doc["apiEndpointUrl"].as<String>();
@@ -104,7 +100,6 @@ void handleConfig() {
       String response = "{\"ip_address\":\"" + ipAddress + "\"}";
       server.send(200, "application/json", response);
 
-      // Successfully connected to new WiFi, send IP address back to Django
       Serial.println("\nNew WiFi connection established, IP Address: " + ipAddress);
       digitalWrite(bluePin, HIGH);
       tone(buzzerPin, 1000);
@@ -138,22 +133,21 @@ void get_card_uid(){
   server.send(200, "text/plain",cardUID);
 }
 
-// Function to write String data to EEPROM
+
 void writeEEPROM(int startAddr, String data) {
   int len = data.length();
   for (int i = 0; i < len; i++) {
     EEPROM.write(startAddr + i, data[i]);
   }
-  EEPROM.write(startAddr + len, '\0');  // Null-terminate the string
-  EEPROM.commit();  // Save changes to EEPROM
+  EEPROM.write(startAddr + len, '\0'); 
+  EEPROM.commit();
 }
 
-// Function to read String data from EEPROM
 String readEEPROM(int startAddr) {
   String data = "";
   char c = EEPROM.read(startAddr);
   int i = 0;
-  while (c != '\0' && i < 64) {  // Read until null-terminator or buffer size limit
+  while (c != '\0' && i < 64) {  
     data += c;
     i++;
     c = EEPROM.read(startAddr + i);
@@ -175,7 +169,6 @@ void setup() {
 
   EEPROM.begin(EEPROM_SIZE);
 
-  // Load saved WiFi credentials from EEPROM
   ssid = readEEPROM(SSID_ADDR);
   password = readEEPROM(PASSWORD_ADDR);
   serverName = readEEPROM(SERVERNAME_ADDR);
@@ -221,14 +214,6 @@ void setup() {
     password.trim();
   }
 
-  // WiFi.begin(ssid.c_str(), password.c_str());
-
-  // while (WiFi.status() != WL_CONNECTED) {
-  //   delay(500);
-  //   Serial.println("Connecting to WiFi...");
-  // }
-
-  // Serial.println("Connected to WiFi, IP Address: " + WiFi.localIP().toString());
   digitalWrite(bluePin, HIGH);
   tone(buzzerPin, 1000);
   delay(50);
@@ -250,10 +235,9 @@ void setup() {
 }
 
 void loop() {
-  server.handleClient();  // Handle incoming client requests
+  server.handleClient(); 
   if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) return;
 
-  // Reading the RFID card UID
   cardUID = "";
   for (byte i = 0; i < mfrc522.uid.size; i++) {
     cardUID.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? "0" : ""));
@@ -263,7 +247,6 @@ void loop() {
   Serial.println("Card UID: " + cardUID);
 
   if (WiFi.status() == WL_CONNECTED) {
-    // Send the card UID to the Django server
     HTTPClient http;
     http.begin(serverName);
     http.addHeader("Content-Type", "application/json");
