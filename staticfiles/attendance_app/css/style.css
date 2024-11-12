@@ -100,7 +100,6 @@ cursor: pointer;
 
 .nav-active{
     background-color:#466aa6;
-    opacity: 0.5;
 }
 
 .nav-buttons:hover{
