@@ -31,6 +31,7 @@ class Event(models.Model):
     status = models.BooleanField(default=True)
     start_time = models.TimeField()
     stop_time = models.TimeField()
+    date_added = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.name
