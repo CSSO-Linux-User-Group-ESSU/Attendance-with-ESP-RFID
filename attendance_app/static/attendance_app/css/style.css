@@ -1,4 +1,9 @@
  
+
+.refresh-button{
+    float: right;
+}
+
 table .red-cells{
     background-color: red;
     font-weight: bold;
