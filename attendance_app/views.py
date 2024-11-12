@@ -116,17 +116,16 @@ def control_panel(request):
     return redirect('attendance_app:index')
 
 
-def attendance_for_today(request, day_id):
-    day = Day.objects.get(id=day_id)
-    event1 = day.event
+def attendance_for_today(request, event_id):
+    event1 = Event.objects.get(id=event_id)
     attendances = []
     for attendance in Attendance.objects.all():
-        if str(attendance.date_attended).split()[0] == str(day.date):
+        if str(attendance.date_attended).split()[0] == str(event1.date_added):
             attendances.append(attendance)
 
     unique_att = get_unique_attendances(attendances)
 
-    context = {"day":day,
+    context = {"day":event1.date_added,
                "event":event1,
                "attendances":unique_att,
                "top":len(unique_att),
@@ -190,17 +189,6 @@ def get_days_of_attendances(attendances, event_id):
             date = str(attendance.date_attended).split()[0]
             event = Event.objects.get(id=event_id)
             Day.objects.get_or_create(date=date, event=event)
-
-    
-
-def event(request, event_id):
-    event1 = Event.objects.get(id=event_id)
-    get_days_of_attendances(Attendance.objects.all(), event_id)
-
-    days = event1.day_set.all()
-
-    return render(request, "attendance_app/event.html", {'days':days, "event":event1})
-
 
 def add_event(request):
     if request.method != "POST":

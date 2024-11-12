@@ -50,7 +50,7 @@
                 <td>{{event.date_added}} {{event.start_time}} - {{event.stop_time}}</td>
                 <td>{{event.device}}</td>
                 <td>
-                    <a href="{% url 'attendance_app:event' event.id %}" class="view-btn">
+                    <a href="{% url 'attendance_app:attendance_for_today' event.id %}" class="view-btn">
                         <i class="fa fa-eye" style="font-size:18px"></i>
                     </a>
                     <a href="{% url 'attendance_app:delete_event' event.id %}" class="red-button">
