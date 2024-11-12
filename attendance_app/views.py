@@ -6,7 +6,7 @@ from .models import Student, Attendance, Event, Device, SecurityToken, Day
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from datetime import datetime
+from django.utils import timezone
 import pytz
 import requests
 import json
@@ -327,15 +327,11 @@ def api_attendance(request):
         data = json.loads(request.body)
         card_uid = data.get("card_uid")
         token1 = data.get("token")
-        # ping = data.get("ping")
-
         try:
-            #get the date for the attendance
-            # current_utc = datetime.now(pytz.utc)
-            # timezone = pytz.timezone("Asia/Manila")
-            # current_local = str(current_utc.astimezone(timezone)).split()[0]
-
-
+            #get time to check if the attendance got on time
+            current_time = timezone.localtime().time()
+            
+            
             student1 = Student.objects.get(card_uid=str(card_uid).upper())
             token2 = SecurityToken.objects.get(token=token1)
             device1 = Device.objects.get(name=data.get("device"),token=token2)
@@ -343,19 +339,26 @@ def api_attendance(request):
             for event in Event.objects.all():
                 if event.device==device1:
                     event1.append(event)
-            # date1 = Day.objects.get(date=current_local, event=event1)
-            print("Events:",len(event1))
+            
+            
             if len(event1) > 1:
                 events_enabled = 0
                 for event_i in event1:
                     if event_i.status==True:
                         events_enabled+=1
-                        Attendance.objects.create(student=student1,event=event_i)
+                        if event_i.start_time <= current_time and event_i.stop_time >= current_time:
+                            Attendance.objects.create(student=student1,event=event_i)
+                        else:
+                            return JsonResponse({'status': 'error', 'message': 'Deadline of Event'}, status=404)
+                        
                 if events_enabled == 0:
                     return JsonResponse({'status': 'error', 'message': 'Events associated with device disabled'}, status=404)
             else:
                 if event1[0].status:
-                    Attendance.objects.create(student=student1,event=event1[0])
+                    if event1[0].start_time <= current_time and event1[0].stop_time >= current_time:
+                        Attendance.objects.create(student=student1,event=event1[0])
+                    else:
+                        return JsonResponse({'status': 'error', 'message': 'Deadline of Event'}, status=404)
                 else:
                     return JsonResponse({'status': 'error', 'message': 'Event disabled'}, status=404)
                 
