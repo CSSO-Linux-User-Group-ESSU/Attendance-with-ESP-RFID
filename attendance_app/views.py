@@ -99,13 +99,17 @@ def control_panel(request):
             form = EventForm()
 
             current_time = timezone.localtime().time()
-
+            current_date = timezone.now().date()
             for event in events1:
+                if current_date != event.date_added:
+                    event.status = False
+                    event.save()
+                    continue
                 if event.start_time > current_time or event.stop_time < current_time:
                     event.status = False
                     event.save()
 
-            return render(request, 'attendance_app/events.html',{"events":events1,"form":form,"curr_time":current_time})
+            return render(request, 'attendance_app/events.html',{"events":events1,"form":form,"curr_time":current_time, "curr_date":current_date})
         else:
             messages.error(request,"Wrong admin or password")
             return redirect('attendance_app:index')
@@ -145,26 +149,24 @@ def dashboard(request):
     return render(request, 'attendance_app/dashboard.html', context)
 
 
-def is_morning(date):
-    time = str(date).split()[1]
-
-    hour = time.split(":")[0]
-
-    return int(hour) < 12
-
-
 def events(request):
     events1 = Event.objects.all()
     form = EventForm()
 
     current_time = timezone.localtime().time()
+    current_date = timezone.now().date()
+    
     for event in events1:
+        if current_date != event.date_added:
+            event.status = False
+            event.save()
+            continue
         if event.start_time > current_time or event.stop_time < current_time:
             event.status = False
             event.save()
 
 
-    return render(request, "attendance_app/events.html",{"events":events1,"form":form,"curr_time":current_time})
+    return render(request, "attendance_app/events.html",{"events":events1,"form":form,"curr_time":current_time, "curr_date":current_date})
 
 
 def get_unique_attendances(attendances):
