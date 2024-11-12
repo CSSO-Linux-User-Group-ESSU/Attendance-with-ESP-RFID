@@ -122,13 +122,14 @@ cursor: pointer;
     border-radius: 5px;
     font-family: Arial, sans-serif;
     font-size: 16px;
-    transition: background-color 0.3s filter 0.3s ease;
+    transition: background-color 0.3s ease;
     margin-bottom: 20px;
 }
 
 .back-link:hover {
     background-color: #45a049;
-    filter: drop-shadow(0 0 4em #313cffaa);
+    cursor: pointer;
+    /* filter: drop-shadow(0 0 4em #313cffaa); */
 }
 
 .back-link:before {
@@ -400,9 +401,9 @@ header a {
     max-width: 400px;
     margin: 20px auto;
     padding: 20px;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     border-radius: 8px;
-    background-color: #f9f9f9;
+    /* background-color: #f9f9f9; */
     font-family: Arial, sans-serif;
 }
 
