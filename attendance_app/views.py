@@ -97,6 +97,14 @@ def control_panel(request):
             login(request, user)
             events1 = Event.objects.all()
             form = EventForm()
+
+            current_time = timezone.localtime().time()
+
+            for event in events1:
+                if event.start_time > current_time or event.stop_time < current_time:
+                    event.status = False
+                    event.save()
+
             return render(request, 'attendance_app/events.html',{"events":events1,"form":form})
         else:
             messages.error(request,"Wrong admin or password")
@@ -107,11 +115,8 @@ def control_panel(request):
 def attendance_for_today(request, day_id):
     day = Day.objects.get(id=day_id)
     event1 = day.event
-    # attendances = day.attendance_set.all()
     attendances = []
     for attendance in Attendance.objects.all():
-        # print(str(attendance.date_attended).split()[0])
-        # print(day.date)
         if str(attendance.date_attended).split()[0] == str(day.date):
             attendances.append(attendance)
 
@@ -148,25 +153,16 @@ def is_morning(date):
     return int(hour) < 12
 
 
-def get_morning_afternoon(attendances):
-    timezone = pytz.timezone("Asia/Manila")
-
-
-    morning_attendances = []
-    afternoon_attendances = []
-
-    for attendance in attendances:
-        if is_morning(attendance.date_attended.astimezone(timezone)):
-            morning_attendances.append(attendance)
-        else:
-            afternoon_attendances.append(attendance)
-
-    return morning_attendances, afternoon_attendances
-
-
 def events(request):
     events1 = Event.objects.all()
     form = EventForm()
+
+    current_time = timezone.localtime().time()
+    for event in events1:
+        if event.start_time > current_time or event.stop_time < current_time:
+            event.status = False
+            event.save()
+
 
     return render(request, "attendance_app/events.html",{"events":events1,"form":form})
 
@@ -198,17 +194,6 @@ def get_days_of_attendances(attendances, event_id):
 def event(request, event_id):
     event1 = Event.objects.get(id=event_id)
     get_days_of_attendances(Attendance.objects.all(), event_id)
-
-    # if request.method=="POST":
-    #     day, created = Day.objects.get_or_create(date=request.POST.get("date"), event=event1)
-
-    #     if created:
-    #         pass
-    #     else:
-    #         messages.error(request,"Date already exists")
-    #         days = event1.day_set.all()
-            
-    #         return render(request, "attendance_app/event.html", {'days':days, "event":event1 })
 
     days = event1.day_set.all()
 
