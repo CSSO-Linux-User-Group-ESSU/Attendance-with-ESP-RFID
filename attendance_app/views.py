@@ -105,7 +105,7 @@ def control_panel(request):
                     event.status = False
                     event.save()
 
-            return render(request, 'attendance_app/events.html',{"events":events1,"form":form})
+            return render(request, 'attendance_app/events.html',{"events":events1,"form":form,"curr_time":current_time})
         else:
             messages.error(request,"Wrong admin or password")
             return redirect('attendance_app:index')
@@ -164,7 +164,7 @@ def events(request):
             event.save()
 
 
-    return render(request, "attendance_app/events.html",{"events":events1,"form":form})
+    return render(request, "attendance_app/events.html",{"events":events1,"form":form,"curr_time":current_time})
 
 
 def get_unique_attendances(attendances):
