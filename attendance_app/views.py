@@ -2,12 +2,11 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from .forms import EventForm, DeviceForm
-from .models import Student, Attendance, Event, Device, SecurityToken, Day
+from .models import Student, Attendance, Event, Device, SecurityToken
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.utils import timezone
-import pytz
 import requests
 import json
 
@@ -181,14 +180,6 @@ def get_unique_attendances(attendances):
     unique_attendances1 = [i for i in unique_attendances.values()]
 
     return unique_attendances1
-
-#used in event view for displaying the days with attendances
-def get_days_of_attendances(attendances, event_id):
-    for attendance in attendances:
-        if attendance.event==Event.objects.get(id=event_id):
-            date = str(attendance.date_attended).split()[0]
-            event = Event.objects.get(id=event_id)
-            Day.objects.get_or_create(date=date, event=event)
 
 def add_event(request):
     if request.method != "POST":

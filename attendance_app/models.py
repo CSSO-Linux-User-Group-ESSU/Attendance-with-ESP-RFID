@@ -36,14 +36,6 @@ class Event(models.Model):
     def __str__(self):
         return self.name
 
-class Day(models.Model):
-    date = models.DateField()
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-
-
-    def __str__(self):
-        return f"{str(self.date)}"
-
 class Attendance(models.Model):
     # day = models.ForeignKey(Day, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
