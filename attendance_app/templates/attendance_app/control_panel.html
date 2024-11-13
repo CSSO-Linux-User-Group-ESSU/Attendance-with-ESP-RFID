@@ -8,18 +8,24 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'attendance_app/css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 </head>
 <body>
     <div class="wrapper">
-    <header>
-        <h3 class="font-family-overall">Attendance System</h3>
+        <header>
+            <h3 class="font-family-overall">Attendance System</h3>
             {% if user.is_authenticated %}
-                <a href="{% url 'attendance_app:logout' %}"><i class="fa fa-sign-out" style="font-size:36px"></i></a>
-            {% else %}
-                <a href="{% url 'attendance_app:index' %}">Login</a>
+                <div class="profile-dropdown">
+                    <button class="profile-btn">
+                        <i class="fa fa-user-circle" style="font-size:36px; color:white;"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'attendance_app:logout' %}">Profile</a>
+                        <a href="{% url 'attendance_app:logout' %}">Logout</a>
+                    </div>
+                </div>
             {% endif %}
-    </header>
+        </header>
+        
 
     <div class="main-content">
         <div class="div2">

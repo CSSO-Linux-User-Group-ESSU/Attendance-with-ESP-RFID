@@ -1,3 +1,52 @@
+/* Container for profile button and dropdown */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style for profile button */
+.profile-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #466aa6;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: rgb(255, 255, 255);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    width: 100%; /* Ensures full width */
+    box-sizing: border-box; /* Ensures padding doesn’t add extra width */
+}
+
+/* Links inside the dropdown */
+.dropdown-content a:hover {
+    background-color: #333;
+}
+
+/* Show the dropdown content on button hover */
+.profile-dropdown:hover .dropdown-content {
+    display: block;
+}
+
 
 .attendance-div{
     flex-direction: row;
@@ -243,7 +292,7 @@ table .green-cells{
 
 .div2 a {
     text-decoration: none;
-    padding: 15px 20px;
+    padding: 30px 20px;
     padding-top: 30px;
     color: white;
     display: block;
@@ -255,7 +304,7 @@ table .green-cells{
 }
 
 .div2 {
-    margin-top: 40px;
+    margin-top: 20px;
     width: 300px;
     height: calc(100vh - 100px);
     background-color: #333;
@@ -319,7 +368,7 @@ header h3 {
 header a {
     color: #af4c4c;
     text-decoration: none;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
 
 .container {

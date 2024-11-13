@@ -78,7 +78,12 @@
         // This function will be triggered by the ESP32 when a card is scanned
         function updateCardUID(cardUID) {
             // Update the input field with the card UID
-            document.getElementById('card_uid').value = cardUID;
+            if(cardUID=="Error"){
+                document.getElementById('card_uid').placeholder = "Scan ID";
+            }else{
+                document.getElementById('card_uid').value = cardUID;
+            }
+            
         }
 
         // Optionally, use setInterval or a WebSocket to listen for updates from the ESP32
