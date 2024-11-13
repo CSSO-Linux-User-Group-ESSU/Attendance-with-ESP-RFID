@@ -1,27 +1,44 @@
+
+.attendance-div{
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    
+}
  
+.font-header{
+    font-weight: bold;
+    font-size: 50px;
+    
+ }
+
+.font-family-overall{
+    font-family: Arial, Helvetica, sans-serif;
+ }
 
 .refresh-button{
     float: right;
+    height: 42px;
 }
 
 table .red-cells{
-    background-color: red;
+    background-color: #af4c4c;
     font-weight: bold;
 }
 
 table .green-cells{
-    background-color: green;
+    background-color: #4CAF50;
     font-weight: bold;
 }
 
 .table1 a.red-button{
     display: inline-block;
     padding: 8px 16px;
-    background-color: red;
+    background-color: #af4c4c;
     color: white;
     text-decoration: none;
     border-radius: 4px;
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     transition: background-color 0.3s ease, color 0.3s ease;
  }
@@ -29,11 +46,11 @@ table .green-cells{
  .table1 a.green-button{
     display: inline-block;
     padding: 8px 16px;
-    background-color: green;
+    background-color: #4CAF50;
     color: rgb(255, 255, 255);
     text-decoration: none;
     border-radius: 4px;
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     transition: background-color 0.3s ease, color 0.3s ease;
  }
@@ -57,26 +74,33 @@ table .green-cells{
 }
 
 .modal-content {
-background: white;
-padding: 20px;
-border-radius: 8px;
-width: 50%;                
-max-width: 600px;          
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-position: relative;        
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    width: 500px;                
+    max-width: 600px;          
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    position: relative;        
 }
 
 .close {
-position: absolute;
-top: 10px;
-right: 10px;
-font-size: 24px;
-cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 40px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close:hover{
+    color:red;
 }
 
 .logo{
     width: 200px;
-    /* filter: drop-shadow(0 0 4em #313cffaa); */
     transition: filter 0.3s;
 }
 
@@ -85,7 +109,7 @@ cursor: pointer;
 }
 
 .form1 input{
-    font-family: Arial;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
 }
 
@@ -119,28 +143,20 @@ cursor: pointer;
     color: white;
     padding: 10px 20px;
     text-decoration: none;
-    border-radius: 5px;
-    font-family: Arial, sans-serif;
+    border-radius: 4px;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
-    transition: background-color 0.3s filter 0.3s ease;
+    transition: background-color 0.3s ease;
     margin-bottom: 20px;
 }
 
 .back-link:hover {
     background-color: #45a049;
-    filter: drop-shadow(0 0 4em #313cffaa);
+    cursor: pointer;
+    /* filter: drop-shadow(0 0 4em #313cffaa); */
 }
-
-.back-link:before {
-    content: "\2190";
-    margin-right: 8px;
-}
-
-
 
 .attendance_dashboard_h2 {
-    font-family: Arial, sans-serif;
-    color: #333;
     font-size:22px;
     margin-bottom: 20px;
 }
@@ -153,41 +169,38 @@ cursor: pointer;
     margin-bottom: 30px;
 }
 
-.form1 .form_label1 {
-    font-weight: bold;
-    color: #333;
-    font-size:18px;
-}
-
-.form1 .form_input1[type="date"] {
-    padding: 10px;
+.form_input1[type="date"] {
+    /* padding: 10px; */
     width: 200px;
+    height: 37px;
     border: 2px solid #ccc;
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.form1 .form_button1 {
-    width: 120px;
-    padding: 10px;
+.form_button1 {
+    height:40px;
+    display: inline-block;
     background-color: #4CAF50;
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
     transition: background-color 0.3s ease;
 }
 
-.form1 .form_button1:hover {
+.form_button1:hover {
     background-color: #45a049;
+    cursor: pointer;
 }
 
 
 .all_logs_h4 {
     margin-bottom: 10px;
-    font-family: Arial, sans-serif;
-    color: #555;
+    font-family: Arial, Helvetica, sans-serif;
     font-size:18px;
 }
 
@@ -198,7 +211,7 @@ cursor: pointer;
     color: white;
     text-decoration: none;
     border-radius: 4px;
-    font-family: Arial, sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
     font-size: 14px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -206,8 +219,8 @@ cursor: pointer;
 .table1 {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
-    font-family: Arial, sans-serif;
+    /* margin: 20px 0; */
+    font-family:Arial, Helvetica, sans-serif;
     font-size: 16px;
     text-align: left;
 }
@@ -222,18 +235,6 @@ cursor: pointer;
     font-weight: bold;
 }
 
-/* .table1 tr:nth-child(even) {
-    background-color: #f9f9f9;
-} */
-
-/* .table1 tr:hover {
-    background-color: #f1f1f1;
-} */
-
-/* .table1 td {
-    color: #333;
-} */
-
 .table1 td[colspan="6"] {
     text-align: center;
     color: #999;
@@ -246,7 +247,7 @@ cursor: pointer;
     padding-top: 30px;
     color: white;
     display: block;
-    font-family: Arial, sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
     font-size: 22px;
     text-align: left;
     transition: background-color 0.3s ease;
@@ -316,7 +317,7 @@ header h3 {
 }
 
 header a {
-    color: #ff6666;
+    color: #af4c4c;
     text-decoration: none;
     margin-left: 10px;
 }
@@ -363,17 +364,23 @@ header a {
     transition: background-color 0.3s;
 }
 
+.modal-btn {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    background-color: #1eff00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
 .login-btn:hover {
     background-color:#466aa6;
     box-shadow: 0 0 30px rgb(0, 0, 0);
-}
-
-
-.h11 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-family: 'Arial', sans-serif;
-    color: #333;
 }
 
 .footer2 {
@@ -391,6 +398,7 @@ header a {
 
 .footer2 p {
     margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
 }
 
@@ -400,16 +408,17 @@ header a {
     max-width: 400px;
     margin: 20px auto;
     padding: 20px;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     border-radius: 8px;
-    background-color: #f9f9f9;
-    font-family: Arial, sans-serif;
+    /* background-color: #f9f9f9; */
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 
 .form-container input[type="text"],
 .form-container input[type="date"],
 .form-container input[type="number"],
+.form-container input[type="time"],
 .form-container select {
     width: 100%;
     padding: 10px;
@@ -418,32 +427,46 @@ header a {
     border-radius: 4px;
     font-size: 16px;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.form-container input[type="time"] {
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #ffffff;
+}
+
+.form-container input[type="time"]:focus {
+    border-color: #4CAF50;
+    outline: none;
 }
 
 .form-container button {
     width: 100%;
     padding: 10px;
+    font-weight: bold;
+    font-size:50px;
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
     margin-top: 10px;
-    transition: background-color 0.3s filter 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 .form-container button:hover {
-    filter: drop-shadow(0 0 4em #313cffaa);
     background-color: #45a049;
+    cursor: pointer;
 }
 
 .form-container label {
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     margin-bottom: 5px;
     display: block;
     font-size: 14px;
-    color: #333;
 }
 
 .form-container .field {
