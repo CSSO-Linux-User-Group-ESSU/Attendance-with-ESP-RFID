@@ -26,6 +26,7 @@
                 <th>Status</th>
                 <th>Event / Subject</th>
                 <th>Organizer / Instructor</th>
+                <th>Date Allocated</th>
                 <th>Time Allocated</th>
                 <th>Associated Device</th>
                 <th>Action</th>
@@ -47,7 +48,8 @@
                 </td>
                 <td>{{event.name}}</td>
                 <td>{{event.instructor}}</td>
-                <td>{{event.date_added}} {{event.start_time}} - {{event.stop_time}}</td>
+                <td>{{event.date_added}}</td>
+                <td>{{event.start_time}} - {{event.stop_time}}</td>
                 <td>{{event.device}}</td>
                 <td>
                     <a href="{% url 'attendance_app:attendance_for_today' event.id %}" class="view-btn">
