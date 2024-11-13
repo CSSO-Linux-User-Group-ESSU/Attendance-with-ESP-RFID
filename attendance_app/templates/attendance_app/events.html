@@ -2,7 +2,7 @@
 
 {% block content %}
     
-    <h2 class="attendance_dashboard_h2">Attendances</h2>
+    <h2 class="attendance_dashboard_h2 font-family-overall">Attendances</h2>
 
     <p>
         <button id="openModalBtn" class="back-link">Add New Attendance</button>
@@ -11,11 +11,11 @@
     <div id="attendanceModal" class="modal" style="display: none;">
         <div class="modal-content">
           <span id="closeModalBtn" class="close">&times;</span>
-          <h2 class="attendance_dashboard_h2">New Attendance</h2>
+          <h2 style="text-align: center" class="font-family-overall">New Attendance</h2>
           <form method="post" action="{% url 'attendance_app:add_event' %}" class="form-container">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Add</button>
+            <button type="submit">ADD</button>
           </form>
         </div>
       </div>
@@ -53,20 +53,21 @@
                     <a href="{% url 'attendance_app:attendance_for_today' event.id %}" class="view-btn">
                         <i class="fa fa-eye" style="font-size:18px"></i>
                     </a>
+                    {% if event.start_time <= curr_time and event.stop_time >= curr_time and curr_date == event.date_added %}
+                    {% if not event.status %}
+                    <a href="{% url 'attendance_app:change_status' event.id %}" class="green-button" style="font-size:17px">Enable</a>
+                    {% else %}
+                    <a href="{% url 'attendance_app:change_status' event.id %}" class="red-button"style="font-size:17px">Disable</a>
+                    {% endif %}
+                    {% else %}
+                    {% endif %}
                     <a href="{% url 'attendance_app:delete_event' event.id %}" class="red-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
                             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
                         </svg>
                     </a>
-                    {% if event.start_time <= curr_time and event.stop_time >= curr_time and curr_date == event.date_added %}
-                    {% if not event.status %}
-                    <a href="{% url 'attendance_app:change_status' event.id %}" class="green-button">Enable</a>
-                    {% else %}
-                    <a href="{% url 'attendance_app:change_status' event.id %}" class="red-button">Disable</a>
-                    {% endif %}
-                    {% else %}
-                    {% endif %}
+                    
                 </td>
             </tr>
             {% empty %}

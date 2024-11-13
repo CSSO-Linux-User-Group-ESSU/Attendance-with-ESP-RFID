@@ -8,11 +8,12 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'attendance_app/css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
     <div class="wrapper">
     <header>
-        <h3>Attendance System</h3>
+        <h3 class="font-family-overall">Attendance System</h3>
             {% if user.is_authenticated %}
                 <a href="{% url 'attendance_app:logout' %}"><i class="fa fa-sign-out" style="font-size:36px"></i></a>
             {% else %}
@@ -22,10 +23,10 @@
 
     <div class="main-content">
         <div class="div2">
-            <a class="nav-buttons" href="{% url 'attendance_app:dashboard' %}">History</a>
-            <a class="nav-buttons" href="{% url 'attendance_app:events' %}">Attendance</a>
-            <a class="nav-buttons" href="{% url 'attendance_app:devices' %}">Devices</a>
-            <a class="nav-buttons" href="{% url 'student_app:students' %}">Students</a>
+            <a class="nav-buttons font-family-overall" href="{% url 'attendance_app:dashboard' %}">History</a>
+            <a class="nav-buttons font-family-overall" href="{% url 'attendance_app:events' %}">Attendance</a>
+            <a class="nav-buttons font-family-overall" href="{% url 'attendance_app:devices' %}">Devices</a>
+            <a class="nav-buttons font-family-overall" href="{% url 'student_app:students' %}">Students</a>
         </div>
         {% block content %}
         {% endblock content %}
@@ -33,7 +34,7 @@
 
 
 
-    <footer class="footer2">
+    <footer class="footer2 font-family-overall">
         <p>&copy; 2024 ESSU Attendance System. All Rights Reserved.</p>
     </footer>
     </div>

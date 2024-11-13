@@ -1,7 +1,7 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <h2 class="attendance_dashboard_h2">Students</h2>
+    <h2 class="attendance_dashboard_h2 font-family-overall">Students</h2>
 
     <p>
         <button id="openModalBtn" class="back-link">Add New Student</button>
@@ -10,13 +10,13 @@
     <div id="attendanceModal" class="modal" style="display: none;">
         <div class="modal-content">
           <span id="closeModalBtn" class="close">&times;</span>
-          <h2 class="attendance_dashboard_h2">New Student</h2>
+          <h2 style="text-align: center;" class="font-family-overall">New Student</h2>
           <form method="post" action="{% url 'student_app:add_student' %}" class="form-container">
             <label for="card_uid">Card UID</label>
             <input type="text" id="card_uid" name="card_uid" required />
             {% csrf_token %}
             {{form.as_p}}
-            <button type="submit">Add</button>
+            <button type="submit">ADD</button>
           </form>
         </div>
     </div>
@@ -24,11 +24,11 @@
     <div id="attendanceModal1" class="modal" style="display: none;">
         <div class="modal-content">
           <span id="closeModalBtn1" class="close">&times;</span>
-          <h2 class="attendance_dashboard_h2">Upload from File</h2>
+          <h2 style="text-align:center" class="font-family-overall">Upload from File</h2>
           <form method="post" enctype="multipart/form-data" class="form-container" action="{% url 'student_app:upload_file' %}">
             {% csrf_token %}
             {{ form1.as_p }}
-            <button type="submit">Upload</button>
+            <button type="submit">UPLOAD</button>
             </form>
         </div>
     </div>
@@ -54,7 +54,9 @@
                  <td>{{ student.first_name}}</td>
                  <td>{{ student.middle_name}}</td>
                  <td>
-                     <a href="{% url 'student_app:student_attendance' student.id %}" class="view-btn">Logs</a>
+                     <a href="{% url 'student_app:student_attendance' student.id %}" class="view-btn" style="font-size:17px">
+                        <i class="fa fa-eye" style="font-size:18px"></i>
+                     </a>
                      <a href="{% url 'student_app:delete_student' student.id %}" class="red-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>

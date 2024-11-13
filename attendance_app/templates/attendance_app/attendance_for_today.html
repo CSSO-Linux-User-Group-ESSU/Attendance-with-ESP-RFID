@@ -2,12 +2,16 @@
 
 {% block content %}
     <p><a href="{% url 'attendance_app:events' %}" class="back-link">Go Back</a></p>
-    <h2 class="attendance_dashboard_h2">{{event.name}}</h2>
 
-    <h4 class="all_logs_h4">Recorded Student Attendance: {{top}}/{{below}}</h4>
-    <p class="all_logs_h4">Date:{{day}}</p>
+    <h2 class="font-family-overall" style="text-align: center;">{{event.name}}</h2>
 
-    <button class="refresh-button" onclick="location.reload()"><i class="fa fa-refresh" style="font-size:36px;"></i></button>
+    <div class="attendance-div">
+        <h3 class="font-family-overall">Recorded Student Attendance: {{top}}/{{below}}</h3>
+        <h3 class="font-family-overall">Date:{{day}}</h3>
+        <button class="refresh-button" onclick="location.reload()"><i class="fa fa-refresh" style="font-size:36px;"></i></button>
+    </div>
+    
+
     <table class="table1">
         <thead>
             <tr>

@@ -1,17 +1,15 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <h2 class="attendance_dashboard_h2">Attendance History</h2>
+    <h2 class="attendance_dashboard_h2 font-family-overall" style="margin-bottom: 30px;">Attendance History</h2>
 
     <form method="post" action="{% url 'attendance_app:date_attendance' %}">
         {% csrf_token %}
-        <label class="form_label1">Select Date</label>
-        <br>
         <input class="form_input1" type="date" id="date" name="date" required>
         <button class="form_button1" type="submit">Go to Date</button>
     </form>
 
-    <h4 class="all_logs_h4">All logs:</h4>
+    <h3 class="font-family-overall">All logs:</h3>
     <table class="table1">
         <thead>
             <tr>
