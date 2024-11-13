@@ -15,7 +15,7 @@
 
         <div class="container">
             <img class="logo" src="{% static 'attendance_app/img/essu_logo.png' %}">
-            <h1 class="font-header font-family-overall">Create account</h1>
+            <h1 class="font-family-overall">Create account</h1>
             <form action="{% url 'attendance_app:signup' %}" method="post" class="form1">
 
                 {% csrf_token %}
@@ -32,7 +32,7 @@
                     <button type="submit" class="login-btn font-family-overall">CREATE</button>
 
             </form>
-            <i><a href="{% url 'attendance_app:index' %}" class="font-family-overall">Login</a></i>
+            <i>Already have an account? <a href="{% url 'attendance_app:index' %}" class="font-family-overall">Login</a></i>
         </div>
 
         <footer class="footer2">

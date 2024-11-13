@@ -15,7 +15,7 @@
 
         <div class="container">
             <img class="logo" src="{% static 'attendance_app/img/essu_logo.png' %}">
-            <h1 class="font-header font-family-overall">Login</h1>
+            <h1 class="font-family-overall">Login</h1>
             <form action="{% url 'attendance_app:control_panel' %}" method="post" class="form1">
 
                 {% csrf_token %}
