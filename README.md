@@ -14,7 +14,9 @@
 <HTTPClient.h>
 <SPI.h>
 <MFRC522.h>
-<Arduino_JSON.h>
+<WebServer.h>
+<ArduinoJson.h>
+<EEPROM.h>
 ```
 ## 2.) Upload the code .ino into the esp32
 ## 3.) Run the .ino file in Arduino IDE to configure the esp32
