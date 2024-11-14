@@ -48,7 +48,17 @@ venv\Scripts\activate
 ```bash
 pip install -r requirements.txt
 ```
-## 8.) Migrate and collectstatic
+
+## 8.) Setup MySQL database
+
+```bash
+mysql -u root -p
+CREATE DATABASE database_name CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+GRANT ALL PRIVILEGES ON database_name.* TO 'username'@'localhost' IDENTIFIED BY 'password';
+FLUSH PRIVILEGES;
+EXIT;
+```
+## 9.) Migrate and collectstatic
 
 ```bash
 python manage.py makemigrations attendance_app
@@ -57,7 +67,7 @@ python manage.py migrate
 python manage.py collectstatic
 ```
 
-## 9.) Run server
+## 10.) Run server
 
 ```bash
 python manage.py runserver
