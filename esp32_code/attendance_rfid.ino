@@ -159,22 +159,22 @@ void get_card_uid(){
   server.send(200, "text/plain",cardUID);
 }
 
-// Function to write String data to EEPROM
+
 void writeEEPROM(int startAddr, String data) {
   int len = data.length();
   for (int i = 0; i < len; i++) {
     EEPROM.write(startAddr + i, data[i]);
   }
-  EEPROM.write(startAddr + len, '\0');  // Null-terminate the string
-  EEPROM.commit();  // Save changes to EEPROM
+  EEPROM.write(startAddr + len, '\0');  
+  EEPROM.commit(); 
 }
 
-// Function to read String data from EEPROM
+
 String readEEPROM(int startAddr) {
   String data = "";
   char c = EEPROM.read(startAddr);
   int i = 0;
-  while (c != '\0' && i < 64) {  // Read until null-terminator or buffer size limit
+  while (c != '\0' && i < 64) {  
     data += c;
     i++;
     c = EEPROM.read(startAddr + i);
@@ -183,7 +183,7 @@ String readEEPROM(int startAddr) {
 }
 
 void setupAccessPoint() {
-  Serial.println("Starting Access Point...");
+  Serial.println("No Saved Credentials, Starting Access Point");
   WiFi.softAP("ESP32_Config", "12345678");
 
   IPAddress IP = WiFi.softAPIP();
@@ -191,7 +191,7 @@ void setupAccessPoint() {
   Serial.print("AP IP address: ");
   Serial.println(IP);
 
-  // Serve configuration page
+  
   server.on("/", handleRoot);
   server.on("/save_config", HTTP_POST, saveWiFiConfig);
   server.begin();
