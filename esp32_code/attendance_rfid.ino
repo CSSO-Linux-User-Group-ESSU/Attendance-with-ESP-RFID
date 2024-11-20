@@ -207,13 +207,13 @@ void saveWiFiConfig() {
       ssid = server.arg("ssid");
       password = server.arg("password");
 
-      // Save to EEPROM
+      
       writeEEPROM(SSID_ADDR, ssid);
       writeEEPROM(PASSWORD_ADDR, password);
 
       server.send(200, "text/html", "<h2>Configuration Saved. Rebooting...</h2>");
       delay(1000);
-      ESP.restart();  // Restart the ESP32 to apply changes
+      ESP.restart();  
     } else {
       server.send(400, "text/html", "<h2>Error: Missing SSID or Password</h2>");
     }
