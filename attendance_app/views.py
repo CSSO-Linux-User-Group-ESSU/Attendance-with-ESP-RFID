@@ -216,7 +216,6 @@ def ping_device(request, device_id):
     try:
         response = requests.post(f"http://{device.ip_address}/ping",headers=headers,json=config_data, timeout=5)
         device.status = (response.text == "pong")
-        print("PONG:",response.text)
         device.save()
     except requests.RequestException:
         device.status = False
@@ -309,7 +308,6 @@ def api_attendance(request):
             
             
             if len(event1) > 1:
-                print('DUDUHA EVENT')
                 events_enabled = 0
                 for event_i in event1:
                     if event_i.status==True:
@@ -322,8 +320,6 @@ def api_attendance(request):
                 if events_enabled == 0:
                     return JsonResponse({'status': 'error', 'message': 'Events associated with device disabled'}, status=404)
             else:
-                print("UUSA LA EVENT")
-                print(event1[0])
                 if event1[0].status:
                     if event1[0].start_time <= current_time and event1[0].stop_time >= current_time:
                         Attendance.objects.create(student=student1,event=event1[0])
