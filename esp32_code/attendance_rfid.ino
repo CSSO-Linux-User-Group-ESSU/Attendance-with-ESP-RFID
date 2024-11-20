@@ -226,6 +226,7 @@ void saveWiFiConfig()
       writeEEPROM(PASSWORD_ADDR, password);
 
       server.send(200, "text/html", "<h2>Configuration Saved. Rebooting...</h2>");
+      digitalWrite(yellowPin,LOW);
       delay(1000);
       ESP.restart();
     }
