@@ -267,6 +267,7 @@ void setup() {
     server.begin();
   }else{
     setupAccessPoint();
+    digitalWrite(yellowPin,HIGH);
   }
 }
 
