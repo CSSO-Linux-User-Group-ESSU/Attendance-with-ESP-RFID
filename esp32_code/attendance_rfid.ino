@@ -5,7 +5,13 @@
 #include <WebServer.h>
 #include <ArduinoJson.h>
 #include <EEPROM.h>
+#include <Wire.h>
+#include <LiquidCrystal_PCF8574.h>
 
+LiquidCrystal_PCF8574 lcd(0x3F);
+
+#define SDA_CUSTOM 17
+#define SCL_CUSTOM 16
 #define SS_PIN 5
 #define RST_PIN 0
 #define SSID_ADDR 0
@@ -70,6 +76,9 @@ void handlePing()
 
     if (deviceName2 == deviceName)
       server.send(200, "text/plain", "pong");
+      displayPing();
+      delay(700);
+      displayDevice();
   }
 }
 
@@ -82,6 +91,31 @@ void sendIP()
     String response = "{\"ip_address\":\"" + ipAddress + "\"}";
     server.send(200, "application/json", response);
   }
+}
+
+
+void displayDevice(){
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print(deviceName);
+  lcd.setCursor(0,1);
+  lcd.print("Ready...");
+}
+
+void displayConnected(){
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Connected");
+  lcd.setCursor(0,1);
+  lcd.print("IP:"+ WiFi.localIP().toString());
+}
+
+void displayPing(){
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Ping");
+  lcd.setCursor(0,1);
+  lcd.print("Pong");
 }
 
 // for configuring the esp32
@@ -132,6 +166,9 @@ void handleConfig()
 
       // Successfully connected to new WiFi, send IP address back to Django
       Serial.println("\nNew WiFi connection established, IP Address: " + ipAddress);
+      
+      displayDevice();
+
       digitalWrite(bluePin, HIGH);
       tone(buzzerPin, 1000);
       delay(50);
@@ -224,10 +261,16 @@ void saveWiFiConfig()
 
       writeEEPROM(SSID_ADDR, ssid);
       writeEEPROM(PASSWORD_ADDR, password);
+      writeEEPROM(DEVICENAME_ADDR,"");
 
       server.send(200, "text/html", "<h2>Configuration Saved. Rebooting...</h2>");
       digitalWrite(yellowPin,LOW);
       delay(1000);
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("Rebooting...");
+      delay(900);
+      lcd.clear();
       ESP.restart();
     }
     else
@@ -239,6 +282,9 @@ void saveWiFiConfig()
 
 void setup()
 {
+  Wire.begin(SDA_CUSTOM,SCL_CUSTOM);
+  lcd.begin(16, 2);
+  lcd.setBacklight(255);
   token1.trim();
   pinMode(redPin, OUTPUT);
   pinMode(bluePin, OUTPUT);
@@ -248,6 +294,11 @@ void setup()
   mfrc522.PCD_Init();
 
   EEPROM.begin(EEPROM_SIZE);
+
+  lcd.setCursor(0, 0);
+  lcd.print("Starting device");
+  delay(1000);
+  lcd.clear();
 
   // Load saved WiFi credentials from EEPROM
   ssid = readEEPROM(SSID_ADDR);
@@ -261,12 +312,14 @@ void setup()
   {
     delay(500);
     Serial.println("Connecting to WiFi...");
+    lcd.setCursor(0, 0);
+    lcd.print("Connecting...");
     maxAttempts += 1;
   }
   if (WiFi.status() == WL_CONNECTED)
   {
     Serial.println("Connected to WiFi, IP Address: " + WiFi.localIP().toString());
-    // Serial.println("Connected to WiFi, IP Address: " + WiFi.localIP().toString());
+    displayConnected();
     digitalWrite(bluePin, HIGH);
     tone(buzzerPin, 1000);
     delay(50);
@@ -285,9 +338,18 @@ void setup()
     server.on("/send_ip", HTTP_POST, sendIP);
     server.on("/get_card_uid", HTTP_GET, get_card_uid);
     server.begin();
+
+    delay(1000);
+    if(deviceName.c_str()!=""){ displayDevice();}
+   
   }
   else
   {
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("AP Mode");
+    lcd.setCursor(0,1);
+    lcd.print("IP:192.168.4.1");
     setupAccessPoint();
     digitalWrite(yellowPin, HIGH);
   }
@@ -311,6 +373,14 @@ void loop()
   }
   cardUID.toUpperCase();
   Serial.println("Card UID: " + cardUID);
+
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Scanned");
+  lcd.setCursor(0,1);
+  lcd.print(cardUID);
+  delay(500);
+  displayDevice();
 
   if (WiFi.status() == WL_CONNECTED)
   {

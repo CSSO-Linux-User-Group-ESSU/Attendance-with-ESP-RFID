@@ -17,6 +17,8 @@
 <WebServer.h>
 <ArduinoJson.h>
 <EEPROM.h>
+<Wire.h>
+<LiquidCrystal_PCF8574.h>
 ```
 ## 2.) Upload the code .ino into the esp32
 ## 3.) Run the .ino file in Arduino IDE to configure the esp32
