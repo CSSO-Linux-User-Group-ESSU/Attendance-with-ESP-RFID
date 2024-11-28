@@ -28,11 +28,11 @@ int yellowPin = 13;
 String cardUID;
 String ssid;
 String password;
-String serverName; // Your Django server endpoint
+String serverName;
 String deviceName;
 String token1 = "fhdhjdkdsjcncjdhchdjdjdsjdw3@@!!#^^4682eqryoxuewrozcbvmalajurpd";
 
-// HTML form for WiFi configuration
+
 const char *htmlPage = R"rawliteral(
 <!DOCTYPE html>
 <html>
@@ -124,10 +124,8 @@ void handleConfig()
 {
   if (server.method() == HTTP_POST)
   {
-    // Allocate a JSON document to store the incoming data
     DynamicJsonDocument doc(1024);
 
-    // Parse the JSON body
     DeserializationError error = deserializeJson(doc, server.arg("plain"));
 
     if (error)
@@ -137,7 +135,6 @@ void handleConfig()
       return;
     }
 
-    // Extract the ssid and password from the parsed JSON
     String ssid = doc["ssid"];
     String password = doc["password"];
     serverName = doc["apiEndpointUrl"].as<String>();
@@ -164,7 +161,6 @@ void handleConfig()
       String response = "{\"ip_address\":\"" + ipAddress + "\"}";
       server.send(200, "application/json", response);
 
-      // Successfully connected to new WiFi, send IP address back to Django
       Serial.println("\nNew WiFi connection established, IP Address: " + ipAddress);
       
       displayDevice();
@@ -300,7 +296,6 @@ void setup()
   delay(1000);
   lcd.clear();
 
-  // Load saved WiFi credentials from EEPROM
   ssid = readEEPROM(SSID_ADDR);
   password = readEEPROM(PASSWORD_ADDR);
   serverName = readEEPROM(SERVERNAME_ADDR);
