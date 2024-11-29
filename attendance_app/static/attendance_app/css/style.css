@@ -1,10 +1,10 @@
-/* Container for profile button and dropdown */
+
 .profile-dropdown {
     position: relative;
     display: inline-block;
 }
 
-/* Style for profile button */
+
 .profile-btn {
     background: none;
     border: none;
@@ -12,7 +12,7 @@
     font-size: 16px;
 }
 
-/* Dropdown content (hidden by default) */
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -25,7 +25,7 @@
     overflow: hidden;
 }
 
-/* Links inside the dropdown */
+
 .dropdown-content a {
     color: rgb(255, 255, 255);
     padding: 12px 16px;
@@ -33,16 +33,16 @@
     display: block;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
-    width: 100%; /* Ensures full width */
-    box-sizing: border-box; /* Ensures padding doesn’t add extra width */
+    width: 100%; 
+    box-sizing: border-box;
 }
 
-/* Links inside the dropdown */
+
 .dropdown-content a:hover {
     background-color: #333;
 }
 
-/* Show the dropdown content on button hover */
+
 .profile-dropdown:hover .dropdown-content {
     display: block;
 }
@@ -470,6 +470,8 @@ header a {
 .form-container input[type="date"],
 .form-container input[type="number"],
 .form-container input[type="time"],
+.form-container input[type="password"],
+.form-container input[type="email"],
 .form-container select {
     width: 100%;
     padding: 10px;

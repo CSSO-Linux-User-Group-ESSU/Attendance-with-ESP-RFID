@@ -11,6 +11,26 @@ import requests
 import json
 
 
+
+def update_profile(request):
+    if request.method=="POST":
+        user = request.user
+
+        user.last_name = request.POST.get('last_name', user.last_name)
+        user.first_name = request.POST.get('first_name', user.first_name)
+        user.username = request.POST.get('username', user.username)
+        user.email = request.POST.get('email', user.email)
+        password = request.POST.get('password')
+
+        if password:
+            user.set_password(password)
+        
+        user.save()
+
+        login(request,user)
+
+        return redirect("attendance_app:events")
+
 def change_status(request, event_id):
     event = Event.objects.get(id=event_id)
 

@@ -7,6 +7,7 @@ from . import views
 app_name = "attendance_app"
 urlpatterns = [
     path('ping_device/<int:device_id>/',views.ping_device, name='ping_device'),
+    path('update_profile/',views.update_profile, name='update_profile'),
     path('signup/',views.signup, name='signup'),
     path('logout/',views.logout_view, name='logout'),
     path("api/",views.api_attendance, name='api_attendance'),

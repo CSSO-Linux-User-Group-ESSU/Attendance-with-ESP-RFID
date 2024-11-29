@@ -10,8 +10,44 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+    <div id="attendanceModalProf" class="modal" style="display: none;">
+        <div class="modal-content">
+          <span id="closeModalBtnProf" class="close">&times;</span>
+          <h2 style="text-align:center" class="font-family-overall">Profile</h2>
+          <form method="post" action="{% url 'attendance_app:update_profile' %}" class="form-container">
+            {% csrf_token %}
+
+            <p>
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+            </p>
+            
+            <p>
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+            </p>
+            
+            <p>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value="{{ user.username }}" required>
+            </p>
+            
+            <p>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="{{ user.email }}" required>
+            </p>
+            <p>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter new password (optional)">
+            </p>
+            
+            <button type="submit">Save Changes</button>
+          </form>
+        </div>
+    </div>
     <div class="wrapper">
         <header>
+            
             <h3 class="font-family-overall">Attendance System</h3>
             {% if user.is_authenticated %}
                 <div class="profile-dropdown">
@@ -19,7 +55,7 @@
                         <i class="fa fa-user-circle" style="font-size:36px; color:white;"></i>
                     </button>
                     <div class="dropdown-content">
-                        <!-- <a href="{% url 'attendance_app:logout' %}">Profile</a> -->
+                        <a id="openModalBtnProf">Profile</a>
                         <a href="{% url 'attendance_app:logout' %}">Logout</a>
                     </div>
                 </div>
@@ -46,5 +82,27 @@
     </div>
 
     <script src="{% static 'attendance_app/js/control_panel.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = document.getElementById("attendanceModalProf");
+            const openModalBtn = document.getElementById("openModalBtnProf");
+            const closeModalBtn = document.getElementById("closeModalBtnProf");
+        
+            
+            openModalBtn.addEventListener("click", function() {
+              modal.style.display = "flex";
+            });
+        
+            closeModalBtn.addEventListener("click", function() {
+              modal.style.display = "none";
+            });
+        
+            window.addEventListener("click", function(event) {
+              if (event.target == modal) {
+                modal.style.display = "none";
+              }
+            });
+          });
+    </script>
 </body>
 </html>
