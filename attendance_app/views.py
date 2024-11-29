@@ -325,6 +325,9 @@ def api_attendance(request):
             for event in Event.objects.all():
                 if event.device==device1:
                     event1.append(event)
+
+            if len(event1)==0:
+                return JsonResponse({'status': 'Error', 'message': 'No Events'}, status=404)
             
             
             if len(event1) > 1:
@@ -335,27 +338,27 @@ def api_attendance(request):
                         if event_i.start_time <= current_time and event_i.stop_time >= current_time:
                             Attendance.objects.create(student=student1,event=event_i)
                         else:
-                            return JsonResponse({'status': 'error', 'message': 'Event Deadline'}, status=404)
+                            return JsonResponse({'status': 'Error', 'message': 'Event Deadline'}, status=404)
                         
                 if events_enabled == 0:
-                    return JsonResponse({'status': 'error', 'message': 'No Events'}, status=404)
+                    return JsonResponse({'status': 'Error', 'message': 'No Events'}, status=404)
             else:
                 if event1[0].status:
                     if event1[0].start_time <= current_time and event1[0].stop_time >= current_time:
                         Attendance.objects.create(student=student1,event=event1[0])
                     else:
-                        return JsonResponse({'status': 'error', 'message': 'Event Deadline'}, status=404)
+                        return JsonResponse({'status': 'Error', 'message': 'Event Deadline'}, status=404)
                 else:
-                    return JsonResponse({'status': 'error', 'message': 'Event disabled'}, status=404)
+                    return JsonResponse({'status': 'Error', 'message': 'Event disabled'}, status=404)
                 
             #success
-            return JsonResponse({'status': 'success', 'message': str(student1)}, status=201)
+            return JsonResponse({'status': 'Success', 'message': str(student1)}, status=201)
         except Student.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Student Denied'}, status=404)
+            return JsonResponse({'status': 'Error', 'message': 'Student Denied'}, status=404)
         except Event.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'No Event'}, status=404)
+            return JsonResponse({'status': 'Error', 'message': 'No Event'}, status=404)
         except Device.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'No Device'}, status=404)
+            return JsonResponse({'status': 'Error', 'message': 'No Device'}, status=404)
         except SecurityToken.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Token unknown'}, status=404)
-    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+            return JsonResponse({'status': 'Error', 'message': 'Token unknown'}, status=404)
+    return JsonResponse({'status': 'Error', 'message': 'Invalid request'}, status=400)

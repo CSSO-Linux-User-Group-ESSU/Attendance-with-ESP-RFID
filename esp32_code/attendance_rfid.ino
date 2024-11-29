@@ -77,8 +77,14 @@ void handlePing()
     if (deviceName2 == deviceName)
       server.send(200, "text/plain", "pong");
       displayPing();
+      digitalWrite(redPin,HIGH);
+      digitalWrite(yellowPin,HIGH);
+      digitalWrite(bluePin,HIGH);
       delay(700);
       displayDevice();
+      digitalWrite(redPin,LOW);
+      digitalWrite(yellowPin,LOW);
+      digitalWrite(bluePin,LOW);
   }
 }
 
@@ -357,7 +363,12 @@ void setup()
 
 void loop()
 {
-  server.handleClient(); // Handle incoming client requests
+  server.handleClient();
+  if(deviceName != ""){
+     displayDevice();
+  }else{
+    displayConnected();
+  }
 
   if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial())
   {
@@ -380,11 +391,7 @@ void loop()
   lcd.setCursor(0,1);
   lcd.print(cardUID);
   delay(500);
-  if(deviceName != ""){
-     displayDevice();
-  }else{
-    displayConnected();
-  }
+  
 
   if (WiFi.status() == WL_CONNECTED)
   {
@@ -402,6 +409,32 @@ void loop()
       String response = http.getString();
       Serial.println("Server Response Code: " + String(httpResponseCode));
       Serial.println("Server Response: " + response);
+
+      StaticJsonDocument<1024> jsonDoc; // Adjust size as needed for your JSON payload
+      DeserializationError error = deserializeJson(jsonDoc, response);
+
+      if(error){
+        Serial.print("Error parsing json:");
+        Serial.println(error.c_str());
+      }else{
+          const char* message = jsonDoc["message"];
+          const char* status = jsonDoc["status"];
+
+          Serial.println("Parsed JSON:");
+          lcd.clear();
+          if (message)
+          {
+            Serial.println("Message: " + String(message));
+            lcd.setCursor(0, 1);
+            lcd.print(message);
+          }
+          if (status)
+          {
+            lcd.setCursor(0, 0);
+            lcd.print(status);
+            Serial.println("Status: " + String(status));
+          }
+      }
 
       if (httpResponseCode == 201)
       {
@@ -422,6 +455,11 @@ void loop()
     }
     else
     {
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Error");
+      lcd.setCursor(0, 1);
+      lcd.print("Server Error");
       Serial.print("Error on sending POST: ");
       Serial.println(httpResponseCode);
       digitalWrite(yellowPin, HIGH);
@@ -432,4 +470,5 @@ void loop()
     }
     http.end();
   }
+  delay(2000);
 }
