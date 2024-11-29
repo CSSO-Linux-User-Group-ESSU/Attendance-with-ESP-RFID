@@ -20,10 +20,10 @@ def update_profile(request):
         user.first_name = request.POST.get('first_name', user.first_name)
         user.username = request.POST.get('username', user.username)
         user.email = request.POST.get('email', user.email)
-        password = request.POST.get('password')
+        # password = request.POST.get('password')
 
-        if password:
-            user.set_password(password)
+        # if password:
+        #     user.set_password(password)
         
         user.save()
 

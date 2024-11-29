@@ -335,7 +335,12 @@ void setup()
     server.begin();
 
     delay(1000);
-    if(deviceName.c_str()!=""){ displayDevice();}
+    if(deviceName != ""){
+       displayDevice();
+      //  lcd.clear();
+      //  lcd.setCursor(0, 0);
+      //  lcd.print("Im here");
+    }
    
   }
   else
@@ -375,7 +380,11 @@ void loop()
   lcd.setCursor(0,1);
   lcd.print(cardUID);
   delay(500);
-  displayDevice();
+  if(deviceName != ""){
+     displayDevice();
+  }else{
+    displayConnected();
+  }
 
   if (WiFi.status() == WL_CONNECTED)
   {
