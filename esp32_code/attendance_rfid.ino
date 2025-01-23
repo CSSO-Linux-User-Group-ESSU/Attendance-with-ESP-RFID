@@ -32,7 +32,6 @@ String serverName;
 String deviceName;
 String token1 = "fhdhjdkdsjcncjdhchdjdjdsjdw3@@!!#^^4682eqryoxuewrozcbvmalajurpd";
 
-
 const char *htmlPage = R"rawliteral(
 <!DOCTYPE html>
 <html>
@@ -76,15 +75,15 @@ void handlePing()
 
     if (deviceName2 == deviceName)
       server.send(200, "text/plain", "pong");
-      displayPing();
-      digitalWrite(redPin,HIGH);
-      digitalWrite(yellowPin,HIGH);
-      digitalWrite(bluePin,HIGH);
-      delay(700);
-      displayDevice();
-      digitalWrite(redPin,LOW);
-      digitalWrite(yellowPin,LOW);
-      digitalWrite(bluePin,LOW);
+    displayPing();
+    digitalWrite(redPin, HIGH);
+    digitalWrite(yellowPin, HIGH);
+    digitalWrite(bluePin, HIGH);
+    delay(700);
+    displayDevice();
+    digitalWrite(redPin, LOW);
+    digitalWrite(yellowPin, LOW);
+    digitalWrite(bluePin, LOW);
   }
 }
 
@@ -99,28 +98,30 @@ void sendIP()
   }
 }
 
-
-void displayDevice(){
+void displayDevice()
+{
   lcd.clear();
-  lcd.setCursor(0,0);
+  lcd.setCursor(0, 0);
   lcd.print(deviceName);
-  lcd.setCursor(0,1);
+  lcd.setCursor(0, 1);
   lcd.print("Ready...");
 }
 
-void displayConnected(){
+void displayConnected()
+{
   lcd.clear();
-  lcd.setCursor(0,0);
+  lcd.setCursor(0, 0);
   lcd.print("Connected");
-  lcd.setCursor(0,1);
-  lcd.print("IP:"+ WiFi.localIP().toString());
+  lcd.setCursor(0, 1);
+  lcd.print("IP:" + WiFi.localIP().toString());
 }
 
-void displayPing(){
+void displayPing()
+{
   lcd.clear();
-  lcd.setCursor(0,0);
+  lcd.setCursor(0, 0);
   lcd.print("Ping");
-  lcd.setCursor(0,1);
+  lcd.setCursor(0, 1);
   lcd.print("Pong");
 }
 
@@ -168,7 +169,7 @@ void handleConfig()
       server.send(200, "application/json", response);
 
       Serial.println("\nNew WiFi connection established, IP Address: " + ipAddress);
-      
+
       displayDevice();
 
       digitalWrite(bluePin, HIGH);
@@ -263,13 +264,13 @@ void saveWiFiConfig()
 
       writeEEPROM(SSID_ADDR, ssid);
       writeEEPROM(PASSWORD_ADDR, password);
-      writeEEPROM(DEVICENAME_ADDR,"");
+      writeEEPROM(DEVICENAME_ADDR, "");
 
       server.send(200, "text/html", "<h2>Configuration Saved. Rebooting...</h2>");
-      digitalWrite(yellowPin,LOW);
+      digitalWrite(yellowPin, LOW);
       delay(1000);
       lcd.clear();
-      lcd.setCursor(0,0);
+      lcd.setCursor(0, 0);
       lcd.print("Rebooting...");
       delay(900);
       lcd.clear();
@@ -282,9 +283,11 @@ void saveWiFiConfig()
   }
 }
 
+int AP_MODE = 0;
+
 void setup()
 {
-  Wire.begin(SDA_CUSTOM,SCL_CUSTOM);
+  Wire.begin(SDA_CUSTOM, SCL_CUSTOM);
   lcd.begin(16, 2);
   lcd.setBacklight(255);
   token1.trim();
@@ -341,33 +344,49 @@ void setup()
     server.begin();
 
     delay(1000);
-    if(deviceName != ""){
-       displayDevice();
+    if (deviceName != "")
+    {
+      displayDevice();
       //  lcd.clear();
       //  lcd.setCursor(0, 0);
       //  lcd.print("Im here");
     }
-   
+    AP_MODE = 0;
   }
   else
   {
+    AP_MODE = 1;
     lcd.clear();
-    lcd.setCursor(0,0);
+    lcd.setCursor(0, 0);
     lcd.print("AP Mode");
-    lcd.setCursor(0,1);
+    lcd.setCursor(0, 1);
     lcd.print("IP:192.168.4.1");
     setupAccessPoint();
-    digitalWrite(yellowPin, HIGH);
   }
 }
 
 void loop()
 {
   server.handleClient();
-  if(deviceName != ""){
-     displayDevice();
-  }else{
-    displayConnected();
+  if (!AP_MODE)
+  {
+    if (deviceName != "")
+    {
+      displayDevice();
+    }
+    else
+    {
+      displayConnected();
+    }
+  }
+  else
+  {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("AP Mode");
+    lcd.setCursor(0, 1);
+    lcd.print("IP:192.168.4.1");
+    digitalWrite(yellowPin, HIGH);
   }
 
   if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial())
@@ -386,12 +405,11 @@ void loop()
   Serial.println("Card UID: " + cardUID);
 
   lcd.clear();
-  lcd.setCursor(0,0);
+  lcd.setCursor(0, 0);
   lcd.print("Scanned");
-  lcd.setCursor(0,1);
+  lcd.setCursor(0, 1);
   lcd.print(cardUID);
   delay(500);
-  
 
   if (WiFi.status() == WL_CONNECTED)
   {
@@ -413,27 +431,30 @@ void loop()
       StaticJsonDocument<1024> jsonDoc; // Adjust size as needed for your JSON payload
       DeserializationError error = deserializeJson(jsonDoc, response);
 
-      if(error){
+      if (error)
+      {
         Serial.print("Error parsing json:");
         Serial.println(error.c_str());
-      }else{
-          const char* message = jsonDoc["message"];
-          const char* status = jsonDoc["status"];
+      }
+      else
+      {
+        const char *message = jsonDoc["message"];
+        const char *status = jsonDoc["status"];
 
-          Serial.println("Parsed JSON:");
-          lcd.clear();
-          if (message)
-          {
-            Serial.println("Message: " + String(message));
-            lcd.setCursor(0, 1);
-            lcd.print(message);
-          }
-          if (status)
-          {
-            lcd.setCursor(0, 0);
-            lcd.print(status);
-            Serial.println("Status: " + String(status));
-          }
+        Serial.println("Parsed JSON:");
+        lcd.clear();
+        if (message)
+        {
+          Serial.println("Message: " + String(message));
+          lcd.setCursor(0, 1);
+          lcd.print(message);
+        }
+        if (status)
+        {
+          lcd.setCursor(0, 0);
+          lcd.print(status);
+          Serial.println("Status: " + String(status));
+        }
       }
 
       if (httpResponseCode == 201)
