@@ -4,6 +4,7 @@
     <p><a href="{% url 'attendance_app:events' %}" class="back-link">Go Back</a></p>
 
     <h2 class="font-family-overall" style="text-align: center;">{{event.name}}</h2>
+    <input type="text" id="barcodeScanner" placeholder="Scan barcode here..." autofocus>
 
     <div class="attendance-div">
         <h3 class="font-family-overall">Recorded Student Attendance: {{top}}/{{below}}</h3>
