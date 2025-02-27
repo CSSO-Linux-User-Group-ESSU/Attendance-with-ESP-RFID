@@ -103,7 +103,7 @@ def delete_device(request, device_id):
 
 def logout_view(request):
     logout(request)
-    return redirect("attendance_app:index")
+    return redirect("attendance_app:log_in")
 
 
 def control_panel(request):
@@ -131,8 +131,8 @@ def control_panel(request):
             return render(request, 'attendance_app/events.html',{"events":events1,"form":form,"curr_time":current_time, "curr_date":current_date})
         else:
             messages.error(request,"Wrong admin or password")
-            return redirect('attendance_app:index')
-    return redirect('attendance_app:index')
+            return redirect('attendance_app:log_in')
+    return redirect('attendance_app:log_in')
 
 
 def attendance_for_today(request, event_id):
