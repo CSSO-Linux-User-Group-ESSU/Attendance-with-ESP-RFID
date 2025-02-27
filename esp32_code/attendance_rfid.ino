@@ -418,7 +418,7 @@ void loop()
     http.begin(serverName);
     http.addHeader("Content-Type", "application/json");
 
-    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"device\":\"" + deviceName + "\",\"token\":\"" + token1 + "\"}";
+    String jsonPayload = "{\"card_uid\":\"" + cardUID + "\",\"device\":\"" + deviceName + "\",\"token\":\"" + token1 + "\",\"barcode\":\"\",\"event\":\"\"}";
     Serial.println("Sending JSON Payload: " + jsonPayload);
     int httpResponseCode = http.POST(jsonPayload);
 

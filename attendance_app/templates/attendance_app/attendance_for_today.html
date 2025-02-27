@@ -4,7 +4,7 @@
     <p><a href="{% url 'attendance_app:events' %}" class="back-link">Go Back</a></p>
 
     <h2 class="font-family-overall" style="text-align: center;">{{event.name}}</h2>
-    <input type="text" id="barcodeScanner" placeholder="Scan barcode here..." autofocus>
+    <input type="text" id="barcodeScanner" autofocus data-event="{{ event.name }}" placeholder="Scan barcode here...">
 
     <div class="attendance-div">
         <h3 class="font-family-overall">Recorded Student Attendance: {{top}}/{{below}}</h3>
@@ -39,5 +39,28 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <script>
+        document.getElementById("barcodeScanner").addEventListener("change", function() {
+            let barcode = this.value.trim();  // Get scanned barcode
+            this.value = "";  // Clear the input field
+
+            let eventName = document.getElementById("barcodeScanner").dataset.event;  // Get event name
+
+    
+            // Send barcode data to Django API
+            fetch("{% url 'attendance_app:api_attendance' %}", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ barcode: barcode, token: "fhdhjdkdsjcncjdhchdjdjdsjdw3@@!!#^^4682eqryoxuewrozcbvmalajurpd",card_uid:"",device:"",event:eventName})
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message || data.error);  // Show response message
+                location.reload();  // Refresh attendance records
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
 
 {% endblock content %}

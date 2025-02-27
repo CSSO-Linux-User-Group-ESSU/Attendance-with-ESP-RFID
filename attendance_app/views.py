@@ -202,17 +202,34 @@ def get_unique_attendances(attendances):
 
     return unique_attendances1
 
-def add_event(request):
-    if request.method != "POST":
-        form = EventForm()
-    else:
-        form = EventForm(data=request.POST)
-        if form.is_valid():
+# def add_event(request):
+#     if request.method != "POST":
+#         form = EventForm()
+#     else:
+#         form = EventForm(data=request.POST)
+#         if form.is_valid():
             
-            form.save()
+#             form.save()
+#             return redirect("attendance_app:events")
+
+#     return render(request, "attendance_app/events.html",{"form":form})
+def add_event(request):
+    if request.method == "POST":
+        form = EventForm(request.POST)
+        if form.is_valid():
+            event = form.save(commit=False)
+            
+            # If barcode is enabled, remove device association
+            if form.cleaned_data.get("barcode_enabled"):
+                event.device = None  # No physical device required
+            
+            event.save()
             return redirect("attendance_app:events")
 
-    return render(request, "attendance_app/events.html",{"form":form})
+    else:
+        form = EventForm()
+
+    return render(request, "attendance_app/events.html", {"form": form})
 
 
 def devices(request):
@@ -312,19 +329,30 @@ def api_attendance(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         card_uid = data.get("card_uid")
+        barcode = data.get("barcode")
         token1 = data.get("token")
+        event_taken = data.get("event")
+        barcode_enabled = barcode != ""
+
         try:
             #get time to check if the attendance got on time
             current_time = timezone.localtime().time()
             
-            
-            student1 = Student.objects.get(card_uid=str(card_uid).upper())
+            if barcode_enabled:
+                student1 = Student.objects.get(student_id=str(barcode.strip()))
+            else:
+                student1 = Student.objects.get(card_uid=str(card_uid).upper())
             token2 = SecurityToken.objects.get(token=token1)
-            device1 = Device.objects.get(name=data.get("device"),token=token2)
-            event1 = []
-            for event in Event.objects.all():
-                if event.device==device1:
-                    event1.append(event)
+            
+            
+            if not barcode_enabled:
+                event1 = []
+                device1 = Device.objects.get(name=data.get("device"),token=token2)
+                for event in Event.objects.all():
+                    if event.device==device1:
+                        event1.append(event)
+            else:
+                event1 = [Event.objects.get(name=str(event_taken))]
 
             if len(event1)==0:
                 return JsonResponse({'status': 'Error', 'message': 'No Events'}, status=404)
