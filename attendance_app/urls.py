@@ -21,5 +21,5 @@ urlpatterns = [
     path("delete_event/<int:event_id>/",views.delete_event, name='delete_event'),
     path("delete_day/<int:event_id>/",views.delete_day, name='delete_day'),
     path("change_status/<int:event_id>/",views.change_status, name='change_status'),
-    path("",views.index, name='index')
+    path("",views.log_in, name='log_in')
 ]

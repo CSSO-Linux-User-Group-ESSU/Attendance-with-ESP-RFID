@@ -71,7 +71,7 @@ def signup(request):
             user.is_superuser = True
             user.save()
             messages.success(request, "User created")
-            return render(request, "attendance_app/index.html")
+            return render(request, "attendance_app/log_in.html")
 
         else:
             messages.error(request,"User already exists")
@@ -154,8 +154,8 @@ def attendance_for_today(request, event_id):
     return render(request, "attendance_app/attendance_for_today.html", context)
 
 
-def index(request):
-    return render(request, 'attendance_app/index.html')
+def log_in(request):
+    return render(request, 'attendance_app/log_in.html')
 
 
 def dashboard(request):
