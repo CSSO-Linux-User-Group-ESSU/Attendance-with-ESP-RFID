@@ -1,3 +1,23 @@
+/* Import a nice font (optional) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background-color: #000;
+}
+
+
+
+
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -604,4 +624,102 @@ header a {
 
 .form-container .field {
     margin-bottom: 15px;
+}
+
+
+/* CSS for Home*/
+
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url("/static/attendance_app/img/essu_bg.png") no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Home Container */
+.home-container {
+    position: absolute;
+    top: 70px;
+    left: 100px;
+    text-align: left;
+}
+
+/* Heading Styling */
+h1 {
+    font-size: 4rem;
+    font-weight: bolder;
+    color: white; /* Letter fill color */
+
+    /* Thick text border */
+    -webkit-text-stroke: 1px #3e7b27;
+    
+    /* Extra outer glow effect to enhance visibility */
+    text-shadow: 
+        1px 1px 0px #3e7b27, 
+        -1px 1px 0px #3e7b27, 
+        1px -1px 0px #3e7b27, 
+        -1px -1px 0px #3e7b27;
+
+    margin-bottom: 1px;
+}
+
+/* Navigation Styling */
+ul {
+    list-style: none;
+    padding: 1px;
+    border-radius: 10px;
+    display: flex;
+    gap: 6px;
+}
+
+ul li {
+    display: inline;
+}
+
+ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+ul li a:hover {
+    color: #1ae485;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .home-container {
+        position: static;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    ul {
+        flex-direction: column;
+        gap: 10px;
+        padding: 0;
+    }
+
+    ul li {
+        display: block;
+    }
+
+    ul li a {
+        display: block;
+        padding: 12px;
+    }
 }
