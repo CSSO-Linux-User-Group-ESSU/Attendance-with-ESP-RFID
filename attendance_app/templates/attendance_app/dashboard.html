@@ -10,7 +10,7 @@
     </form>
 
     <h3 class="font-family-overall">All logs:</h3>
-    <table class="table1">
+    <table id="dashboardTable" class="table1">
         <thead>
             <tr>
                 <th>Event / Subject</th>
@@ -31,13 +31,28 @@
                     <td>{{ record.student.middle_name }}</td>
                     <td>{{ record.date_attended }}</td>
                 </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="6">No attendance records available.</td>
-                </tr>
             {% endfor %}
         </tbody>
     </table>
+    {% load static  %}
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+    <!-- Initialize DataTable -->
+    <script>
+        $(document).ready(function() {
+            $('#dashboardTable').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable column sorting
+                pageLength: 10, // Set number of rows per page
+                lengthMenu: [5, 10, 25, 50], // Define page length options
+            });
+        });
+    </script>
 
 
 {% endblock content %}

@@ -13,7 +13,7 @@
     </div>
     
 
-    <table class="table1">
+    <table id="todayTable" class="table1">
         <thead>
             <tr>
                 <th>Student ID</th>
@@ -31,10 +31,6 @@
                 <td>{{record.student.first_name}}</td>
                 <td>{{record.student.middle_name}}</td>
                 <td>{{record.date_attended}}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="5">No attendance for this date.</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -60,6 +56,23 @@
                 location.reload();  // Refresh attendance records
             })
             .catch(error => console.error("Error:", error));
+        });
+    </script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+    <!-- Initialize DataTable -->
+    <script>
+        $(document).ready(function() {
+            $('#todayTable').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search bar
+                ordering: true, // Enable column sorting
+                pageLength: 10, // Set number of rows per page
+                lengthMenu: [5, 10, 25, 50], // Define page length options
+            });
         });
     </script>
 
