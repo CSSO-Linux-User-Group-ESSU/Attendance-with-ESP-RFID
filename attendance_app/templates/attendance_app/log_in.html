@@ -18,15 +18,21 @@
 
                     {% csrf_token %}
 
-                        <input type="text" id="username" name="username" required class="input-field" placeholder="Username">
-                        <input type="password" id="password" name="password" required class="input-field" placeholder="Password">
-                        <button type="submit" class="login-btn font-family-overall">   Log In    </button>
+                        <label for="username" class="label">Username</label>
+                        <input type="text" id="username" name="username" required class="input-field">
+                        <label for="password" class="label">Password</label>
+                        <input type="password" id="password" name="password" required class="input-field">
+                        <button type="submit" class="login-btn font-family-overall">
+                            <span>Log In</span>
+                        </button>
 
                 </form>
 
                 <hr style="border: 1px solid white; opacity: 0.16; width: 100%;">
 
-                <button class="create-acc-btn" onclick="window.location.href='{% url 'attendance_app:signup' %}';">Create an account</button>
+                <button class="create-acc-btn" onclick="window.location.href='{% url 'attendance_app:signup' %}';">
+                    <span>Create an account</span>
+                </button>
             </div>
         </div>
 

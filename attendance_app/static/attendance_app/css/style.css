@@ -44,7 +44,6 @@ body {
     width: 70%;               /* 90% width for mobile responsiveness */
     max-width: 400px;         /* Limit width for larger screens */
     padding: 20px;
-    background: white;
     flex-direction: column;
     display: flex;
     justify-content:center;
@@ -248,7 +247,6 @@ table .green-cells{
     margin-bottom: 20px;
 }
 
-
 .form1 {
     display: flex;
     flex-direction: column;
@@ -420,53 +418,66 @@ header a {
     width: 100%;
     max-width: 300px;
     height: 3vh;
-    max-height: 50px;
+    max-height: 30px;
     display: grid;
     gap: 10px;
-    padding: 10px 0px 10px 0px;
-    border: none;
-    border-radius: 30px;
-    text-align: center;
+    padding: 10px 20px 10px 20px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    text-align: left;
     font-size: 18px;
-}
-
-.input-field::placeholder {
-    color: grey;
-    text-align: center;
-    font-size: 18px;
+    background-color: rgb(255, 255, 255, 0);
 }
 
 .input-field:focus {
     border: none;
     outline: none;
     width: 100%;
+    background-color: rgb(255, 255, 255, 0.20);
 }
 
-.search:focus-within {
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.75);
+.input-field:focus-within {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+}
+
+.label {
+    width: 100%;
+    max-width: 300px;
+    height: 1vh;
+    max-height: 10px;
+    display: grid;
+    gap: 2px;
+    padding: 10px 0px 10px 0px;
+    border: none;
+    border-radius: none;
+    text-align: left;
+    color: white;
+    font-size: 18px;
+    font-size: bold;
+    box-shadow: 0 0 0px rgba(255, 254, 254, 0.75);
 }
 
 .login-btn {
     width: 100%;
-    max-width: 300px;
-    height: 8vh;
-    max-height: 50px;
+    max-width: 85%;
+    height: 15vh;
+    max-height: 55px;
     display: grid;
-    padding: 12px ;
-    background-color: #3e7b27;
-    color: white;
+    padding: 18px 20px 10px 20px;
+    background-color: #1ae485;
+    color: black;
     border: none;
     border-radius: 30px;
-    font-size: 25px;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: bolder;
     cursor: pointer;
-    margin-top: 10px;
+    margin: 15px 0px 5px 0px;
     transition: background-color 0.3s;
 }
 
 .login-btn:hover {
-    background-color: white;
-    color: #3e7b27;
+    background-color: black;
+    color:  #1ae485;
     cursor: pointer;
     transition: color 0.3s ease, background 0.3s ease;
     box-shadow: 0 0 5px rgb(0, 0, 0);
@@ -478,21 +489,23 @@ header a {
     height: 8vh;
     max-height: 50px;
     display: grid;
-    padding: 10px 10px 10px 10px;
-    background-color: #3e7b27;
-    color: white;
-    border: none;
+    padding: 13px 10px 10px 10px;
+    background-color: rgb(255, 255, 255, 0);
+    color: #1ae485;
+    border: 1px solid #1ae485;
     border-radius: 30px;
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
     margin-top: 15px;
+    opacity: .16px;
     transition: background-color 0.3s;
 }
 
 .create-acc-btn:hover {
-    background-color: white;
-    color: #3e7b27;
+    background-color: #1ae485;
+    color: black;
+    border: 1px solid #1ae485;
     cursor: pointer;
     transition: color 0.3s ease, background 0.3s ease;
     box-shadow: 0 0 5px rgb(0, 0, 0);
