@@ -1,0 +1,163 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url("/static/attendance_app/img/essu_bg.png") no-repeat center center/cover;
+    color: white;
+    align-items: center;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Logo design */
+.logo-font {
+    color: white; /* Text color */
+    text-shadow: 
+        -2px -2px 0 #00723c,  
+         2px -2px 0 #00723c,  
+        -2px  2px 0 #00723c,  
+         2px  2px 0 #00723c; /* green outline */
+    font-size: 45px;
+}
+
+/* To center the center box*/
+.container {
+    flex-direction: column;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    align-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Contains the form */
+.center-box {
+    width: 100vw;               /* 90% width for mobile responsiveness */
+    max-width: 400px;         /* Limit width for larger screens */
+    flex-direction: column;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    text-align: center;
+    padding: 0px 0px 0px 0px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255, 0.16);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form1 {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding: 10px 5px 10px 10px;
+    gap: 10px;
+}
+
+/* log in button */
+.login-btn {
+    width: 45vw;
+    max-width: 360px;
+    height: 15vh;
+    max-height: 55px;
+    display: grid;
+    padding: 15px 10px 20px 10px;
+    background-color: #1ae485;
+    color: black;
+    border: none;
+    border-radius: 30px;
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: center;
+    cursor: pointer;
+    margin: 15px 0px 10px 0px;
+    transition: background-color 0.3s;
+}
+
+/* Log in hover effect */
+.login-btn:hover {
+    background-color: black;
+    color:  #1ae485;
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+}
+
+/* Create button */
+.create-acc-btn {
+    width: 80%;
+    max-width: 400px;
+    height: 15vh;
+    max-height: 55px;
+    display: grid;
+    padding: 15px 10px 10px 10px;
+    background-color: rgb(255, 255, 255, 0);
+    color: #1ae485;
+    border: 1px solid #1ae485;
+    border-radius: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    opacity: .16px;
+    transition: background-color 0.3s;
+}
+
+/* Hover effect */
+.create-acc-btn:hover {
+    background-color: #1ae485;
+    color: black;
+    border: 1px solid #1ae485;
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+}
+
+/* Input design */
+.input-field {
+    width: 30vw;
+    max-width: 300px;
+    height: 3vh;
+    max-height: 20px;
+    display: grid;
+    gap: 10px;
+    padding: 10px 30px 10px 30px;
+    border: 1px solid grey;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 18px;
+    background-color: rgb(255, 255, 255, 0);
+}
+
+/* Makes the background more whiter when typing*/
+.input-field:focus,
+.input-field:active {
+    text-decoration: none;
+    border: none;
+    outline: none;
+    background-color: rgb(255, 255, 255, 0.20);
+}
+
+/* Creates a shadow outside the input field when typing */
+.input-field:focus-within {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+}
+
+/* Login labels design */
+.label {
+    width: 100%;
+    max-width: 300px;
+    height: 1vh;
+    max-height: 10px;
+    display: grid;
+    gap: 2px;
+    padding: 10px 0px 10px 0px;
+    border: none;
+    border-radius: none;
+    text-align: left;
+    color: white;
+    font-size: 18px;
+    font-size: bold;
+    box-shadow: 0 0 0px rgba(255, 254, 254, 0.75);
+}

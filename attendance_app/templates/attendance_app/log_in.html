@@ -3,7 +3,7 @@
 <head>
     <title>Login</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'attendance_app/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'attendance_app/css/login_signup.css' %}">
 </head>
 <body>
 
@@ -28,7 +28,7 @@
 
                 </form>
 
-                <hr style="border: 1px solid white; opacity: 0.16; width: 100%;">
+                <hr style="border: 1px solid white; opacity: 0.16; width: 90%;">
 
                 <button class="create-acc-btn" onclick="window.location.href='{% url 'attendance_app:signup' %}';">
                     <span>Create an account</span>

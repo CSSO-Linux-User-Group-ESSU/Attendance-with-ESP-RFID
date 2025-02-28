@@ -11,7 +11,6 @@ import requests
 import json
 
 
-
 def home(request):
     return render(request, 'attendance_app/home.html')
 
