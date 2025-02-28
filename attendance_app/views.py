@@ -12,6 +12,10 @@ import json
 
 
 
+def home(request):
+    return render(request, 'attendance_app/home.html')
+
+
 def update_profile(request):
     if request.method=="POST":
         user = request.user
