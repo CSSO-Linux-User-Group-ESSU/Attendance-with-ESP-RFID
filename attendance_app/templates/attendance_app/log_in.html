@@ -8,37 +8,30 @@
 <body>
 
     <div class="wrapper">
-        <!--
-        
-        <header>
-            <h3>Attendance System</h3>
-        </header>
-        -->
 
         <div class="container">
             <div class="center-box">
-                <!-- <img class="logo" src="{% static 'attendance_app/img/essu_logo.png' %}"> -->
+                <!--  <img class="logo" src="{% static 'attendance_app/img/essu_logo.png' %}">  -->
+                  
                 <h1 class="logo-font">EAC</h1>
-                <form action="{% url 'attendance_app:log_in' %}" method="post" class="form1">
+                <form action="{% url 'attendance_app:control_panel' %}" method="post" class="form1">
 
                     {% csrf_token %}
 
                         <input type="text" id="username" name="username" required class="input-field" placeholder="Username">
-                        <input type="email" id="email" name="email" required class="input-field" placeholder="Email">
                         <input type="password" id="password" name="password" required class="input-field" placeholder="Password">
-                        <input type="password" id="password2" name="password2" required class="input-field" placeholder="Confirm Password">
-
-                        <button type="submit" class="login-btn">Create</button>
+                        <button type="submit" class="login-btn font-family-overall">   Log In    </button>
 
                 </form>
 
                 <hr style="border: 1px solid white; opacity: 0.16; width: 100%;">
 
-                <button class="login-btn" onclick="window.location.href='{% url 'attendance_app:log_in' %}';"><a>Log In Account</button>
+                <button class="create-acc-btn" onclick="window.location.href='{% url 'attendance_app:signup' %}';">Create an account</button>
             </div>
         </div>
 
-        <!--<footer class="footer2">
+        <!--
+        <footer>
             <p>&copy; 2024 ESSU Attendance System. All Rights Reserved.</p>
         </footer>-->
 

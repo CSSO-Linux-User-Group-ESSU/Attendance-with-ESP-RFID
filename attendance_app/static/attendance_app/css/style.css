@@ -19,6 +19,14 @@ body {
 
 
 
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url("/static/attendance_app/img/essu_bg.png"); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+
 .profile-dropdown {
     position: relative;
     display: inline-block;
@@ -32,6 +40,40 @@ body {
     font-size: 16px;
 }
 
+.logo-font {
+    color: white; /* Text color */
+    text-shadow: 
+        -2px -2px 0 #00723c,  
+         2px -2px 0 #00723c,  
+        -2px  2px 0 #00723c,  
+         2px  2px 0 #00723c; /* green outline */
+    font-size: 45px;
+}
+
+/* To center the center box*/
+.container {
+    flex-direction: column;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    height: 100vh;
+}
+
+/* Contains the form */
+.center-box {
+    width: 70%;               /* 90% width for mobile responsiveness */
+    max-width: 400px;         /* Limit width for larger screens */
+    padding: 20px;
+    background: white;
+    flex-direction: column;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    text-align: center;
+    border-radius: 50px;
+    background-color: rgb(255, 255, 255, 0.16);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
 .dropdown-content {
     display: none;
@@ -81,10 +123,6 @@ body {
     
  }
 
-.font-family-overall{
-    font-family: Arial, Helvetica, sans-serif;
- }
-
 .refresh-button{
     float: right;
     height: 42px;
@@ -125,7 +163,7 @@ table .green-cells{
  }
  
  
- .form_button1:hover{
+.form_button1:hover{
     cursor: pointer;
  }
  
@@ -204,7 +242,6 @@ table .green-cells{
 .nav-buttons:active{
     opacity: 0.4;
 }
-
 
 .back-link {
     display: inline-block;
@@ -362,8 +399,6 @@ html, body {
     box-sizing: border-box;
 }
 
-
-
 header {
     background-color: #333;
     color: white;
@@ -393,16 +428,6 @@ header a {
     /* margin-left: 10px; */
 }
 
-.container {
-    flex-direction: column;
-    display: flex;
-    justify-content:center;
-    align-items:center;
-    flex-grow: 1;
-    padding: 20px;
-    background-color: #b9b9b9;
-}
-
 .form1 {
     width: 100%;
     max-width: 400px;
@@ -414,45 +439,87 @@ header a {
 .input-field {
     width: 100%;
     max-width: 300px;
-    padding: 10px;
-    margin: 10px 0;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+    height: 3vh;
+    max-height: 50px;
+    display: grid;
+    gap: 10px;
+    padding: 10px 0px 10px 0px;
+    border: none;
+    border-radius: 30px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.input-field::placeholder {
+    color: grey;
+    text-align: center;
+    font-size: 18px;
+}
+
+.input-field:focus {
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.search:focus-within {
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.75);
 }
 
 .login-btn {
     width: 100%;
     max-width: 300px;
-    padding: 10px;
-    background-color: #333;
+    height: 8vh;
+    max-height: 50px;
+    display: grid;
+    padding: 12px ;
+    background-color: #3e7b27;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s;
-}
-
-.modal-btn {
-    width: 100%;
-    max-width: 300px;
-    padding: 10px;
-    background-color: #1eff00;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 30px;
+    font-size: 25px;
+    font-weight: bold;
     cursor: pointer;
     margin-top: 10px;
     transition: background-color 0.3s;
 }
 
 .login-btn:hover {
-    background-color:#466aa6;
-    box-shadow: 0 0 30px rgb(0, 0, 0);
+    background-color: white;
+    color: #3e7b27;
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+    box-shadow: 0 0 5px rgb(0, 0, 0);
 }
+
+.create-acc-btn {
+    width: 100%;
+    max-width: 300px;
+    height: 8vh;
+    max-height: 50px;
+    display: grid;
+    padding: 10px 10px 10px 10px;
+    background-color: #3e7b27;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s;
+}
+
+.create-acc-btn:hover {
+    background-color: white;
+    color: #3e7b27;
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+}
+
+
+
 
 .footer2 {
     text-align: center;
