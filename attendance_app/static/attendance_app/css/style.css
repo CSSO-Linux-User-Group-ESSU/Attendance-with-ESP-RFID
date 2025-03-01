@@ -7,6 +7,18 @@
   padding: 0;
   box-sizing: border-box;
 }
+<<<<<<< HEAD
+=======
+
+/* Body Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background-color: #000;
+}
+
+
+>>>>>>> bb40333a40a40e5bd934835ca729fe61c7c99638
 body {
     font-family: 'Poppins', sans-serif;
     background: url("/static/attendance_app/img/essu_bg.png") no-repeat center center/cover;
@@ -48,31 +60,6 @@ body {
         -2px  2px 0 #00723c,  
          2px  2px 0 #00723c; /* green outline */
     font-size: 45px;
-}
-
-/* To center the center box*/
-.container {
-    flex-direction: column;
-    display: flex;
-    justify-content:center;
-    align-items:center;
-    height: 100vh;
-}
-
-/* Contains the form */
-.center-box {
-    width: 70%;               /* 90% width for mobile responsiveness */
-    max-width: 400px;         /* Limit width for larger screens */
-    padding: 20px;
-    background: white;
-    flex-direction: column;
-    display: flex;
-    justify-content:center;
-    align-items:center;
-    text-align: center;
-    border-radius: 50px;
-    background-color: rgb(255, 255, 255, 0.16);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-content {
@@ -268,7 +255,6 @@ table .green-cells{
     margin-bottom: 20px;
 }
 
-
 .form1 {
     display: flex;
     flex-direction: column;
@@ -435,91 +421,6 @@ header a {
     flex-direction: column;
     align-items: center;
 }
-
-.input-field {
-    width: 100%;
-    max-width: 300px;
-    height: 3vh;
-    max-height: 50px;
-    display: grid;
-    gap: 10px;
-    padding: 10px 0px 10px 0px;
-    border: none;
-    border-radius: 30px;
-    text-align: center;
-    font-size: 18px;
-}
-
-.input-field::placeholder {
-    color: grey;
-    text-align: center;
-    font-size: 18px;
-}
-
-.input-field:focus {
-    border: none;
-    outline: none;
-    width: 100%;
-}
-
-.search:focus-within {
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.75);
-}
-
-.login-btn {
-    width: 100%;
-    max-width: 300px;
-    height: 8vh;
-    max-height: 50px;
-    display: grid;
-    padding: 12px ;
-    background-color: #3e7b27;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    font-size: 25px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s;
-}
-
-.login-btn:hover {
-    background-color: white;
-    color: #3e7b27;
-    cursor: pointer;
-    transition: color 0.3s ease, background 0.3s ease;
-    box-shadow: 0 0 5px rgb(0, 0, 0);
-}
-
-.create-acc-btn {
-    width: 100%;
-    max-width: 300px;
-    height: 8vh;
-    max-height: 50px;
-    display: grid;
-    padding: 10px 10px 10px 10px;
-    background-color: #3e7b27;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: background-color 0.3s;
-}
-
-.create-acc-btn:hover {
-    background-color: white;
-    color: #3e7b27;
-    cursor: pointer;
-    transition: color 0.3s ease, background 0.3s ease;
-    box-shadow: 0 0 5px rgb(0, 0, 0);
-}
-
-
-
 
 .footer2 {
     text-align: center;

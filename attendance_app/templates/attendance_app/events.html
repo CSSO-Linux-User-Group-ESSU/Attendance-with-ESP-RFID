@@ -43,7 +43,7 @@
         </div>
       </div>
 
-    <table class="table1">
+    <table id="eventTable" class="table1">
         <thead>
             <tr>
                 <th>Status</th>
@@ -96,13 +96,31 @@
                 </td>
             </tr>
             {% empty %}
-            <tr>
-                <td colspan="7">No attendance records available.</td>
-            </tr>
+            <!--<tr>-->
+                <!-- <td colspan="7">No attendance records available.</td> -->
+           <!-- </tr>-->
             {% endfor %}
         </tbody>
     </table>
     {% load static %}
     <script src="{% static 'attendance_app/js/modal.js' %}"></script>
+   
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+    <!-- Initialize DataTable -->
+    <script>
+        $(document).ready(function() {
+        $('#eventTable').DataTable({
+            paging: true, // Enable pagination
+            searching: true, // Enable search bar
+            ordering: true, // Enable column sorting
+            pageLength: 10, // Set number of rows per page
+            lengthMenu: [5, 10, 25, 50], // Define page length options
+        });
+    });
+    </script>
 
 {% endblock content %}
