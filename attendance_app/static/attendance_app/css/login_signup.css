@@ -1,16 +1,24 @@
 body {
-    font-family: 'Poppins', sans-serif;
     background: url("/static/attendance_app/img/essu_bg.png") no-repeat center center/cover;
     color: white;
     align-items: center;
-    align-content: center;
+    justify-content: center;
     display: flex;
-    flex-direction: column;
     min-height: 100vh;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* Logo design */
 .logo-font {
+    font-size: large;
+    font-weight: bold;
+    padding: 0px 150px 0px 0px;
     color: white; /* Text color */
     text-shadow: 
         -2px -2px 0 #00723c,  
@@ -20,30 +28,34 @@ body {
     font-size: 45px;
 }
 
-/* To center the center box*/
-.container {
-    flex-direction: column;
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    align-content: center;
-    height: 100vh;
-    width: 100vw;
-}
-
 /* Contains the form */
 .center-box {
-    width: 100vw;               /* 90% width for mobile responsiveness */
-    max-width: 400px;         /* Limit width for larger screens */
+    width: 420px;              
     flex-direction: column;
     display: flex;
     justify-content:center;
     align-items:center;
     text-align: center;
-    padding: 0px 0px 0px 0px;
+    padding: 30px 40px;
     border-radius: 10px;
-    background-color: rgb(255, 255, 255, 0.16);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgb(255, 255, 255, .2);
+    background-color: transparent;
+    backdrop-filter: blur(20px);
+    color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.center-box .input-field {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+}
+
+.center-box h1 {
+    font-size: 35px;
+    text-align: center;
+    font-weight: bolder;
 }
 
 .form1 {
@@ -54,14 +66,48 @@ body {
     gap: 10px;
 }
 
+/* Input design */
+.input-field input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    border: 2px solid rgb(255, 255, 255, .2);
+    padding: 20px 45px 20px 20px;
+    border-radius: 40px;
+    text-align: left;
+    font-size: 16px;
+    background-color: transparent;
+}
+
+.input-field input::placeholder {
+    color: #fff;
+}
+
+.input-field .login-svg {
+    position: absolute;
+    right: 10px;
+    top: 25%;
+    transform: translateX(-50%);
+    font-size: 20px;
+}
+
+.input-field .create-acc-svg {
+    position: absolute;
+    right: 10px;
+    top: 85%;
+    transform: translateX(-50%);
+    font-size: 20px;
+}
+
+
 /* log in button */
-.login-btn {
+.center-box .login-btn {
     width: 45vw;
     max-width: 360px;
-    height: 15vh;
-    max-height: 55px;
+    height: 10vh;
+    max-height: 50px;
     display: grid;
-    padding: 15px 10px 20px 10px;
     background-color: #1ae485;
     color: black;
     border: none;
@@ -70,7 +116,8 @@ body {
     font-weight: bolder;
     text-align: center;
     cursor: pointer;
-    margin: 15px 0px 10px 0px;
+    padding: 13px 10px 25px 10px;
+    margin: 20px 0;
     transition: background-color 0.3s;
 }
 
@@ -85,8 +132,8 @@ body {
 
 /* Create button */
 .create-acc-btn {
-    width: 80%;
-    max-width: 400px;
+    width: 45vw;
+    max-width: 353px;
     height: 15vh;
     max-height: 55px;
     display: grid;
@@ -98,8 +145,7 @@ body {
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin: 20px 0;
     opacity: .16px;
     transition: background-color 0.3s;
 }
@@ -112,36 +158,6 @@ body {
     cursor: pointer;
     transition: color 0.3s ease, background 0.3s ease;
     box-shadow: 0 0 5px rgb(0, 0, 0);
-}
-
-/* Input design */
-.input-field {
-    width: 30vw;
-    max-width: 300px;
-    height: 3vh;
-    max-height: 20px;
-    display: grid;
-    gap: 10px;
-    padding: 10px 30px 10px 30px;
-    border: 1px solid grey;
-    border-radius: 8px;
-    text-align: left;
-    font-size: 18px;
-    background-color: rgb(255, 255, 255, 0);
-}
-
-/* Makes the background more whiter when typing*/
-.input-field:focus,
-.input-field:active {
-    text-decoration: none;
-    border: none;
-    outline: none;
-    background-color: rgb(255, 255, 255, 0.20);
-}
-
-/* Creates a shadow outside the input field when typing */
-.input-field:focus-within {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
 }
 
 /* Login labels design */
@@ -159,5 +175,5 @@ body {
     color: white;
     font-size: 18px;
     font-size: bold;
-    box-shadow: 0 0 0px rgba(255, 254, 254, 0.75);
+    text-shadow: 2px 20px 20px rgba(0, 0, 0, 0.75);
 }
