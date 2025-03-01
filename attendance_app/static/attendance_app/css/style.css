@@ -7,8 +7,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-<<<<<<< HEAD
-=======
 
 /* Body Styles */
 body {
@@ -18,7 +16,6 @@ body {
 }
 
 
->>>>>>> bb40333a40a40e5bd934835ca729fe61c7c99638
 body {
     font-family: 'Poppins', sans-serif;
     background: url("/static/attendance_app/img/essu_bg.png") no-repeat center center/cover;

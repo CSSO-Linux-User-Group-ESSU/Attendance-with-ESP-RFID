@@ -1,106 +1,122 @@
-
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance System</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'attendance_app/css/style.css' %}">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'attendance_app/css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
 </head>
 <body>
-    <div id="attendanceModalProf" class="modal" style="display: none;">
-        <div class="modal-content">
-          <span id="closeModalBtnProf" class="close">&times;</span>
-          <h2 style="text-align:center" class="font-family-overall">Profile</h2>
-          <form method="post" action="{% url 'attendance_app:update_profile' %}" class="form-container">
-            {% csrf_token %}
-
-            <p>
-                <label for="last_name">Last Name</label>
-                <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required>
-            </p>
-            
-            <p>
-                <label for="first_name">First Name</label>
-                <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required>
-            </p>
-            
-            <p>
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" value="{{ user.username }}" required>
-            </p>
-            
-            <p>
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="{{ user.email }}" required>
-            </p>
-            
-            <button type="submit">Save Changes</button>
-          </form>
-        </div>
-    </div>
     <div class="wrapper">
+        <!-- Header / Navigation -->
         <header>
-            
             <h3 class="font-family-overall">Attendance System</h3>
+            
+            <div class="div2">
+                <a class="nav-buttons" href="{% url 'attendance_app:dashboard' %}">History</a>
+                <a class="nav-buttons" href="{% url 'attendance_app:events' %}">Attendance</a>
+                <a class="nav-buttons" href="{% url 'attendance_app:devices' %}">Wireless Devices</a>
+                <a class="nav-buttons" href="{% url 'student_app:students' %}">Students</a>
+                <a class="nav-buttons" href="#">Help</a>
+            </div>
+
             {% if user.is_authenticated %}
                 <div class="profile-dropdown">
                     <button class="profile-btn">
                         <i class="fa fa-user-circle" style="font-size:36px; color:white;"></i>
                     </button>
                     <div class="dropdown-content">
-                        <a id="openModalBtnProf">Profile</a>
+                        <a href="#" id="openModalBtnProf">Profile</a>
                         <a href="{% url 'attendance_app:logout' %}">Logout</a>
                     </div>
                 </div>
             {% endif %}
         </header>
         
+        <!-- Profile Modal -->
+        <div id="attendanceModalProf" class="modal">
+            <div class="modal-content">
+                <span id="closeModalBtnProf" class="close">&times;</span>
+                <h2 class="font-family-overall">Profile</h2>
+                <form method="post" action="{% url 'attendance_app:update_profile' %}" class="form-container">
+                    {% csrf_token %}
+                    
+                    <label for="last_name">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required>
 
-    <div class="main-content">
-        <div class="div2">
-            <a class="nav-buttons font-family-overall" href="{% url 'attendance_app:dashboard' %}">History</a>
-            <a class="nav-buttons font-family-overall" href="{% url 'attendance_app:events' %}">Attendance</a>
-            <a class="nav-buttons font-family-overall" href="{% url 'attendance_app:devices' %}">Wireless Devices</a>
-            <a class="nav-buttons font-family-overall" href="{% url 'student_app:students' %}">Students</a>
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" value="{{ user.username }}" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
         </div>
-        {% block content %}
-        {% endblock content %}
+
+        <!-- Main Content -->
+        <div class="main-content">
+            {% block content %}
+            {% endblock content %}
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer2">
+            <p>&copy; 2024 ESSU Attendance System. All Rights Reserved.</p>
+        </footer>
     </div>
 
-
-
-    <footer class="footer2 font-family-overall">
-        <p>&copy; 2024 ESSU Attendance System. All Rights Reserved.</p>
-    </footer>
-    </div>
-
+    <!-- JavaScript -->
     <script src="{% static 'attendance_app/js/control_panel.js' %}"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const modal = document.getElementById("attendanceModalProf");
             const openModalBtn = document.getElementById("openModalBtnProf");
             const closeModalBtn = document.getElementById("closeModalBtnProf");
-        
-            
-            openModalBtn.addEventListener("click", function() {
-              modal.style.display = "flex";
+            const profileDropdown = document.querySelector(".profile-dropdown");
+
+            // Hide modal initially
+            modal.style.display = "none";
+
+            // Open the modal when clicking "Profile"
+            openModalBtn.addEventListener("click", function (event) {
+                event.preventDefault();
+                modal.style.display = "flex";
             });
-        
-            closeModalBtn.addEventListener("click", function() {
-              modal.style.display = "none";
-            });
-        
-            window.addEventListener("click", function(event) {
-              if (event.target == modal) {
+
+            // Close the modal when clicking "X" button
+            closeModalBtn.addEventListener("click", function () {
                 modal.style.display = "none";
-              }
             });
-          });
+
+            // Close the modal when clicking outside of it
+            window.addEventListener("click", function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+
+            // Toggle dropdown menu on click (not hover)
+            profileDropdown.addEventListener("click", function (event) {
+                event.stopPropagation();
+                this.classList.toggle("active");
+            });
+
+            // Close dropdown when clicking outside
+            window.addEventListener("click", function () {
+                profileDropdown.classList.remove("active");
+            });
+        });
     </script>
 </body>
 </html>
