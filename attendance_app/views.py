@@ -131,6 +131,7 @@ def delete_device(request, device_id):
     return redirect("attendance_app:devices")
 
 
+@login_required
 def control_panel(request):
     if request.method == "POST":
         admin = request.POST.get("username")
