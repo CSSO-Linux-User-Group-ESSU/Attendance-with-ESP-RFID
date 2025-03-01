@@ -1,0 +1,168 @@
+/* Import a nice font (optional) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url("/static/attendance_app/img/essu_bg.png") no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Wrapper */
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Navigation Bar (Blur Effect) */
+header {
+    width: 100%;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.3); /* Slight transparency */
+    backdrop-filter: blur(10px); /* Blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari Support */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+header h3 {
+    color: white;
+    font-size: 22px;
+}
+
+/* Navigation Links */
+.div2 {
+    
+    display: flex;
+    gap: 5px;
+}
+
+.nav-buttons {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+.nav-buttons:hover {
+    color: #3e7b27;
+}
+
+/* Help Button */
+.help-btn {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.help-btn:hover {
+    background: #58D68D;
+    color: black;
+}
+
+/* Profile Dropdown */
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    min-width: 100px;
+    text-align: right;
+}
+
+.profile-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background: #58D68D;
+}
+
+/* Main Content */
+.main-content {
+    width: 90%;
+    max-width: 900px;
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Transparent Content Card */
+.transparent-box {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Image Icon */
+.transparent-box img {
+    width: 150px;
+    height: auto;
+}
+
+/* Text */
+.transparent-box p {
+    color: black;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Footer */
+.footer2 {
+    position: absolute;
+    bottom: 20px;
+    text-align: center;
+    color: white;
+}

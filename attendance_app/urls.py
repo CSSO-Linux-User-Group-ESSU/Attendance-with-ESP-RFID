@@ -21,6 +21,10 @@ urlpatterns = [
     path("delete_event/<int:event_id>/",views.delete_event, name='delete_event'),
     path("delete_day/<int:event_id>/",views.delete_day, name='delete_day'),
     path("change_status/<int:event_id>/",views.change_status, name='change_status'),
-    path("log_in/",views.log_in, name='log_in'),
-    path("",views.home, name='home')
+    path("",views.log_in, name='log_in'),
+
+
+
+    # new added page
+    path("home",views.home, name='home')
 ]
