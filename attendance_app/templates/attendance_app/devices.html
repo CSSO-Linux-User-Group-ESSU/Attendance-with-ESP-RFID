@@ -4,24 +4,26 @@
     <h2 class="attendance_dashboard_h2 font-family-overall">Devices</h2>
 
     <p>
-        <!-- <a href="{% url 'attendance_app:add_device' %}" class="back-link">Add New Device</a> -->
         <button id="openModalBtn" class="back-link">Configure New Device</button>
     </p>
 
-    
-
+    <!-- Modal -->
     <div id="attendanceModal" class="modal" style="display: none;">
         <div class="modal-content">
-          <span id="closeModalBtn" class="close">&times;</span>
-          <h2 style="text-align:center" class="font-family-overall">New Device</h2>
-          <form method="post" action="{% url 'attendance_app:add_device' %}" class="form-container">
-            {% csrf_token %}
-            {{form.as_p}}
-            <button type="submit">ADD</button>
-          </form>
+            <span id="closeModalBtn" class="close">&times;</span>
+            <h2 style="text-align:center" class="font-family-overall">New Device</h2>
+            <form method="post" action="{% url 'attendance_app:add_device' %}" class="form-container">
+                {% csrf_token %}
+                {% for field in form %}
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                {% endfor %}
+                <button type="submit">ADD</button>
+            </form>
         </div>
     </div>
 
+    <!-- Devices Table -->
     <table id="deviceTable" class="table1">
         <thead>
             <tr>
@@ -35,56 +37,47 @@
         <tbody>
             {% for device in devices %}
             <tr>
-                {% if device.status %}
-                <td class="green-cells">
-                    <p>
-                        Online
-                    </p>
+                <td class="{% if device.status %}green-cells{% else %}red-cells{% endif %}">
+                    <p>{% if device.status %}Online{% else %}Offline{% endif %}</p>
+                </td>                
+                <td class="{% if device.status %}green-cells{% else %}red-cells{% endif %}">
+                    <p>{% if device.status %}Online{% else %}Offline{% endif %}</p>
                 </td>
-                {% else %}
-                <td class="red-cells">
-                    <p>
-                        Offline
-                    </p>
+                
                 </td>
-                {% endif %}
-                <td>{{device.name}}</td>
-                <td>{{device.ssid}}</td>
-                <td>{{device.apiEndpointUrl}}</td>
+                <td>{{ device.name }}</td>
+                <td>{{ device.ssid }}</td>
+                <td>{{ device.apiEndpointUrl }}</td>
                 <td>
-                    <a href="{% url 'attendance_app:ping_device' device.id %}" class="green-button" style="font-size:17px">Ping</a>
+                    <a href="{% url 'attendance_app:ping_device' device.id %}" class="green-button">Ping</a>
                     <a href="{% url 'attendance_app:delete_device' device.id %}" class="red-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1z"/>
                         </svg>
                     </a>
-                    
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
     {% load static %}
     <script src="{% static 'attendance_app/js/modal.js' %}"></script>
 
-    <!-- jQuery -->
+    <!-- jQuery & DataTables -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <!-- DataTables JS -->
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
-    <!-- Initialize DataTable -->
     <script>
         $(document).ready(function() {
             $('#deviceTable').DataTable({
-                paging: true, // Enable pagination
-                searching: true, // Enable search bar
-                ordering: true, // Enable column sorting
-                pageLength: 10, // Set number of rows per page
-                lengthMenu: [5, 10, 25, 50], // Define page length options
+                paging: true,
+                searching: true,
+                ordering: true,
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
             });
         });
     </script>
-    
-
 
 {% endblock content %}
