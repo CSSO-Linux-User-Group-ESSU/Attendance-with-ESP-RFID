@@ -43,22 +43,28 @@
         </div>
     </div>
     
-    <div id="attendanceModal1" class="modal" style="display: none;">
+    <!-- Upload from File Modal -->
+    <div id="attendanceModal1" class="modal upload-file-modal" style="display: none;">
         <div class="modal-content">
             <span id="closeModalBtn1" class="close">&times;</span>
             <h2 style="text-align:center" class="font-family-overall">Upload from File</h2>
             <form method="post" enctype="multipart/form-data" class="form-container" action="{% url 'student_app:upload_file' %}">
                 {% csrf_token %}
+                
+                <!-- Custom File Upload -->
                 <div class="input-group">
-                    {{ form1.file.label_tag }}
-                    {{ form1.file }}
+                    <input type="file" id="file-upload" name="file" style="display: none;" />
+                    <label for="file-upload">Choose File</label>
+                    <span id="file-name">No file chosen</span>
                 </div>
+    
                 <button type="submit">UPLOAD</button>
             </form>
         </div>
     </div>
     
 
+    <!-- Students Table -->
     <table id="studentTable" class="table1">
         <thead>
             <tr>
@@ -68,17 +74,16 @@
                 <th>First Name</th>
                 <th>Middle Name</th>
                 <th>Action</th>
-
             </tr>
         </thead>
         <tbody>
              {% for student in students %}
              <tr>
-                 <td>{{student.card_uid}}</td>
-                 <td>{{ student.student_id}}</td>
-                 <td>{{ student.last_name}}</td>
-                 <td>{{ student.first_name}}</td>
-                 <td>{{ student.middle_name}}</td>
+                 <td>{{ student.card_uid }}</td>
+                 <td>{{ student.student_id }}</td>
+                 <td>{{ student.last_name }}</td>
+                 <td>{{ student.first_name }}</td>
+                 <td>{{ student.middle_name }}</td>
                  <td>
                      <a href="{% url 'student_app:student_attendance' student.id %}" class="view-btn" style="font-size:17px">
                         <i class="fa fa-eye" style="font-size:18px"></i>
@@ -86,7 +91,7 @@
                      <a href="{% url 'student_app:delete_student' student.id %}" class="red-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
                         </svg>
                      </a>
                  </td>
@@ -94,22 +99,24 @@
              {% endfor %}
         </tbody>
     </table>
+
     {% load static %}
     <script src="{% static 'attendance_app/js/modal.js' %}"></script>
+
     <script>
-        // This function will be triggered by the ESP32 when a card is scanned
+        // Show selected file name
+        document.getElementById("file").addEventListener("change", function() {
+            let fileName = this.files[0] ? this.files[0].name : "No file chosen";
+            document.getElementById("file-name").textContent = fileName;
+        });
+
+        // Automatically update Card UID field when a card is scanned
         function updateCardUID(cardUID) {
-            // Update the input field with the card UID
-            if(cardUID=="Error"){
-                document.getElementById('card_uid').placeholder = "Scan ID";
-            }else{
-                document.getElementById('card_uid').value = cardUID;
-            }
+            document.getElementById('card_uid').value = cardUID === "Error" ? "" : cardUID;
         }
 
-        // Optionally, use setInterval or a WebSocket to listen for updates from the ESP32
         setInterval(() => {
-            fetch('/get_card_uid') // Replace with your actual endpoint
+            fetch('/get_card_uid')
                 .then(response => response.json())
                 .then(data => {
                     if (data.card_uid) {
@@ -117,23 +124,20 @@
                     }
                 })
                 .catch(error => console.error('Error fetching card UID:', error));
-        }, 3000); 
-
+        }, 3000);
     </script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <!-- DataTables JS -->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
 
-    <!-- Initialize DataTable -->
+    <!-- jQuery & DataTables -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready(function() {
             $('#studentTable').DataTable({
-                paging: true, // Enable pagination
-                searching: true, // Enable search bar
-                ordering: true, // Enable column sorting
-                pageLength: 10, // Set number of rows per page
-                lengthMenu: [5, 10, 25, 50], // Define page length options
+                paging: true,
+                searching: true,
+                ordering: true,
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50]
             });
         });
     </script>
