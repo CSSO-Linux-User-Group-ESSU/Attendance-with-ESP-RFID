@@ -9,29 +9,55 @@
     </p>
     <div id="attendanceModal" class="modal" style="display: none;">
         <div class="modal-content">
-          <span id="closeModalBtn" class="close">&times;</span>
-          <h2 style="text-align: center;" class="font-family-overall">New Student</h2>
-          <form method="post" action="{% url 'student_app:add_student' %}" class="form-container">
-            <label for="card_uid">Card UID</label>
-            <input type="text" id="card_uid" name="card_uid" required />
-            {% csrf_token %}
-            {{form.as_p}}
-            <button type="submit">ADD</button>
-          </form>
-        </div>
-    </div>
-
-    <div id="attendanceModal1" class="modal" style="display: none;">
-        <div class="modal-content">
-          <span id="closeModalBtn1" class="close">&times;</span>
-          <h2 style="text-align:center" class="font-family-overall">Upload from File</h2>
-          <form method="post" enctype="multipart/form-data" class="form-container" action="{% url 'student_app:upload_file' %}">
-            {% csrf_token %}
-            {{ form1.as_p }}
-            <button type="submit">UPLOAD</button>
+            <span id="closeModalBtn" class="close">&times;</span>
+            <h2 style="text-align: center;" class="font-family-overall">New Student</h2>
+            <form method="post" action="{% url 'student_app:add_student' %}" class="form-container">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="card_uid">Card UID</label>
+                    <input type="text" id="card_uid" name="card_uid" required />
+                </div>
+    
+                <div class="input-group">
+                    {{ form.student_id.label_tag }}
+                    {{ form.student_id }}
+                </div>
+    
+                <div class="input-group">
+                    {{ form.last_name.label_tag }}
+                    {{ form.last_name }}
+                </div>
+    
+                <div class="input-group">
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name }}
+                </div>
+    
+                <div class="input-group">
+                    {{ form.middle_name.label_tag }}
+                    {{ form.middle_name }}
+                </div>
+    
+                <button type="submit">ADD</button>
             </form>
         </div>
     </div>
+    
+    <div id="attendanceModal1" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span id="closeModalBtn1" class="close">&times;</span>
+            <h2 style="text-align:center" class="font-family-overall">Upload from File</h2>
+            <form method="post" enctype="multipart/form-data" class="form-container" action="{% url 'student_app:upload_file' %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    {{ form1.file.label_tag }}
+                    {{ form1.file }}
+                </div>
+                <button type="submit">UPLOAD</button>
+            </form>
+        </div>
+    </div>
+    
 
     <table id="studentTable" class="table1">
         <thead>

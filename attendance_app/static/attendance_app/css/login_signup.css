@@ -152,9 +152,9 @@ body {
 
 /* Hover effect */
 .create-acc-btn:hover {
-    background-color: #1ae485;
-    color: black;
-    border: 1px solid #1ae485;
+    background-color: #000000;
+    color: #1ae485;
+    border: 1px solid #000000;
     cursor: pointer;
     transition: color 0.3s ease, background 0.3s ease;
     box-shadow: 0 0 5px rgb(0, 0, 0);
