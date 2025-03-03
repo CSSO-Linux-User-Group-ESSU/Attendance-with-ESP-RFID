@@ -17,7 +17,6 @@
 
           <form method="post" action="{% url 'attendance_app:add_event' %}" class="form-container">
             {% csrf_token %}
-            
             <label for="id_name">Event Name:</label>
             {{ form.name }}
 
@@ -40,7 +39,7 @@
             {{ form.start_time }}
 
             <label for="id_stop_time">Stop Time:</label>
-            {{ form.stop_time }}
+            {{ form.stop_time }} -->
 
             <button type="submit">ADD</button>
           </form>
