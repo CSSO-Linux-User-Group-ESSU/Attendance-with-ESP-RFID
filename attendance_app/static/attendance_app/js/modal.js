@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
         modal.style.display = "none";
       }
     });
+    
     const modal1 = document.getElementById("attendanceModal1");
     const openModalBtn1 = document.getElementById("openModalBtn1");
     const closeModalBtn1 = document.getElementById("closeModalBtn1");

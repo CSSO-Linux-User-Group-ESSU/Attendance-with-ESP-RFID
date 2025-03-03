@@ -68,6 +68,7 @@ body {
 
 /* Input design */
 .input-field input {
+    color: #fff;
     width: 100%;
     height: 100%;
     border: none;
@@ -82,6 +83,10 @@ body {
 
 .input-field input::placeholder {
     color: #fff;
+}
+
+.input-field:focus-within {
+    color: transparent;
 }
 
 .input-field .login-svg {

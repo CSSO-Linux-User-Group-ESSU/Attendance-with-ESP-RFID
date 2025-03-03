@@ -10,10 +10,14 @@
 
     <div id="attendanceModal" class="modal" style="display: none;">
         <div class="modal-content">
+
           <span id="closeModalBtn" class="close">&times;</span>
+
           <h2 style="text-align: center" class="font-family-overall">New Attendance</h2>
+
           <form method="post" action="{% url 'attendance_app:add_event' %}" class="form-container">
             {% csrf_token %}
+            
             <label for="id_name">Event Name:</label>
             {{ form.name }}
 
@@ -43,7 +47,7 @@
         </div>
       </div>
 
-    <table id="eventTable" class="content-table`">
+    <table id="eventTable" class="content-table">
         <thead>
             <tr>
                 <th>Status</th>
