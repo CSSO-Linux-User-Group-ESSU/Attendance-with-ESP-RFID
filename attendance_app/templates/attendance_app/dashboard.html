@@ -1,15 +1,7 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <div class="calendar">
-        <h2 class="attendance_dashboard_h2 font-family-overall" style="margin-bottom: 30px;">Attendance History</h2>
-
-        <form method="post" action="{% url 'attendance_app:date_attendance' %}">
-            {% csrf_token %}
-            <input class="form_input1" type="date" id="date" name="date" required>
-            <button class="form_button1" type="submit">Go to Date</button>
-        </form>
-    </div>
+    
 
     <h3 class="font-family-overall">All logs:</h3>
     <table id="dashboardTable" class="content-table">
