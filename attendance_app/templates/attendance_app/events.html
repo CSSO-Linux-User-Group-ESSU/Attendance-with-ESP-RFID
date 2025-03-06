@@ -18,29 +18,7 @@
           <form method="post" action="{% url 'attendance_app:add_event' %}" class="form-container">
             {% csrf_token %}
             <label for="id_name">Event Name:</label>
-            {{ form.name }}
-
-            <label for="id_instructor">Instructor:</label>
-            {{ form.instructor }}
-
-            <label for="id_device">Select Device (for RFID scanning):</label>
-            {{ form.device }}
-
-            <br>
-
-            <div class="checkbox-container">
-                <input type="checkbox" id="use-barcode">
-                <label for="use-barcode">Use a Barcode</label>
-            </div>
-
-            <br>
-
-            <label for="id_start_time">Start Time:</label>
-            {{ form.start_time }}
-
-            <label for="id_stop_time">Stop Time:</label>
-            {{ form.stop_time }} -->
-
+            {{ form.as_p }}
             <button type="submit">ADD</button>
           </form>
         </div>
