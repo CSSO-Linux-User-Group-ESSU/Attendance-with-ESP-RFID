@@ -2,15 +2,8 @@
 
 {% block content %}
     <h2 class="attendance_dashboard_h2 font-family-overall">Devices</h2>
-
-    <p>
-        <!-- <a href="{% url 'attendance_app:add_device' %}" class="back-link">Add New Device</a> -->
-        <button id="openModalBtn" class="back-link">Configure New Device</button>
-    </p>
-
     
-
-    <div id="attendanceModal" class="modal" style="display: none;">
+    <div id="attendanceModal" class="modal-container" style="display: none;">
         <div class="modal-content">
           <span id="closeModalBtn" class="close">&times;</span>
           <h2 style="text-align:center" class="font-family-overall">New Device</h2>
@@ -22,36 +15,36 @@
         </div>
     </div>
 
-    <table id="deviceTable" class="table1">
+    <table id="deviceTable" class="content-table">
         <thead>
             <tr>
-                <th>Status</th>
-                <th>Device Name</th>
-                <th>SSID</th>
-                <th>URL</th>
-                <th>Action</th>
+                <th data-title="Status">Status</th>
+                <th data-title="Devices">Devices</th>
+                <th data-title="SSID">SSID</th>
+                <th data-title="URL">URL</th>
+                <th data-title="Action">Action</th>
             </tr>
         </thead>
         <tbody>
             {% for device in devices %}
             <tr>
                 {% if device.status %}
-                <td class="green-cells">
+                <td data-title="Status" class="green-cells">
                     <p>
                         Online
                     </p>
                 </td>
                 {% else %}
-                <td class="red-cells">
+                <td data-title="Status" class="red-cells">
                     <p>
                         Offline
                     </p>
                 </td>
                 {% endif %}
-                <td>{{device.name}}</td>
-                <td>{{device.ssid}}</td>
-                <td>{{device.apiEndpointUrl}}</td>
-                <td>
+                <td data-title="Devices">{{device.name}}</td>
+                <td data-title="SSID">{{device.ssid}}</td>
+                <td data-title="URL">{{device.apiEndpointUrl}}</td>
+                <td data-title="Action">
                     <a href="{% url 'attendance_app:ping_device' device.id %}" class="green-button" style="font-size:17px">Ping</a>
                     <a href="{% url 'attendance_app:delete_device' device.id %}" class="red-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -65,6 +58,12 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <p class="open-modal-btn">
+        <!-- <a href="{% url 'attendance_app:add_device' %}" class="back-link">Add New Device</a> -->
+        <button id="openModalBtn" class="back-link">Configure New Device</button>
+    </p>
+
     {% load static %}
     <script src="{% static 'attendance_app/js/modal.js' %}"></script>
 

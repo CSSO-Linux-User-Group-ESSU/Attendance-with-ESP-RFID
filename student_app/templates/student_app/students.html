@@ -3,11 +3,7 @@
 {% block content %}
     <h2 class="attendance_dashboard_h2 font-family-overall">Students</h2>
 
-    <p>
-        <button id="openModalBtn" class="back-link">Add New Student</button>
-        <button id="openModalBtn1" class="back-link">Upload from File</button>
-    </p>
-    <div id="attendanceModal" class="modal" style="display: none;">
+    <div id="attendanceModal" class="modal-container" style="display: none;">
         <div class="modal-content">
           <span id="closeModalBtn" class="close">&times;</span>
           <h2 style="text-align: center;" class="font-family-overall">New Student</h2>
@@ -33,32 +29,31 @@
         </div>
     </div>
 
-    <table id="studentTable" class="table1">
+    <table id="studentTable" class="content-table">
         <thead>
             <tr>
-                <th>Card UID</th>
-                <th>Student ID</th>
-                <th>Last Name</th>
-                <th>First Name</th>
-                <th>Middle Name</th>
-                <th>Action</th>
-
+                <th data-title="Card UID">Card UID</th>
+                <th data-title="Student ID">Student ID</th>
+                <th data-title="Last Name">Last Name</th>
+                <th data-title="First Name">First Name</th>
+                <th data-title="Middle Name">Middle Name</th>
+                <th data-title="Action">Action</th>
             </tr>
         </thead>
         <tbody>
              {% for student in students %}
              <tr>
-                 <td>{{student.card_uid}}</td>
-                 <td>{{ student.student_id}}</td>
-                 <td>{{ student.last_name}}</td>
-                 <td>{{ student.first_name}}</td>
-                 <td>{{ student.middle_name}}</td>
-                 <td>
+                 <td data-title="Card UID">{{student.card_uid}}</td>
+                 <td data-title="Student ID">{{ student.student_id}}</td>
+                 <td data-title="Last Name">{{ student.last_name}}</td>
+                 <td data-title="First Name">{{ student.first_name}}</td>
+                 <td data-title="Middle Name">{{ student.middle_name}}</td>
+                 <td data-title="Action">
                      <a href="{% url 'student_app:student_attendance' student.id %}" class="view-btn" style="font-size:17px">
                         <i class="fa fa-eye" style="font-size:18px"></i>
                      </a>
                      <a href="{% url 'student_app:delete_student' student.id %}" class="red-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
                             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
                         </svg>
@@ -68,6 +63,12 @@
              {% endfor %}
         </tbody>
     </table>
+
+    <p class="open-modal-btn">
+        <button id="openModalBtn" class="back-link">Add New Student</button>
+        <button id="openModalBtn1" class="back-link">Upload from File</button>
+    </p>
+
     {% load static %}
     <script src="{% static 'attendance_app/js/modal.js' %}"></script>
     <script>

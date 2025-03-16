@@ -7,76 +7,108 @@
     {% load static %}
     
     <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'attendance_app/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'attendance_app/css/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'attendance_app/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'attendance_app/css/table.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
 </head>
 <body>
-    <div class="wrapper">
-        <!-- Header / Navigation -->
-        <header>
-            <h3 class="font-family-overall">Attendance System</h3>
-            
-            <div class="div2">
-                <a class="nav-buttons" href="{% url 'attendance_app:dashboard' %}">History</a>
-                <a class="nav-buttons" href="{% url 'attendance_app:events' %}">Attendance</a>
-                <a class="nav-buttons" href="{% url 'attendance_app:devices' %}">Wireless Devices</a>
-                <a class="nav-buttons" href="{% url 'student_app:students' %}">Students</a>
-                <a class="nav-buttons" href="#">Help</a>
-            </div>
+    <div class="container">
 
-            {% if user.is_authenticated %}
-                <div class="profile-dropdown">
-                    <button class="profile-btn">
-                        <i class="fa fa-user-circle" style="font-size:36px; color:white;"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="#" id="openModalBtnProf">Profile</a>
-                        <a href="{% url 'attendance_app:logout' %}">Logout</a>
+        <header>
+            <ul>
+                <li>
+                    <button class="sidebar-button"  onclick="showSidebar()"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 32 32" >
+                    <path d="M 8 5 C 6.3550302 5 5 6.3550302 5 8 C 5 9.6449698 6.3550302 11 8 11 L 24 11 C 25.64497 11 27 9.6449698 27 8 C 27 6.3550302 25.64497 5 24 5 L 8 5 z M 8 7 L 24 7 C 24.56503 7 25 7.4349698 25 8 C 25 8.5650302 24.56503 9 24 9 L 8 9 C 7.4349698 9 7 8.5650302 7 8 C 7 7.4349698 7.4349698 7 8 7 z M 8 13 C 6.3550302 13 5 14.35503 5 16 C 5 17.64497 6.3550302 19 8 19 L 24 19 C 25.64497 19 27 17.64497 27 16 C 27 14.35503 25.64497 13 24 13 L 8 13 z M 8 15 L 24 15 C 24.56503 15 25 15.43497 25 16 C 25 16.56503 24.56503 17 24 17 L 8 17 C 7.4349698 17 7 16.56503 7 16 C 7 15.43497 7.4349698 15 8 15 z M 8 21 C 6.3550302 21 5 22.35503 5 24 C 5 25.64497 6.3550302 27 8 27 L 24 27 C 25.64497 27 27 25.64497 27 24 C 27 22.35503 25.64497 21 24 21 L 8 21 z M 8 23 L 24 23 C 24.56503 23 25 23.43497 25 24 C 25 24.56503 24.56503 25 24 25 L 8 25 C 7.4349698 25 7 24.56503 7 24 C 7 23.43497 7.4349698 23 8 23 z"></path>
+                    </svg></button>
+                    <ul class="sidebar" id="sidebar">
+                        <li>
+                            <button class="sidebar-button"  onclick=hideSidebar()><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 32 32">
+                            <path d="M 8 5 C 6.3550302 5 5 6.3550302 5 8 C 5 9.6449698 6.3550302 11 8 11 L 24 11 C 25.64497 11 27 9.6449698 27 8 C 27 6.3550302 25.64497 5 24 5 L 8 5 z M 8 7 L 24 7 C 24.56503 7 25 7.4349698 25 8 C 25 8.5650302 24.56503 9 24 9 L 8 9 C 7.4349698 9 7 8.5650302 7 8 C 7 7.4349698 7.4349698 7 8 7 z M 8 13 C 6.3550302 13 5 14.35503 5 16 C 5 17.64497 6.3550302 19 8 19 L 24 19 C 25.64497 19 27 17.64497 27 16 C 27 14.35503 25.64497 13 24 13 L 8 13 z M 8 15 L 24 15 C 24.56503 15 25 15.43497 25 16 C 25 16.56503 24.56503 17 24 17 L 8 17 C 7.4349698 17 7 16.56503 7 16 C 7 15.43497 7.4349698 15 8 15 z M 8 21 C 6.3550302 21 5 22.35503 5 24 C 5 25.64497 6.3550302 27 8 27 L 24 27 C 25.64497 27 27 25.64497 27 24 C 27 22.35503 25.64497 21 24 21 L 8 21 z M 8 23 L 24 23 C 24.56503 23 25 23.43497 25 24 C 25 24.56503 24.56503 25 24 25 L 8 25 C 7.4349698 25 7 24.56503 7 24 C 7 23.43497 7.4349698 23 8 23 z"></path>
+                            </svg></button>
+                        </li>
+                        <li><a href="{% url 'attendance_app:dashboard' %}">History</a></li>
+                        <li><a href="{% url 'attendance_app:events' %}">Attendance</a></li>
+                        <li><a href="{% url 'attendance_app:devices' %}">Devices</a></li>
+                        <li><a href="{% url 'student_app:students' %}">Students</a></li>
+                        <li><a href="#">Help</a></li>
+                        <li></li>
+                    </ul>
+                </li>
+                <li><h1>Attendance Checker</h1></li>
+
+                <!-- Profile Modal -->
+                <div id="attendanceModalProf" class="modal">
+                    <div class="modal-content">
+                        <span id="closeModalBtnProf" class="close">&times;</span>
+                        <h2 class="font-family-overall">Profile</h2>
+                        <form method="post" action="{% url 'attendance_app:update_profile' %}" class="form-container">
+                            {% csrf_token %}
+                            
+                            <label for="last_name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+
+                            <label for="first_name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" value="{{ user.username }}" required>
+
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+                            <button type="submit">Save Changes</button>
+                        </form>
                     </div>
                 </div>
-            {% endif %}
+
+                {% if user.is_authenticated %}
+                <li>
+                    <div class="profile-dropdown">
+                        <button class="profile-btn">
+                            <i class="fa fa-user-circle profile-btn" ></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="#" id="openModalBtnProf">Profile</a>
+                            <a href="{% url 'attendance_app:logout' %}">Logout</a>
+                        </div>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
         </header>
         
-        <!-- Profile Modal -->
-        <div id="attendanceModalProf" class="modal">
-            <div class="modal-content">
-                <span id="closeModalBtnProf" class="close">&times;</span>
-                <h2 class="font-family-overall">Profile</h2>
-                <form method="post" action="{% url 'attendance_app:update_profile' %}" class="form-container">
-                    {% csrf_token %}
-                    
-                    <label for="last_name">Last Name</label>
-                    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required>
-
-                    <label for="first_name">First Name</label>
-                    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required>
-
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" value="{{ user.username }}" required>
-
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" value="{{ user.email }}" required>
-
-                    <button type="submit">Save Changes</button>
-                </form>
+        <section>
+            <div class="sidebar-col">
+                <nav>
+                    <ul>
+                        <li><b><a href="{% url 'attendance_app:dashboard' %}">Control Panel</a></b></li>
+                        <li><a href="{% url 'attendance_app:dashboard' %}">History</a></li>
+                        <li><a href="{% url 'attendance_app:events' %}">Attendance</a></li>
+                        <li><a href="{% url 'attendance_app:devices' %}">Devices</a></li>
+                        <li><a href="{% url 'student_app:students' %}">Students</a></li>
+                        <li><a href="#">Help</a></li>
+                    </ul>
+                </nav>
             </div>
-        </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            {% block content %}
-            {% endblock content %}
-        </div>
+            <!-- Main Content -->
+            <div class="main-col">
+                {% block content %}
+                {% endblock content %}
+            </div>
+
+        </section>
 
         <!-- Footer -->
-        <footer class="footer2">
+        <footer>
             <p>&copy; 2025 ESSU Attendance System. All Rights Reserved.</p>
         </footer>
+        
     </div>
-
+    
     <!-- JavaScript -->
     <script src="{% static 'attendance_app/js/control_panel.js' %}"></script>
     <script>
@@ -119,5 +151,6 @@
             });
         });
     </script>
+
 </body>
 </html>

@@ -7,15 +7,15 @@
     <table id="studentAttTable" class="table1">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Event/Subject</th>
+                <th data-title="Date">Date</th>
+                <th  data-title="Event">Event</th>
             </tr>
         </thead>
         <tbody>
             {% for attendance in attendances %}
             <tr>
-                <td>{{attendance.date_attended}}</td>
-                <td>{{attendance.event.name}}</td>
+                <td data-title="Date">{{attendance.date_attended}}</td>
+                <td data-title="Event">{{attendance.event.name}}</td>
             </tr>
             {% endfor %}
         </tbody>

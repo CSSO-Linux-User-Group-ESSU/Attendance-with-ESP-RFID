@@ -1,88 +1,91 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    
-    <h2 class="attendance_dashboard_h2 font-family-overall">Attendances</h2>
 
-    <p>
-        <button id="openModalBtn">Add Attendance</button>
-    </p>
+        <h2 class="attendance_dashboard_h2 font-family-overall">Attendances</h2>
 
-    <div id="attendanceModal" class="modal" style="display: none;">
-        <div class="modal-content">
+        <div id="attendanceModal" class="modal-modal" style="display: none;">
+            <div class="modal-content">
 
-          <span id="closeModalBtn" class="close">&times;</span>
+            <span id="closeModalBtn" class="close">&times;</span>
 
-          <h2 style="text-align: center" class="font-family-overall">New Attendance</h2>
+            <h2 style="text-align: center" class="font-family-overall">New Attendance</h2>
 
-          <form method="post" action="{% url 'attendance_app:add_event' %}" class="form-container">
-            {% csrf_token %}
-            <label for="id_name">Event Name:</label>
-            {{ form.as_p }}
-            <button type="submit">ADD</button>
-          </form>
+            <form method="post" action="{% url 'attendance_app:add_event' %}" class="form-container">
+                {% csrf_token %}
+                <label for="id_name">Event Name:</label>
+                {{ form.as_p }}
+                <button type="submit">Add</button>
+            </form>
+            </div>
         </div>
-      </div>
+        <table id="eventTable" class="content-table">
+            <thead>
+                <tr>
+                    <th data-title="Status">Status</th>
+                    <th data-title="Event">Event</th>
+                    <th data-title="Organizer">Organizer</th>
+                    <th data-title="Date">Date</th>
+                    <th data-title="Time">Time</th>
+                    <th data-title="Device">Devices</th>
+                    <th data-title="Action">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td data-title="Status" class="{% if event.status %}green-cells{% else %}red-cells{% endif %}">
+                        {% if event.start_time <= curr_time and event.stop_time >= curr_time and curr_date == event.date_added %}
+                        {% if event.status %}
+                        Enabled
+                        {% else %}
+                        Disabled
+                        {% endif %}
+                        {% else %}
+                        Deadline
+                        {% endif %}
+                    </td>
+                    <td data-title="Event">{{event.name}}</td>
+                    <td data-title="Organizer">{{event.instructor}}</td>
+                    <td data-title="Date">{{event.date_added}}</td>
+                    <td data-title="Time">{{event.start_time}} - {{event.stop_time}}</td>
+                    <td data-title="Device">{{event.device}}</td>
+                    <td data-title="Action">
+                        <a href="{% url 'attendance_app:attendance_for_today' event.id %}" class="view-btn">
+                            <i class="fa fa-eye" style="font-size:18px"></i>
+                        </a>
+                        {% if event.start_time <= curr_time and event.stop_time >= curr_time and curr_date == event.date_added %}
+                        {% if not event.status %}
+                        <a href="{% url 'attendance_app:change_status' event.id %}" class="green-button" style="font-size:17px">Enable</a>
+                        {% else %}
+                        <a href="{% url 'attendance_app:change_status' event.id %}" class="red-button"style="font-size:17px">Disable</a>
+                        {% endif %}
+                        {% else %}
+                        {% endif %}
+                        <a href="{% url 'attendance_app:delete_event' event.id %}" class="red-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                            </svg>
+                        </a>
+                        
+                    </td>
+                </tr>
+                {% empty %}
+                <!--<tr>-->
+                    <!-- <td colspan="7">No attendance records available.</td> -->
+            <!-- </tr>-->
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <table id="eventTable" class="content-table">
-        <thead>
-            <tr>
-                <th>Status</th>
-                <th>Event / Subject</th>
-                <th>Organizer / Instructor</th>
-                <th>Date Allocated</th>
-                <th>Time Allocated</th>
-                <th>Associated Device</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for event in events %}
-            <tr>
-                <td class="{% if event.status %}green-cells{% else %}red-cells{% endif %}">
-                    {% if event.start_time <= curr_time and event.stop_time >= curr_time and curr_date == event.date_added %}
-                    {% if event.status %}
-                    Enabled
-                    {% else %}
-                    Disabled
-                    {% endif %}
-                    {% else %}
-                    Deadline
-                    {% endif %}
-                </td>
-                <td>{{event.name}}</td>
-                <td>{{event.instructor}}</td>
-                <td>{{event.date_added}}</td>
-                <td>{{event.start_time}} - {{event.stop_time}}</td>
-                <td>{{event.device}}</td>
-                <td>
-                    <a href="{% url 'attendance_app:attendance_for_today' event.id %}" class="view-btn">
-                        <i class="fa fa-eye" style="font-size:18px"></i>
-                    </a>
-                    {% if event.start_time <= curr_time and event.stop_time >= curr_time and curr_date == event.date_added %}
-                    {% if not event.status %}
-                    <a href="{% url 'attendance_app:change_status' event.id %}" class="green-button" style="font-size:17px">Enable</a>
-                    {% else %}
-                    <a href="{% url 'attendance_app:change_status' event.id %}" class="red-button"style="font-size:17px">Disable</a>
-                    {% endif %}
-                    {% else %}
-                    {% endif %}
-                    <a href="{% url 'attendance_app:delete_event' event.id %}" class="red-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                        </svg>
-                    </a>
-                    
-                </td>
-            </tr>
-            {% empty %}
-            <!--<tr>-->
-                <!-- <td colspan="7">No attendance records available.</td> -->
-           <!-- </tr>-->
-            {% endfor %}
-        </tbody>
-    </table>
+        <p class="open-modal-btn">
+            <button id="openModalBtn">Add Attendance</button>
+        </p>
+
+
+
+    </div>
     {% load static %}
     <script src="{% static 'attendance_app/js/modal.js' %}"></script>
    
