@@ -303,7 +303,7 @@ nav a:hover {
 }
 
 .dropdown-content a:hover {
-    background: #31511E;
+    background: #f0f0f0;
     color: #fff;
     border-radius: 4px;
 }
