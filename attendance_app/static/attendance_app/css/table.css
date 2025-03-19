@@ -11,6 +11,7 @@
 }
 
 .content-table th {
+    width: 100%;
     background-color: #31511E;
     color: #fff;
     text-align: left;

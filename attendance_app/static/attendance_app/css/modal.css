@@ -55,8 +55,7 @@
 }
 
 .open-modal-btn button{
-    width: 45vw;
-    max-width: 360px;
+    min-width: 240px;
     width: 100%;
     padding: 12px;
     background: #859F3D;
@@ -64,6 +63,7 @@
     border: none;
     cursor: #fff;
     font-size: 16px;
+    font-weight: bold;
     color: #fff;
     font-weight: 500;
     margin-bottom: 20px;
@@ -192,8 +192,7 @@
 /* Submit Button */
 .modal-content button {
     width: 45vw;
-    max-width: 360px;
-    width: 100%;
+    min-width: 300px;
     padding: 12px;
     background: #859F3D;
     border-radius: 6px;
