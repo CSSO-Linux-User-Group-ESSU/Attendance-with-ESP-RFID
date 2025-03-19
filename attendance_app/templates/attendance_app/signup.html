@@ -9,7 +9,7 @@
 
     <div class="container">
 
-        <form action="{% url 'attendance_app:log_in' %}" method="post" class="signup-form-box">
+        <form action="{% url 'attendance_app:signup' %}" method="post" class="signup-form-box">
 
             {% csrf_token %}
 
@@ -36,9 +36,6 @@
 
         </form>
 
-    <!--<footer class="footer2">
-        <p>&copy; 2024 ESSU Attendance System. All Rights Reserved.</p>
-    </footer>-->
 
     </div>
 
