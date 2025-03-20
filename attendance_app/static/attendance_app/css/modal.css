@@ -1,26 +1,30 @@
-
+.no-scroll {
+    overflow: hidden;
+    height: 100vh;
+  }
+  
 /* Modal Background */
 .modal {
     display: none;
-    position: absolute;
-    z-index: 1;
+    position: fixed;
+    overflow: hidden;
+    z-index: 9999;
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     padding: 20px;
-    border-radius: 1em;
 }
 
 /* Modal Box */
 .modal-content {
-    overflow: hidden;
-    width: 420px;     
+    width: 420px;
+    min-width: 200px;   
     height: 100%;   
     max-height: 700px;
     gap: 1em;

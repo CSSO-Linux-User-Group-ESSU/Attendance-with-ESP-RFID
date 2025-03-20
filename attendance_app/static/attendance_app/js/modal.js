@@ -8,15 +8,18 @@ document.addEventListener("DOMContentLoaded", function() {
     // Open the modal
     openModalBtn.addEventListener("click", function() {
       modal.style.display = "flex";
+      document.body.classList.add("no-scroll");
     });
 
     closeModalBtn.addEventListener("click", function() {
       modal.style.display = "none";
+      document.body.classList.remove("no-scroll");
     });
 
     window.addEventListener("click", function(event) {
       if (event.target == modal) {
         modal.style.display = "none";
+        document.body.classList.remove("no-scroll");
       }
     });
     
@@ -27,15 +30,18 @@ document.addEventListener("DOMContentLoaded", function() {
     // Open the modal
     openModalBtn1.addEventListener("click", function() {
       modal1.style.display = "flex";
+      document.body.classList.add("no-scroll");
     });
 
     closeModalBtn1.addEventListener("click", function() {
       modal1.style.display = "none";
+      document.body.classList.remove("no-scroll");
     });
 
     window.addEventListener("click", function(event) {
       if (event.target == modal1) {
         modal1.style.display = "none";
+        document.body.classList.remove("no-scroll");
       }
     });
   });
