@@ -207,6 +207,36 @@ nav a:is(:link, :active, :visited).active {
     background-color: #d8d8d8;
 }
 
+.green-button {
+    max-width: 300px;
+    width: 100%;
+    padding: 12px;
+    background: #859F3D;
+    border-radius: 6px;
+    border: none;
+    cursor: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+    transition: 0.5s;
+}
+
+.green-button:hover {
+    background-color: #859F3D;
+    color:  #fff;
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+}
+
+.scan-barcode {
+    font-size: 0;
+    height: 0;
+    width: 0;
+    border: none;
+}
+
 /* Sidebar for mobile devices */
 .sidebar {
     flex-direction: column;

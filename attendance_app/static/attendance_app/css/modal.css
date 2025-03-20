@@ -58,22 +58,6 @@
     transition: 0.5s;
 }
 
-.open-modal-btn button{
-    min-width: 240px;
-    width: 100%;
-    padding: 12px;
-    background: #859F3D;
-    border-radius: 6px;
-    border: none;
-    cursor: #fff;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    font-weight: 500;
-    margin-bottom: 20px;
-    transition: 0.5s;
-}
-
 .modal-content input {
     width: 100%;
     padding: 12px;
@@ -110,14 +94,31 @@
     white-space: nowrap;
 }
 
-/* Log in hover effect */
-.button:hover {
+/* Open modal button */
+.open-modal-btn button{
+    min-width: 240px;
+    width: 100%;
+    padding: 12px;
+    background: #859F3D;
+    border-radius: 6px;
+    border: none;
+    cursor: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 20px;
+    transition: 0.5s;
+}
+
+.open-modal-btn button:hover {
     background-color: #859F3D;
     color:  #fff;
     cursor: pointer;
     transition: color 0.3s ease, background 0.3s ease;
     box-shadow: 0 0 5px rgb(0, 0, 0);
 }
+
 
 /* Close Button */
 .close {
