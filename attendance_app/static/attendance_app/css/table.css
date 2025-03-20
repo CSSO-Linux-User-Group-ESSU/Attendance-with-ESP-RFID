@@ -2,22 +2,21 @@
 /* Table Design */
 .content-table {
     border-collapse: collapse;
-    margin: 2em 1em;
-    font-size: 0.9em;
+    margin: 0;
     width: 100%;
     border-radius: 5px 5px 0 0;
-    overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
 }
 
+.content-table tr {
+    padding: .45em;
+}
+
 .content-table th {
-    width: 100%;
     background-color: #31511E;
     color: #fff;
     text-align: left;
     font-weight: bold;
-    position: sticky;
-    top: 130;
 }
 
 .content-table tr:nth-child(n+11) { 
@@ -26,7 +25,7 @@
 
 .content-table th,
 .content-table td {
-    padding: 12px 15px;
+    padding: 1em;
     font-weight: normal;
 }
 
@@ -72,7 +71,7 @@
     .content-table  {
         font-size: 10px;
         border: 2px solid #31511E;
-        margin: 1em 1em;
+        margin: 0;
     }
     .content-table thead tr {
         display: none;
