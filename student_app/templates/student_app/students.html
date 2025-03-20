@@ -3,7 +3,7 @@
 {% block content %}
     <h2 class="attendance_dashboard_h2 font-family-overall">Students</h2>
 
-    <div id="attendanceModal" class="modal-container" style="display: none;">
+    <!-- <div id="attendanceModal" class="modal-container" style="display: none;">
         <div class="modal-content">
           <span id="closeModalBtn" class="close">&times;</span>
           <h2 style="text-align: center;" class="font-family-overall">New Student</h2>
@@ -14,6 +14,22 @@
             {{form.as_p}}
             <button type="submit">ADD</button>
           </form>
+        </div>
+    </div> -->
+    <div id="attendanceModal" class="modal" style="display: none;">
+        <div class="modal-content">
+
+        <span id="closeModalBtn" class="close">&times;</span>
+
+        <h2 style="text-align: center" class="font-family-overall">New Student</h2>
+
+        <form method="post" action="{% url 'student_app:add_student' %}" class="form-container">
+            {% csrf_token %}
+            <label for="card_uid">Card UID</label>
+            <input type="text" id="card_uid" name="card_uid" required />
+            {{ form.as_p }}
+            <button type="submit">ADD</button>
+        </form>
         </div>
     </div>
 
