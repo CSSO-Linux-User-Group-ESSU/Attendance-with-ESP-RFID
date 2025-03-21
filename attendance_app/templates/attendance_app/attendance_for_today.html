@@ -52,7 +52,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert(data.message || data.error);  // Show response message
+                //alert(data.message || data.error);  // Show response message -->
                 location.reload();  // Refresh attendance records
             })
             .catch(error => console.error("Error:", error));
