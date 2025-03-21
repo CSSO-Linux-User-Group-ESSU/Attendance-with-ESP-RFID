@@ -4,13 +4,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", serif;
 }
 
 body {
+    overflow: hidden;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     min-height: 100vh;
     background-color: linear-gradient(to right, #e2e2e2, #c9d6f8);
     color: #333;
@@ -20,11 +21,11 @@ body {
     margin: 0 15px;
 }
 
+
 /* Contains the login form */
 .login-form-box {
     width: 100%;
     max-width: 450px;
-    height: 450px;
     padding: 30px;
     border-radius: 10px;
     background-color: #fff;
@@ -34,8 +35,6 @@ body {
 /* Contains the sig up form */
 .signup-form-box {
     width: 100%;
-    max-width: 450px;
-    height: 550px;
     padding: 30px;
     border-radius: 10px;
     background-color: #fff;

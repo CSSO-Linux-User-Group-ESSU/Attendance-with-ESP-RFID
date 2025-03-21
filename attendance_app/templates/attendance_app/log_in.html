@@ -1,40 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'attendance_app/css/login_signup.css' %}">
+    
 </head>
 <body>
-
     <div class="container">
         <form action="{% url 'attendance_app:log_in' %}" method="post" class="login-form-box">
 
-            {% csrf_token %}
-            <h1>Log In</h1>
-            <div class="input-field">
-                <input type="text" id="username" name="username" onfocus="this.placeholder=''"  onblur="this.placeholder='username'" placeholder="username" required>
-            </div>
-            <div class="input-field">
-                <input type="password" id="password" name="password" onfocus="this.placeholder=''" onblur="this.placeholder='password'" placeholder="password" required>
-            </div>
-            <button type="submit" class="login-btn font-family-overall">
-                Log In
-            </button>
+        {% csrf_token %}
+        <h1>Log In</h1>
+        <div class="input-field">
+            <input type="text" id="username" name="username" onfocus="this.placeholder=''"  onblur="this.placeholder='username'" placeholder="username" required>
+        </div>
+        <div class="input-field">
+            <input type="password" id="password" name="password" onfocus="this.placeholder=''" onblur="this.placeholder='password'" placeholder="password" required>
+        </div>
+        <button type="submit" class="login-btn font-family-overall">
+            Log In
+        </button>
 
-            <hr style="border: 1px solid lightgrey; width: 100%; margin: 30px 0;">
+        <hr style="border: 1px solid lightgrey; width: 100%; margin: 30px 0;">
 
-            <button class="create-acc-btn" onclick="window.location.href='{% url 'attendance_app:signup' %}'">
-                Create an account
-            </button>
+        <button class="create-acc-btn" onclick="window.location.href='{% url 'attendance_app:signup' %}'">
+            Create an account
+        </button>
 
         </form>
     </div>
-
-    <!--
-    <footer>
-        <p>&copy; 2024 ESSU Attendance System. All Rights Reserved.</p>
-    </footer>-->
-
 </body>
 </html>
+
+
