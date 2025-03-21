@@ -1,10 +1,10 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <p><a href="{%url 'student_app:students' %}" class="back-link">Go back</a></p>
+    <button onclick="window.location.href='{%url 'student_app:students' %}'" class="back-button">Go back</button>
     <h4 class="all_logs_h4">Student: {{student.last_name}}, {{student.first_name}}, {{student.middle_name}}</h4>
     <!-- <button class="refresh-button" onclick="location.reload()"><i class="fa fa-refresh" style="font-size:36px;"></i></button> -->
-    <table id="studentAttTable" class="table1">
+    <table id="studentAttTable" class="content-table">
         <thead>
             <tr>
                 <th data-title="Date">Date</th>

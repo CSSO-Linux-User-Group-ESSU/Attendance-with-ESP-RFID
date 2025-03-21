@@ -494,7 +494,7 @@ nav a:is(:link, :active, :visited).active {
 
 
 /* Size of the web pages for tablets */
-@media (max-width: 800px) {
+@media (max-width: 820px) {
     body {
         width: 100%;
     }
@@ -533,6 +533,66 @@ nav a:is(:link, :active, :visited).active {
         height: 420px;
         
         left: 35px;
+    }
+    .events-action-button-container {
+        display: grid;
+        grid-template-columns: 30px 30px;
+        grid-template-rows: 30px 30px;
+        grid-template-areas:
+            "box-2 box-2"
+            "box-1 box-3"
+        ;
+        gap: 1em;
+        justify-content: center;
+        width: 100px;
+        height: 70px;
+
+    }
+    .students-action-button-container {
+        display: grid;
+        grid-template-columns: 30px 30px;
+        grid-template-areas:
+            "box-1 box-2"
+        ;
+        gap: 1em;
+        justify-content: center;
+        width: 100px;
+        height: 30px;
+    }
+    
+    .device-action-button-container {
+        display: grid;
+        grid-template-columns: 80px 30px;
+        grid-template-areas:
+            "box-1  box-2"
+        ;
+        gap: 1em;
+        justify-content: center;
+        width: 150px;
+        height: 40px;
+    }
+    
+    .view-button {
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        font-size: 12px;
+    }
+    .red-button {
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        svg {
+            width: 15px;
+            height: 15px;
+        }
+    }
+    .enable-button,
+    .disable-button {
+        width: 90px;
+        height: 40px;
+        padding: 5px;
+        font-size: 12px;
     }
 }
 
