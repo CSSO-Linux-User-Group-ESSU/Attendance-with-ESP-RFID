@@ -4,7 +4,11 @@
     <button onclick="window.location.href='{% url 'attendance_app:events' %}'" class="back-link back-button">BACK</button>
 
     <h2 class="font-family-overall" style="text-align: center;">{{event.name}}</h2>
+<<<<<<< HEAD
     <input type="text" id="barcodeScanner" class="scan-barcode" autofocus data-event="{{ event.name }}" placeholder="Scan barcode here...">
+=======
+    <input type="text" id="scannerInput" autofocus data-event="{{ event.name }}" placeholder="Scan barcode or RFID here...">
+>>>>>>> origin/main
 
     <div class="attendance-div">
         <h3 class="font-family-overall">Recorded Student Attendance: {{top}}/{{below}}</h3>
@@ -37,22 +41,26 @@
     </table>
 
     <script>
-        document.getElementById("barcodeScanner").addEventListener("change", function() {
-            let barcode = this.value.trim();  // Get scanned barcode
+        document.getElementById("scannerInput").addEventListener("change", function() {
+            let inputValue = this.value.trim();  // Get scanned value
             this.value = "";  // Clear the input field
 
-            let eventName = document.getElementById("barcodeScanner").dataset.event;  // Get event name
+            let eventName = document.getElementById("scannerInput").dataset.event;  // Get event name
+            let isRFID = inputValue.startsWith("RFID");  // Determine if input is RFID
+            let token = isRFID ? "fhdhjdkdsjcncjdhchdjdjdsjdw3@@!!#^^4682eqryoxuewrozcbvmalajurpd" : "";  // Example token for RFID, replace with actual logic
+            let cardUid = isRFID ? inputValue : "";  // If starts with RFID, treat as RFID card UID
+            let barcode = isRFID ? "" : inputValue;  // Otherwise, treat as barcode
 
-    
-            // Send barcode data to Django API
+            // Send data to Django API
             fetch("{% url 'attendance_app:api_attendance' %}", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ barcode: barcode, token: "fhdhjdkdsjcncjdhchdjdjdsjdw3@@!!#^^4682eqryoxuewrozcbvmalajurpd",card_uid:"",device:"",event:eventName})
+                body: JSON.stringify({ barcode: barcode, card_uid: cardUid, token: token, event: eventName })
             })
             .then(response => response.json())
             .then(data => {
-                //alert(data.message || data.error);  // Show response message -->
+                //alert(data.message || data.error);  // Show response message
+                alert(data.message || data.status);  // Show response message
                 location.reload();  // Refresh attendance records
             })
             .catch(error => console.error("Error:", error));

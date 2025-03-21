@@ -399,18 +399,17 @@ def api_attendance(request):
 
             if barcode_enabled:
                 student1 = Student.objects.get(student_id=str(barcode.strip()))
+                event1 = [Event.objects.get(name=str(event_taken))]
             else:
+                if not token1:
+                    return JsonResponse({"status": "Error", "message": "Token required for RFID scans"}, status=400)
                 student1 = Student.objects.get(card_uid=str(card_uid).upper())
-            token2 = SecurityToken.objects.get(token=token1)
-
-            if not barcode_enabled:
+                token2 = SecurityToken.objects.get(token=token1)
                 event1 = []
                 device1 = Device.objects.get(name=data.get("device"), token=token2)
                 for event in Event.objects.all():
                     if event.device == device1:
                         event1.append(event)
-            else:
-                event1 = [Event.objects.get(name=str(event_taken))]
 
             if len(event1) == 0:
                 return JsonResponse(
@@ -466,7 +465,8 @@ def api_attendance(request):
         except Device.DoesNotExist:
             return JsonResponse({"status": "Error", "message": "No Device"}, status=404)
         except SecurityToken.DoesNotExist:
-            return JsonResponse(
-                {"status": "Error", "message": "Token unknown"}, status=404
-            )
+            if not barcode_enabled:
+                return JsonResponse(
+                    {"status": "Error", "message": "Token unknown"}, status=404
+                )
     return JsonResponse({"status": "Error", "message": "Invalid request"}, status=400)
