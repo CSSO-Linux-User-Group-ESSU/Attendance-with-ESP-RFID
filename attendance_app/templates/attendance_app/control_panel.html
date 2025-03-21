@@ -40,7 +40,32 @@
                 <li><h1>ESSU Attendance System</h1></li>
 
                 <!-- Profile Modal -->
-                <div id="attendanceModalProf" class="modal">
+                <div id="attendanceModal" class="modal" style="display: none;">
+                    <div class="modal-content">
+            
+                    <span id="closeModalBtn" class="close">&times;</span>
+            
+                    <h2 style="text-align: center" class="font-family-overall">Profile</h2>
+            
+                    <form method="post" action="{% url 'attendance_app:update_profile' %}" class="form-container">
+                        {% csrf_token %}
+                        <label for="last_name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+
+                            <label for="first_name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" value="{{ user.username }}" required>
+
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+                            <button type="submit">Save Changes</button>
+                    </form>
+                    </div>
+                </div>
+                <!-- <div id="attendanceModalProf" class="modal">
                     <div class="modal-content">
                         <span id="closeModalBtnProf" class="close">&times;</span>
                         <h2 class="font-family-overall">Profile</h2>
@@ -62,7 +87,7 @@
                             <button type="submit">Save Changes</button>
                         </form>
                     </div>
-                </div>
+                </div> -->
 
                 {% if user.is_authenticated %}
                 <li>
@@ -71,7 +96,7 @@
                             <i class="fa fa-user-circle profile-btn" ></i>
                         </button>
                         <div class="dropdown-content">
-                            <a href="#" id="openModalBtnProf">Profile</a>
+                            <a href="#" id="openModalBtn">Profile</a>
                             <a href="{% url 'attendance_app:logout' %}">Logout</a>
                         </div>
                     </div>
@@ -110,33 +135,34 @@
     
     <!-- JavaScript -->
     <script src="{% static 'attendance_app/js/control_panel.js' %}"></script>
+    <script src="{% static 'attendance_app/js/modal.js' %}"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const modal = document.getElementById("attendanceModalProf");
-            const openModalBtn = document.getElementById("openModalBtnProf");
-            const closeModalBtn = document.getElementById("closeModalBtnProf");
+            //const modal = document.getElementById("attendanceModalProf");
+            //const openModalBtn = document.getElementById("openModalBtnProf");
+            //const closeModalBtn = document.getElementById("closeModalBtnProf");
             const profileDropdown = document.querySelector(".profile-dropdown");
 
             // Hide modal initially
-            modal.style.display = "none";
+            //modal.style.display = "none";
 
             // Open the modal when clicking "Profile"
-            openModalBtn.addEventListener("click", function (event) {
-                event.preventDefault();
-                modal.style.display = "flex";
-            });
+            //openModalBtn.addEventListener("click", function (event) {
+            //    event.preventDefault();
+            //    modal.style.display = "flex";
+            //});
 
             // Close the modal when clicking "X" button
-            closeModalBtn.addEventListener("click", function () {
-                modal.style.display = "none";
-            });
+            //closeModalBtn.addEventListener("click", function () {
+            //    modal.style.display = "none";
+            //});
 
             // Close the modal when clicking outside of it
-            window.addEventListener("click", function (event) {
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                }
-            });
+            //window.addEventListener("click", function (event) {
+            //    if (event.target === modal) {
+            //        modal.style.display = "none";
+            //    }
+            //});
 
             // Toggle dropdown menu on click (not hover)
             profileDropdown.addEventListener("click", function (event) {
