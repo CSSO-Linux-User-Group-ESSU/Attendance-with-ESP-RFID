@@ -50,7 +50,7 @@
                 <td data-title="Time">{{event.start_time}} - {{event.stop_time}}</td>
                 <td data-title="Device">{{event.device}}</td>
                 <td data-title="Action" >
-                    <div class="action-button-container">
+                    <div class="device-action-button-container">
                         <button onclick="window.location.href='{% url 'attendance_app:attendance_for_today' event.id %}'" class="view-button" style="grid-area: box-1">
                             <i class="fa fa-eye" style="font-size:16px"></i>
                         </button>
