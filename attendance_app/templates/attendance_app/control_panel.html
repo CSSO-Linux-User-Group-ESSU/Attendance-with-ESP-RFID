@@ -40,10 +40,10 @@
                 <li><h1>ESSU Attendance System</h1></li>
 
                 <!-- Profile Modal -->
-                <div id="attendanceModal" class="modal" style="display: none;">
+                <div id="attendanceModal2" class="modal" style="display: none;">
                     <div class="modal-content">
             
-                    <span id="closeModalBtn" class="close">&times;</span>
+                    <span id="closeModalBtn2" class="close">&times;</span>
             
                     <h2 style="text-align: center" class="font-family-overall">Profile</h2>
             
@@ -96,7 +96,7 @@
                             <i class="fa fa-user-circle profile-btn" ></i>
                         </button>
                         <div class="dropdown-content">
-                            <a href="#" id="openModalBtn">Profile</a>
+                            <a href="#" id="openModalBtn2">Profile</a>
                             <a href="{% url 'attendance_app:logout' %}">Logout</a>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
     
     <!-- JavaScript -->
     <script src="{% static 'attendance_app/js/control_panel.js' %}"></script>
-    <script src="{% static 'attendance_app/js/modal.js' %}"></script>
+    
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             //const modal = document.getElementById("attendanceModalProf");
@@ -173,6 +173,27 @@
             // Close dropdown when clicking outside
             window.addEventListener("click", function () {
                 profileDropdown.classList.remove("active");
+            });
+            const modal = document.getElementById("attendanceModal2");
+            const openModalBtn = document.getElementById("openModalBtn2");
+            const closeModalBtn = document.getElementById("closeModalBtn2");
+
+            // Open the modal
+            openModalBtn.addEventListener("click", function() {
+            modal.style.display = "flex";
+            document.body.classList.add("no-scroll");
+            });
+
+            closeModalBtn.addEventListener("click", function() {
+            modal.style.display = "none";
+            document.body.classList.remove("no-scroll");
+            });
+
+            window.addEventListener("click", function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                document.body.classList.remove("no-scroll");
+            }
             });
         });
     </script>
