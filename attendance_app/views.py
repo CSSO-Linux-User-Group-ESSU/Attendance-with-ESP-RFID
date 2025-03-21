@@ -391,7 +391,7 @@ def api_attendance(request):
         barcode = data.get("barcode")
         token1 = data.get("token")
         event_taken = data.get("event")
-        barcode_enabled = barcode != ""
+        barcode_enabled = barcode is not None and barcode != ""
 
         try:
             # get time to check if the attendance got on time
