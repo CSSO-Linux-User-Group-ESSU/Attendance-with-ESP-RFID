@@ -253,6 +253,17 @@ nav a:is(:link, :active, :visited).active {
     height: 50px;
 }
 
+.students-action-button-container {
+    display: grid;
+    grid-template-columns: 50px 50px;
+    gap: 0.5em;
+    grid-template-areas:
+        "box-1 box-2"
+    ;
+    width: 110px;
+    height: 50px;
+}
+
 .device-action-button-container {
     display: grid;
     grid-template-columns: 100px 50px;
@@ -637,9 +648,21 @@ nav a:is(:link, :active, :visited).active {
         gap: 0.5em;
         justify-content: right;
         width: 160px;
-        height: 100px;
+        height: 60px;
 
     }
+    .students-action-button-container {
+        display: grid;
+        grid-template-columns: 30px 30px;
+        grid-template-areas:
+            "box-1 box-2"
+        ;
+        gap: 0.5em;
+        justify-content: right;
+        width: 160px;
+        height: 30px;
+    }
+    
     .device-action-button-container {
         display: grid;
         grid-template-columns: 60px 30px;
@@ -649,7 +672,7 @@ nav a:is(:link, :active, :visited).active {
         gap: 1em;
         justify-content: right;
         width: 160px;
-        height: 100px;
+        height: 30px;
     }
     
     .view-button {
