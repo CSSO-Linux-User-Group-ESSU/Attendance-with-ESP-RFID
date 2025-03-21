@@ -4,17 +4,14 @@
     <button onclick="window.location.href='{% url 'attendance_app:events' %}'" class="back-link back-button">BACK</button>
 
     <h2 class="font-family-overall" style="text-align: center;">{{event.name}}</h2>
-<<<<<<< HEAD
-    <input type="text" id="barcodeScanner" class="scan-barcode" autofocus data-event="{{ event.name }}" placeholder="Scan barcode here...">
-=======
-    <input type="text" id="scannerInput" autofocus data-event="{{ event.name }}" placeholder="Scan barcode or RFID here...">
->>>>>>> origin/main
-
     <div class="attendance-div">
         <h3 class="font-family-overall">Recorded Student Attendance: {{top}}/{{below}}</h3>
         <h3 class="font-family-overall">Date:{{day}}</h3>
         <!-- <button class="refresh-button" onclick="location.reload()"><i class="fa fa-refresh" style="font-size:36px;"></i></button> -->
     </div>
+
+    <input type="text" id="scannerInput" class="scan-barcode" autofocus data-event="{{ event.name }}" placeholder="Scan barcode here...">
+
     
 
     <table id="todayTable" class="content-table">
@@ -45,11 +42,10 @@
             let inputValue = this.value.trim();  // Get scanned value
             this.value = "";  // Clear the input field
 
-            let eventName = document.getElementById("scannerInput").dataset.event;  // Get event name
-            let isRFID = inputValue.startsWith("RFID");  // Determine if input is RFID
-            let token = isRFID ? "fhdhjdkdsjcncjdhchdjdjdsjdw3@@!!#^^4682eqryoxuewrozcbvmalajurpd" : "";  // Example token for RFID, replace with actual logic
-            let cardUid = isRFID ? inputValue : "";  // If starts with RFID, treat as RFID card UID
-            let barcode = isRFID ? "" : inputValue;  // Otherwise, treat as barcode
+            let eventName = document.getElementById("scannerInput").dataset.event;
+            let token = "";  // Example token for RFID, replace with actual logic
+            let cardUid = "";  // If starts with RFID, treat as RFID card UID
+            let barcode = inputValue;  // Otherwise, treat as barcode
 
             // Send data to Django API
             fetch("{% url 'attendance_app:api_attendance' %}", {
