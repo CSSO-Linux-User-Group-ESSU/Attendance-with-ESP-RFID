@@ -47,23 +47,7 @@
 }
 
 .content-table tbody tr:hover {
-    background-color: #31511E;
-}
-
-.search-container {
-    margin-top: 10px;
-    margin-left: 200px;
-    display: inline-flex;
-    list-style-type: none;
-    margin: 0;
-    overflow: hidden;
-    padding: 10px 100px;
-    background-color: var(--base-color);
-}
-
-.search-content {
-    float: left;
-    display: flex;
+    background-color: #cfcfcff5;
 }
 
 

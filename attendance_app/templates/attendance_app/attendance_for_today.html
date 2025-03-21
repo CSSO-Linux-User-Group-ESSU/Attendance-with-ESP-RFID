@@ -1,10 +1,10 @@
 {% extends "attendance_app/control_panel.html" %}
 
 {% block content %}
-    <button onclick="window.location.href='{% url 'attendance_app:events' %}'" class="back-link green-button">BACK</button>
+    <button onclick="window.location.href='{% url 'attendance_app:events' %}'" class="back-link back-button">BACK</button>
 
     <h2 class="font-family-overall" style="text-align: center;">{{event.name}}</h2>
-    <input type="text" id="barcodeScanner" autofocus data-event="{{ event.name }}" placeholder="Scan barcode here...">
+    <input type="text" id="barcodeScanner" class="scan-barcode" autofocus data-event="{{ event.name }}" placeholder="Scan barcode here...">
 
     <div class="attendance-div">
         <h3 class="font-family-overall">Recorded Student Attendance: {{top}}/{{below}}</h3>

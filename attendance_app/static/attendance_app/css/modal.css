@@ -72,9 +72,7 @@
 
 
 .modal-content button {
-    width: 100%;
-    max-width: 300px;
-    min-width: 200px;
+    min-width: 100px;
     height: auto;
     padding: 12px;
     background: #859F3D;

@@ -207,7 +207,19 @@ nav a:is(:link, :active, :visited).active {
     background-color: #d8d8d8;
 }
 
-.green-button {
+.scan-barcode {
+    min-width: 300px;
+    padding: 12px;
+    background: #eee;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.back-button {
     max-width: 300px;
     width: 100%;
     padding: 12px;
@@ -222,7 +234,7 @@ nav a:is(:link, :active, :visited).active {
     transition: 0.5s;
 }
 
-.green-button:hover {
+.back-button:hover {
     background-color: #859F3D;
     color:  #fff;
     cursor: pointer;
@@ -230,12 +242,111 @@ nav a:is(:link, :active, :visited).active {
     box-shadow: 0 0 5px rgb(0, 0, 0);
 }
 
-/* .scan-barcode {
-    font-size: 0;
-    height: 0;
-    width: 0;
+.action-button-container {
+    display: grid;
+    grid-template-columns: 50px 50px 50px 50px;
+    gap: 0.1em;
+    grid-template-areas:
+        "box-2 box-2 box-1 box-3"
+    ;
+    width: 200px;
+    height: 50px;
+}
+
+.view-button {
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    background: #859F3D;
+    border-radius: 6px;
     border: none;
-} */
+    cursor: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+    transition: 0.5s;
+}
+
+.view-button:hover {
+    background-color: #859F3D;
+    color:  #fff;
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+}
+
+.enable-button {
+    width: 100px;
+    height: 40px;
+    padding: 10px;
+    background: #859F3D;
+    border-radius: 6px;
+    border: none;
+    cursor: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+    transition: 0.5s;
+    align-items: center;
+}
+
+.enable-button:hover {
+    background-color: #859F3D;
+    color:  #fff;
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+}
+
+
+.disable-button {
+    width: 100px;
+    height: 40px;
+    padding: 10px;
+    background: #9f3d3d;
+    border-radius: 6px;
+    border: none;
+    cursor: #fff;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+    transition: 0.5s;
+    align-items: center;
+}
+
+.disable-button:hover {
+    background-color: #9f3d3d;
+    color:  #fff;
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+}
+
+.red-button {
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    background: #9f3d3d;
+    border-radius: 6px;
+    border: none;
+    cursor: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+    transition: 0.5s;
+    align-items: center;
+}
+
+.red-button:hover {
+    background-color: #9f3d3d;
+    color:  #fff;
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+}
 
 /* Sidebar for mobile devices */
 .sidebar {
@@ -503,5 +614,18 @@ nav a:is(:link, :active, :visited).active {
     }
     .sidebar-col {
         display: none;
+    }
+    .action-button-container {
+        display: grid;
+        grid-template-columns: 50px 50px;
+        grid-template-rows: 50px 50px;
+        gap:  .5em;
+        grid-template-areas:
+            "box-2 box-2"
+            "box-1 box-3"
+        ;
+        justify-content: right;
+        width: 160px;
+        height: 100px;
     }
 }
