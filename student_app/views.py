@@ -40,6 +40,8 @@ def upload_file(request):
                 card_uid, last_name, first_name, middle_name, student_id = row
                 if None in row:
                     continue
+                if card_uid.strip()=="":
+                    card_uid = "None"
 
 
                 #if not already in database
@@ -72,8 +74,11 @@ def add_student(request):
     else:
         form = StudentForm(data=request.POST)
         if form.is_valid():
+            card_uid = request.POST.get("card_uid")
+            if not card_uid:
+                card_uid = "None"
             new_student = form.save(commit=False)
-            new_student.card_uid = str(request.POST.get("card_uid")).upper()
+            new_student.card_uid = str(card_uid).upper()
             new_student.last_name = new_student.last_name.upper()
             new_student.first_name = new_student.first_name.upper()
             new_student.middle_name = new_student.middle_name.upper()
