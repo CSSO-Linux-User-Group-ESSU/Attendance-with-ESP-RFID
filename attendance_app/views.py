@@ -10,17 +10,13 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 import requests
 import json
-import hashlib
-
-def md5_hash(text):
-    return hashlib.md5(text.encode()).hexdigest()
-
 
 def log_in(request):
+    
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
-        user = authenticate(request, username=username, password=md5_hash(password))
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
@@ -49,7 +45,7 @@ def signup(request):
         user, created = User.objects.get_or_create(username=username, email=email)
 
         if created:
-            user.set_password(md5_hash(password))
+            user.set_password(password)
             user.is_staff = True
             user.is_superuser = True
             user.save()
