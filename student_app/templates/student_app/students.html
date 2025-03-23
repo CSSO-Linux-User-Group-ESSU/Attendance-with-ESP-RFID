@@ -3,6 +3,14 @@
 {% block content %}
     <h2 class="attendance_dashboard_h2 font-family-overall">Students</h2>
 
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <!-- <div id="attendanceModal" class="modal-container" style="display: none;">
         <div class="modal-content">
           <span id="closeModalBtn" class="close">&times;</span>
