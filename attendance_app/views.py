@@ -31,8 +31,9 @@ def log_in(request):
 
 
 def signup(request):
-
+    print("Hello")
     if request.method == "POST":
+        print("HGello")
         username = request.POST["username"]
         email = request.POST["email"]
         password = request.POST["password"]

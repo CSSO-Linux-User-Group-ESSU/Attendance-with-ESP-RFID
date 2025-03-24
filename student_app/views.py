@@ -5,6 +5,7 @@ import openpyxl
 import requests
 from django.http import JsonResponse
 from attendance_app.models import Device
+from django.contrib import messages
 
 
 # Create your views here.
@@ -46,7 +47,8 @@ def upload_file(request):
 
                 #if not already in database
                 #create Student
-                if not Student.objects.filter(card_uid=str(card_uid).upper()).exists():
+                if not Student.objects.filter(card_uid=str(card_uid).upper()).exists() and \
+                    not Student.objects.filter(student_id=str(student_id)).exists():
 
                     Student.objects.create(card_uid=str(card_uid).upper(), last_name=str(last_name).upper(),
                                            first_name=str(first_name).upper(), middle_name=str(middle_name).upper(), student_id=student_id)
@@ -73,10 +75,13 @@ def add_student(request):
         form1 = UploadFileForm()
     else:
         form = StudentForm(data=request.POST)
+        
         if form.is_valid():
-            card_uid = request.POST.get("card_uid")
+            card_uid = str(request.POST.get("card_uid")).upper()
+            
             if not card_uid:
                 card_uid = "None"
+
             new_student = form.save(commit=False)
             new_student.card_uid = str(card_uid).upper()
             new_student.last_name = new_student.last_name.upper()
@@ -85,6 +90,10 @@ def add_student(request):
             new_student.card_uid = new_student.card_uid.upper()
 
             new_student.save()
+            messages.success(request, "Student added successfully!")
+            return redirect("student_app:students")
+        else:
+            messages.error(request, "Error info already exists in database(check student id/card uid).")
             return redirect("student_app:students")
 
     return render(request, "student_app/students.html",{"form":form,"form1":form1})
