@@ -15,6 +15,7 @@ body {
     min-height: 100vh;
     background-color: linear-gradient(to right, #e2e2e2, #c9d6f8);
     color: #333;
+    font-size: 16px;
 }
 
 .container {
@@ -65,7 +66,6 @@ body {
 /* log in button */
 .login-form-box .login-btn,
 .signup-form-box .login-btn {
-    width: 45vw;
     max-width: 360px;
     width: 100%;
     padding: 12px;
@@ -75,7 +75,6 @@ body {
     cursor: #fff;
     font-size: 16px;
     color: #fff;
-    font-weight: 500;
     margin-bottom: 20px;
     transition: 0.5s;
 }

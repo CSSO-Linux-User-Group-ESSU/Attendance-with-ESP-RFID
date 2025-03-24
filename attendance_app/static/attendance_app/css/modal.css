@@ -8,7 +8,7 @@
     display: none;
     position: fixed;
     overflow: hidden;
-    z-index: 9999;
+    z-index: 9;
     left: 0;
     top: 0;
     width: 100vw;
@@ -23,16 +23,16 @@
 
 /* Modal Box */
 .modal-content {
-    min-width: 200px;   
+    width: 25vw;
     height: 100%;   
-    max-height: 700px;
+    max-height: 70vh;
     gap: 1em;
     flex-direction: column;
     display: flex;
     justify-content:center;
     align-items:center;
     text-align: center;
-    padding: 30px 40px;
+    padding: 10em 5em;
     border-radius: 10px;
     border: 2px solid rgb(255, 255, 255, .2);
     background-color: #fff;
@@ -50,52 +50,36 @@
     border-radius: 6px;
     border: none;
     cursor: #fff;
-    font-size: 16px;
     color: #fff;
     font-weight: 500;
     margin-bottom: 20px;
     transition: 0.5s;
 }
 
-.modal-content input {
-    width: 100%;
-    padding: 12px;
-    background: #eee;
-    border-radius: 6px;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 10px;
-}
-
 
 .modal-content button {
-    min-width: 100px;
+    min-width: 100%;
     height: auto;
     padding: 12px;
     background: #859F3D;
     border-radius: 6px;
     border: none;
-    font-size: 16px;
     color: #fff;
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: 20px;
     transition: 0.5s;
-
 
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    white-space: nowrap;
 }
 
 /* Open modal button */
 .open-modal-btn button{
-    min-width: 240px;
+    max-width: 400px;
     width: 100%;
-    padding: 12px;
+    padding: 0.8em 2em;
     background: #859F3D;
     border-radius: 6px;
     border: none;
@@ -103,7 +87,6 @@
     font-size: 16px;
     font-weight: bold;
     color: #fff;
-    font-weight: 500;
     margin-bottom: 20px;
     transition: 0.5s;
 }
@@ -119,15 +102,14 @@
 
 /* Close Button */
 .close {
-    color: black;
+    height: 5em;
+    width: 4em;
+    color: #fff;
     float: right;
-    font-size: 50px;
-    font-weight: bold;
     cursor: pointer;
     position: absolute;
-    right: 5px;
-    top: 0;
-    transform: translateX(-50%);
+    top: 10px;
+    right: 0;
 }
 
 .close:hover {
@@ -139,33 +121,35 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    gap: 10px;
+    min-width: 20vw;
+    gap: 1em;
 }
 
 /* Labels */
 .modal-content label {
-    font-size: 13px;
     font-weight: bold;
     width: 100%;
     text-align: left;
 }
 
 /* Input, Select, and Textarea Fields */
-.modal-content form input,
-.modal-content form select,
-.modal-content form textarea {
+.modal-content select,
+.modal-content input,
+.modal-content textarea { 
     width: 100%;
+    min-width: 15vw;
+    height: 40px;
+    font-size: 16px;
     height: 30px;
-    padding: 12px;
+    padding: 1em 1em;
     background: #eee;
     border-radius: 6px;
     border: none;
     outline: none;
-    font-size: 16px;
     color: #333;
     margin-bottom: 10px;
 }
+
 
 /* Placeholder Text Color */
 .modal-content input::placeholder {
@@ -203,7 +187,6 @@
     border-radius: 6px;
     border: none;
     cursor: #fff;
-    font-size: 16px;
     color: #fff;
     font-weight: 500px;
     margin-bottom: 20px;
@@ -219,5 +202,25 @@
 }
 
 
+@media (max-width: 800px) {
+    .modal-content {
+        width: 100%;
+        padding: 1em 2em;
+        height: 100vh;
+    }
+    .open-modal-btn button {
+        width: 40vw;
+    }
+}
 
-
+@media (max-width: 430px) {
+    .modal-content {
+        width: 80vw;
+        max-width: 70vh;
+        padding: 1em 2em;
+        height: 100vh;
+    }
+    .open-modal-btn button {
+        width: 85vw;
+    }
+}

@@ -17,9 +17,10 @@
         </div>
     </div> -->
     <div id="attendanceModal" class="modal" style="display: none;">
+        <span id="closeModalBtn" class="close">
+            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+        </span>
         <div class="modal-content">
-
-        <span id="closeModalBtn" class="close">&times;</span>
 
         <h2 style="text-align: center" class="font-family-overall">New Student</h2>
 
@@ -83,8 +84,8 @@
     </table>
 
     <p class="open-modal-btn">
-        <button id="openModalBtn" class="back-link">Add New Student</button>
-        <button id="openModalBtn1" class="back-link">Upload from File</button>
+        <button id="openModalBtn" class="back-link">Add Student</button>
+        <button id="openModalBtn1" class="back-link">Upload File</button>
     </p>
 
     {% load static %}
