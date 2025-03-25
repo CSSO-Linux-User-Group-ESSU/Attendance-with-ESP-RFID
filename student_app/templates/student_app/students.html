@@ -11,19 +11,6 @@
         {% endfor %}
     {% endif %}
 
-    <!-- <div id="attendanceModal" class="modal-container" style="display: none;">
-        <div class="modal-content">
-          <span id="closeModalBtn" class="close">&times;</span>
-          <h2 style="text-align: center;" class="font-family-overall">New Student</h2>
-          <form method="post" action="{% url 'student_app:add_student' %}" class="form-container">
-            <label for="card_uid">Card UID</label>
-            <input type="text" id="card_uid" name="card_uid" required />
-            {% csrf_token %}
-            {{form.as_p}}
-            <button type="submit">ADD</button>
-          </form>
-        </div>
-    </div> -->
     <div id="attendanceModal" class="modal" style="display: none;">
         <span id="closeModalBtn" class="close">
             <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
@@ -43,14 +30,18 @@
     </div>
 
     <div id="attendanceModal1" class="modal" style="display: none;">
+        <span id="closeModalBtn1" class="close">
+            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#000000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+        </span>
         <div class="modal-content">
-          <span id="closeModalBtn1" class="close">&times;</span>
-          <h2 style="text-align:center" class="font-family-overall">Upload from File</h2>
-          <form method="post" enctype="multipart/form-data" class="form-container" action="{% url 'student_app:upload_file' %}">
+
+        <h2 style="text-align: center" class="font-family-overall">Upload File</h2>
+
+        <form method="post" enctype="multipart/form-data" class="form-container" action="{% url 'student_app:upload_file' %}">
             {% csrf_token %}
             {{ form1.as_p }}
             <button type="submit">UPLOAD</button>
-            </form>
+        </form>
         </div>
     </div>
 
