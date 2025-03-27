@@ -90,7 +90,7 @@ def add_student(request):
             new_student.first_name = new_student.first_name.upper()
             new_student.middle_name = new_student.middle_name.upper()
             new_student.card_uid = new_student.card_uid.upper()
-            new_student.course = new_student.course.upper()
+#            new_student.course = new_student.course.name).upper()
 
             new_student.save()
             messages.success(request, "Student added successfully!")
