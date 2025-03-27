@@ -54,26 +54,109 @@ section {
     width: 100%;
     gap: 1em;
 }
-
+/* 
+    text-decoration: none;
+    display: block;
+ */
 aside {
     flex: 1;
-    justify-content: space-between;
+    text-decoration: none;
+    display: block;
     border-radius: 0.5em;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;;
-    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background: rgba(255, 255, 255, 0.15);
     border: 2px solid #ffffff10;
+    text-wrap: nowrap;
 
     list-style: none;
     transition: 300ms ease-in-out;
     overflow: hidden;
-    padding: 1em 1em;
+    padding: 5px 1em;
 }
 
 aside.close-sidebar {
-    flex: 0.08;
-    width: 50px;
-    padding: 10px;
+    flex: 0.10;
+    width: 60px;
+    padding: 5px;
+}
+
+/* <==== SIDEBAR ====> */
+aside ul {
+    list-style-type: none;
+    justify-content: space-between;
+}
+
+
+aside svg {
+    flex-shrink: 0;
+    fill: #000000;
+    min-width: 50px;
+    text-align: center;
+}
+
+aside li {
+    list-style-type: none;
+    display: flex;
+    margin: 15px 0;
+}   
+
+aside li:first-child {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+    text-wrap: wrap;
+
+    svg {
+        flex-grow: 1;
+    }
+
+    .logo {
+        font-weight: 600;
+    }
+}
+
+.nav-link {
+    width: 100%;
+    border-radius: .5em;
+    padding: .85em;
+    color: #333;
+    transition: 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    text-decoration: none;
+    padding: 5px;
+    line-height: 50px;
+}
+
+.nav-link.close span {
+    opacity: 1;
+}
+
+.nav-link span {
+    flex-grow: 1;
+}
+
+#toggle-btn {
+    margin-right: auto;
+    padding: 1em;
+    border: none;
+    border-radius: .5em;
+    background: none;
+    cursor: pointer;
+    flex-grow: 1;
+
+    svg{
+        transition: rotate 150ms ease;
+    }
+}
+
+#toggle-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.rotate svg:last-child {
+    rotate: 180deg;
 }
 
 main {
@@ -157,81 +240,6 @@ header button {
     }
 }
 
-/* <==== SIDEBAR ====> */
-aside ul {
-    list-style-type: none;
-}
-
-aside.close span {
-    opacity: 1;
-}
-
-.nav-link span {
-    flex-grow: 1;
-}
-
-aside svg {
-    flex-shrink: 0;
-    fill: #333;
-    min-width: 50px;
-    height: 50;
-    text-align: center;
-}
-
-aside li {
-    list-style-type: none;
-    display: flex;
-}   
-
-aside li:first-child {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 16px;
-    text-wrap: wrap;
-
-    svg {
-        flex-grow: 1;
-    }
-
-    .logo {
-        font-weight: 600;
-    }
-}
-
-.nav-link {
-    display: flex;
-    width: 100%;
-    border-radius: 0.5em;
-    padding: 12px 15px;
-    text-decoration: none;
-    align-items: center;
-    color: #333;
-    transition: 0.2s ease;
-    gap: 1em;
-}
-
-#toggle-btn {
-    margin-right: auto;
-    padding: 1em;
-    border: none;
-    border-radius: .5em;
-    background: none;
-    cursor: pointer;
-    flex-grow: 1;
-
-    svg{
-        transition: rotate 150ms ease;
-    }
-}
-
-#toggle-btn:hover {
-    background-color: #f0f0f0;
-}
-
-.rotate svg:last-child {
-    rotate: 180deg;
-}
-
 /* nav h1 {
     height: 50px;
     width: 100%;
@@ -253,9 +261,6 @@ aside a:hover {
     background-color: #f0f0f0;
 }
 
-aside ul li a:hover {
-    background-color: #f0f0f0;
-}
 .nav-link { 
     transition: background-color 0.3s ease;
 }
@@ -606,6 +611,7 @@ main h2 {
         row-gap: .25rem;
         font-weight: 600;
         color: #333;
+        line-height: 20px;
     }
     .nav__list {
         justify-content: space-around;
@@ -734,6 +740,7 @@ main h2 {
     }
     aside {
         display: flex;
+        
     }
 }
 
@@ -794,7 +801,7 @@ main h2 {
         width: 150px;
     } */
     aside {
-        display: flex;
+        line-height: 10px;
     }
     section {
         box-shadow: -10px 0 10px rgb(0, 0, 0, 0.1);
