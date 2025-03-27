@@ -1,7 +1,7 @@
 
 /* Table Design */
 .content-table {
-    font-size: 16px;
+    font-size: 13px;
     border-collapse: collapse;
     margin: 0;
     min-width: 80vw;
@@ -52,7 +52,10 @@
     background-color: #cfcfcff5;
 }
 
-
+@media (max-width: 1024px) {
+    .content-table {
+        min-width: 70vw;
+    }}
 
 @media (max-width: 760px) {
     .content-table  {

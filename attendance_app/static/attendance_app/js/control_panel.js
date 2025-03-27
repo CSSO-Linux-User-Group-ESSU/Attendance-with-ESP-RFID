@@ -1,7 +1,7 @@
 const currentUrl = window.location.pathname;
 const navLinks = document.querySelectorAll('.nav-buttons');
 const toggleButton = document.getElementById('toggle-btn')
-const sidebar = document.querySelector('nav')
+const sidebar = document.querySelector('aside')
 
 
 navLinks.forEach(link => {
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function setActiveLink(event) {
         const clickedLink = event.target;
-        const allMenus = document.querySelectorAll("nav, .nav-link");
+        const allMenus = document.querySelectorAll("aside, .nav-link");
 
         // Remove "active" class from all links in both sidebar and navbar
         allMenus.forEach(menu => {

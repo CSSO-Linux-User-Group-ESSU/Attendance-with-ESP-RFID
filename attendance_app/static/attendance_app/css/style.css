@@ -27,6 +27,7 @@ body,
     margin: 1em 1em;
 }
 
+/* <===Layout===> */
 header {
     background-color: #fff;
     border: 2px solid #ffffff10;
@@ -54,7 +55,7 @@ section {
     gap: 1em;
 }
 
-nav {
+aside {
     flex: 1;
     justify-content: space-between;
     border-radius: 0.5em;
@@ -69,12 +70,11 @@ nav {
     padding: 1em 1em;
 }
 
-nav.close-sidebar {
+aside.close-sidebar {
     flex: 0.08;
-    width: 60px;
-    padding: 5px;
+    width: 50px;
+    padding: 10px;
 }
-
 
 main {
     background-color: rgba(255, 255, 255, 0.15);
@@ -157,31 +157,37 @@ header button {
     }
 }
 
-/* <==== NAVBAR ====> */
-nav ul {
+/* <==== SIDEBAR ====> */
+aside ul {
     list-style-type: none;
 }
 
-nav a span {
+aside.close span {
+    opacity: 1;
+}
+
+.nav-link span {
     flex-grow: 1;
 }
 
-nav svg {
+aside svg {
     flex-shrink: 0;
     fill: #333;
-    width: 32px;
-
+    min-width: 50px;
+    height: 50;
+    text-align: center;
 }
 
-nav li {
+aside li {
     list-style-type: none;
     display: flex;
 }   
 
-nav li:first-child {
+aside li:first-child {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 16px;
+    text-wrap: wrap;
 
     svg {
         flex-grow: 1;
@@ -243,14 +249,26 @@ nav li:first-child {
     background-color: #f0f0f0;
 }
 
+aside a:hover {
+    background-color: #f0f0f0;
+}
+
+aside ul li a:hover {
+    background-color: #f0f0f0;
+}
 .nav-link { 
     transition: background-color 0.3s ease;
 }
 
 .nav-link.active,
-nav.active span,
-nav.active svg {
+aside.active span,
+aside.active svg {
     background-color: #d8d8d8;
+}
+
+main h2 {
+    margin: 1em;
+    font-weight: 600;
 }
 
 .scan-barcode {
@@ -543,7 +561,7 @@ nav.active svg {
 
 
 /* Size of the web pages for tablets */
-@media (max-width: 820px) {
+@media (max-width: 850px) {
     body {
         width: 100%;
     }
@@ -564,7 +582,7 @@ nav.active svg {
             display: flex;
         }
     }
-    nav {
+    aside {
         display: flex;
         position: fixed;
         background-color: #fff;
@@ -572,9 +590,9 @@ nav.active svg {
         left: 0;
         height: 100px;
         width: 100%;
-        height: 5em;
         padding: 0 1rem;
-        border-radius: 1.25rem 1.2rem 0 0;
+        border-top: 1px solid #d8d8d8;
+        overflow-x: scroll;
         transition: .4s;
     }
     .nav__list, 
@@ -592,7 +610,7 @@ nav.active svg {
     .nav__list {
         justify-content: space-around;
     }
-    nav li:first-child {
+    aside li:first-child {
         display: none;
     }
     /* .sidebar-button {
@@ -638,7 +656,6 @@ nav.active svg {
         height: 30px;
         margin-bottom: 1em;
     }
-    
     .device-action-button-container {
         display: grid;
         grid-template-columns: 80px 30px;
@@ -651,7 +668,6 @@ nav.active svg {
         height: 40px;
         margin-bottom: 1em;
     }
-    
     .view-button {
         width: 40px;
         height: 40px;
@@ -677,7 +693,7 @@ nav.active svg {
 }
 
 /* Size of the web pages for tablets */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     body {
         width: 100%;
     }
@@ -716,7 +732,7 @@ nav.active svg {
         height: 50px;
         width: 50px;
     }
-    nav {
+    aside {
         display: flex;
     }
 }
@@ -777,7 +793,7 @@ nav.active svg {
     .sidebar li {
         width: 150px;
     } */
-    nav {
+    aside {
         display: flex;
     }
     section {

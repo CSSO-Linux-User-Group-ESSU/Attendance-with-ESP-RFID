@@ -213,7 +213,7 @@
     }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 768px) {
     .modal-content {
         width: 80vw;
         max-width: 70vh;
