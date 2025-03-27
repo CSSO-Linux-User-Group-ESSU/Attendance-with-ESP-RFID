@@ -36,6 +36,8 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+    
+
 
 class Attendance(models.Model):
     # day = models.ForeignKey(Day, on_delete=models.CASCADE)
