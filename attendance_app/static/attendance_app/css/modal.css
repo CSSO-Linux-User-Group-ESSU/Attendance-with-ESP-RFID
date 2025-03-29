@@ -201,26 +201,36 @@
     box-shadow: 0 0 5px rgb(0, 0, 0);
 }
 
-
-@media (max-width: 800px) {
+@media (max-width: 1024px) {
     .modal-content {
-        width: 100%;
-        padding: 1em 2em;
-        height: 100vh;
+        width: 40%;
+        padding: 0 2em;
+        min-height: 80vh;
     }
     .open-modal-btn button {
         width: 40vw;
     }
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 800px) {
     .modal-content {
-        width: 80vw;
-        max-width: 70vh;
+        width: 40%;
         padding: 1em 2em;
-        height: 100vh;
+        min-height: 60vh;
     }
     .open-modal-btn button {
-        width: 85vw;
+        width: 40vw;
+    }
+}
+
+@media (max-width: 425px) {
+    .modal-content {
+        height: 100vh;
+        width: 50vh;
+        padding: 1em 2em;
+    }
+    .open-modal-btn button {
+        width: 85vw;    
     }
 }
