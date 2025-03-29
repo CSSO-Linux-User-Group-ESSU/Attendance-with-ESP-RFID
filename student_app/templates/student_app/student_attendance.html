@@ -2,7 +2,7 @@
 
 {% block content %}
     <button onclick="window.location.href='{%url 'student_app:students' %}'" class="back-button">Go back</button>
-    <h4 class="all_logs_h4">Student: {{student.last_name}}, {{student.first_name}}, {{student.middle_name}}</h4>
+    <h2 class="attendance_dashboard_h2 font-family-overall">Student: {{student.last_name}}, {{student.first_name}}, {{student.middle_name}}</h2>
     <!-- <button class="refresh-button" onclick="location.reload()"><i class="fa fa-refresh" style="font-size:36px;"></i></button> -->
     <table id="studentAttTable" class="content-table">
         <thead>
