@@ -426,11 +426,13 @@ def api_attendance(request):
 
             if barcode_enabled:
                 student1 = Student.objects.get(student_id=str(barcode.strip()))
+                student_course = student1.course
                 event1 = [Event.objects.get(name=str(event_taken))]
             else:
                 if not token1:
                     return JsonResponse({"status": "Error", "message": "Token required for RFID scans"}, status=400)
                 student1 = Student.objects.get(card_uid=str(card_uid).upper())
+                student_course = student1.course
                 token2 = SecurityToken.objects.get(token=token1)
                 event1 = []
                 device1 = Device.objects.get(name=data.get("device"), token=token2)
@@ -448,6 +450,14 @@ def api_attendance(request):
                 for event_i in event1:
                     if event_i.status == True:
                         events_enabled += 1
+                        #check if student course is allowed in the event
+                        allowed_courses = [event_course.id for event_course in event_i.courses.all()]
+                        if student_course.id not in allowed_courses:
+                            return JsonResponse(
+                                {"status": "Error", "message": "Student Course not allowed in Event"},
+                                status=404,
+                            )
+
                         if (
                             event_i.start_time <= current_time
                             and event_i.stop_time >= current_time
@@ -465,6 +475,12 @@ def api_attendance(request):
                     )
             else:
                 if event1[0].status:
+                    allowed_courses = [event_course.id for event_course in event1[0].courses.all()]
+                    if student_course.id not in allowed_courses:
+                        return JsonResponse(
+                            {"status": "Error", "message": "Student Course not allowed in Event"},
+                            status=404,
+                        )
                     if (
                         event1[0].start_time <= current_time
                         and event1[0].stop_time >= current_time
