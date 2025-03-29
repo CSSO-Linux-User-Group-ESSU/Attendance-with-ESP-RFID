@@ -1,5 +1,5 @@
 from django import forms
-from .models import Student, Course
+from .models import Student
 
 class UploadFileForm(forms.Form):
     files = forms.FileField()
@@ -16,13 +16,4 @@ class StudentForm(forms.ModelForm):
             'first_name': 'First Name',
             'student_id': 'Student ID',
             'course': 'Course'
-        }
-
-class CourseForm(forms.ModelForm):
-    class Meta:
-        model = Course
-        fields = ['name']
-
-        labels = {
-            'name': 'Course Name'
         }
