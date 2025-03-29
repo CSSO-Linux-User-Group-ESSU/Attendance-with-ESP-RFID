@@ -215,24 +215,6 @@ aside.close .nav-link span {
 }
 
 
-#toggle-btn {
-    margin-right: auto;
-    padding: 1em;
-    border: none;
-    border-radius: .5em;
-    background: none;
-    cursor: pointer;
-    flex-grow: 1;
-
-    svg{
-        transition: rotate 150ms ease;
-    }
-}
-
-#toggle-btn:hover {
-    background-color: #f0f0f0;
-}
-
 .rotate svg:last-child {
     rotate: 180deg;
 }
@@ -260,6 +242,24 @@ aside a:hover {
     padding: 6px 12px;
     border-radius: 1em;
     left: calc(100% + 25px);
+}
+
+#toggle-btn {
+    margin-right: auto;
+    padding: 1em;
+    border: none;
+    border-radius: .5em;
+    background: none;
+    cursor: pointer;
+    flex-grow: 1;
+
+    svg{
+        transition: rotate 150ms ease;
+    }
+}
+
+#toggle-btn:hover {
+    background-color: #f0f0f0;
 }
 
 main h2 {
@@ -527,7 +527,7 @@ main h2 {
     position: absolute;
     right: 0;
     background: #fff;
-    min-width: 200px;
+    min-width: 120px;
     border-radius: 8px;
     transform: translateY(-10px);
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
@@ -548,7 +548,11 @@ main h2 {
     display: block;
     color: #333;
     padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 1em;
     text-decoration: none;
+    line-height: 15px;
 }
 
 .dropdown-content a:hover {
