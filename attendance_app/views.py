@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from .forms import EventForm, DeviceForm
 from .models import Student, Attendance, Event, Device, SecurityToken
+from student_app.models import Course
+from student_app.forms import CourseForm
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -10,6 +12,46 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 import requests
 import json
+
+
+def delete_course(request, course_id):
+    Course.objects.get(id=course_id).delete()
+
+    return redirect("attendance_app:courses")
+
+
+def add_course(request):
+    if request.method == "POST":
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            event = form.save(commit=False)
+
+            event.name = str(event.name).upper()
+
+            event.save()
+            return redirect("attendance_app:courses")
+
+    else:
+        form = CourseForm()
+
+    return render(request, "attendance_app/courses.html", {"form": form})
+
+
+@login_required
+def courses(request):
+    courses1 = Course.objects.all()
+    form = CourseForm()
+
+    
+
+    return render(
+        request,
+        "attendance_app/courses.html",
+        {
+            "courses": courses1,
+            "form": form,
+        },
+    )
 
 def log_in(request):
     
@@ -366,6 +408,7 @@ def delete_event(request, event_id):
     Event.objects.get(id=event_id).delete()
 
     return redirect("attendance_app:events")
+
 
 
 def delete_day(request, event_id):

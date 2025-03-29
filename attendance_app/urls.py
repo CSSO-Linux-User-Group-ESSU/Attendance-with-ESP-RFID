@@ -14,7 +14,10 @@ urlpatterns = [
     path("delete_device/<int:device_id>/", views.delete_device, name="delete_device"),
     path("date_attendance/", views.date_attendance, name="date_attendance"),
     path("events/", views.events, name="events"),
+    path("courses/", views.courses, name="courses"),
     path("add_event/", views.add_event, name="add_event"),
+    path("add_course/", views.add_course, name="add_course"),
+    path("delete_course/<int:course_id>/", views.delete_course, name="delete_course"),
     path("devices/", views.devices, name="devices"),
     path(
         "attendance_for_today/<int:event_id>/",
