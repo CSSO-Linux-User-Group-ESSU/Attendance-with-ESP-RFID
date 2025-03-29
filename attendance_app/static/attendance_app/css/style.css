@@ -24,7 +24,7 @@ body,
     display: flex;
     flex-direction: column;
     padding: 1em;
-    gap: 1em;
+    gap: .5em;
     margin: 1em 0;
 }
 
@@ -32,7 +32,7 @@ body,
 header {
     background-color: #fff;
     border: 2px solid #ffffff10;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;;
     border-radius: 2em;
     display: flex;
     position: sticky;
@@ -673,6 +673,7 @@ main h2 {
         border-top: 2px solid #d8d8d8;
         overflow-x: scroll;
         transition: .4s;
+        z-index: 1;
     }
     .nav__list, 
     .nav-link {
