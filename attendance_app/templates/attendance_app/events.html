@@ -14,7 +14,14 @@
 
             <form method="post" action="{% url 'attendance_app:add_event' %}" class="form-container">
                 {% csrf_token %}
+                <label for="courses">Select Courses for Event:</label>
+                <select id="courses" name="courses" multiple required>
+                    {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course.name }}</option>
+                    {% endfor %}
+                </select>
                 {{ form.as_p }}
+                
                 <button type="submit">ADD</button>
             </form>
         </div>
@@ -24,6 +31,7 @@
         <thead>
             <tr>
                 <th data-title="Status">Status</th>
+                <th data-title="Courses Allowed">Courses Allowed</th>
                 <th data-title="Event">Event</th>
                 <th data-title="Organizer">Organizer</th>
                 <th data-title="Date">Date</th>
@@ -45,6 +53,11 @@
                     {% else %}
                     Deadline
                     {% endif %}
+                </td>
+                <td data-title="Courses Allowed">
+                    {% for course in event.courses.all %}
+                        {{ course.name }}
+                    {% endfor %}
                 </td>
                 <td data-title="Event">{{event.name}}</td>
                 <td data-title="Organizer">{{event.instructor}}</td>
@@ -106,6 +119,23 @@
         });
     });
     </script>
+    <!-- Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+
+    <!-- Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#courses").select2({
+                placeholder: "Select courses...",
+                closeOnSelect: false, // Keep dropdown open
+                allowClear: true,
+                width: "100%",
+                theme: "classic"
+            });
+        });
+    </script>
+
     
 
 {% endblock content %}
