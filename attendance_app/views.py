@@ -16,7 +16,6 @@ import json
 @login_required
 def courses(request):
     courses1 = Course.objects.all()
-    form = CourseForm()
 
     
 
@@ -24,8 +23,7 @@ def courses(request):
         request,
         "attendance_app/courses.html",
         {
-            "courses": courses1,
-            "form": form,
+            "courses": courses1
         },
     )
 
