@@ -25,13 +25,31 @@
 /* Modal Box */
 .modal-content {
     width: 25vw; 
-    max-height: 90vh;
+    max-height: 85vh;
     gap: 1em;
     flex-direction: column;
     display: flex;
     justify-content:center;
     align-items:center;
     padding: 10em 5em;
+    border-radius: 10px;
+    border: 2px solid rgb(255, 255, 255, .2);
+    background-color: #fff;
+    backdrop-filter: blur(20px);
+    color: #333;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Upload modal box */
+.file-upload-content {
+    min-width: 20vw;
+    max-height: 90vh;
+    gap: 1em;
+    flex-direction: column;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    padding: 10em 3em;
     border-radius: 10px;
     border: 2px solid rgb(255, 255, 255, .2);
     background-color: #fff;
@@ -56,7 +74,8 @@
 }
 
 
-.modal-content button {
+.modal-content button,
+.file-upload-content button {
     min-width: 100%;
     height: auto;
     padding: 12px;
@@ -116,11 +135,12 @@
 }
 
 /* Form Container */
-.modal-content form {
+.modal-content form,
+.file-upload-content form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 20vw;
+    width: 100%;
     gap: 1em;
 }
 
@@ -132,8 +152,8 @@
 
 /* Input, Select, and Textarea Fields */
 .modal-content select,
-.modal-content input,
-.modal-content textarea { 
+.modal-content textarea,
+.modal-content input  { 
     min-width: 20vw;
     font-size: 16px;
     height: 30px;
@@ -144,6 +164,19 @@
     outline: none;
     color: #333;
     margin-bottom: 10px;
+}
+
+.file-upload-content input{
+    width: 100%;
+    font-size: 16px;
+    height: 45px;
+    padding: 0.8em 1em;
+    background: #eee;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    color: #333;
+    margin-bottom: 10px;   
 }
 
 .select-course-dropdown input {
