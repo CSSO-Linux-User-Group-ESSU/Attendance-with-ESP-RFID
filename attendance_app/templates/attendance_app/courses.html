@@ -17,7 +17,7 @@
                 
                 <td data-title="Course Name">{{course.name}}</td>
                 <td data-title="Action" >
-                    <div class="events-action-button-container">
+                    <div class="course-action-button-container" style="grid-area: box-2">
                         <button onclick="window.location.href='{% url 'attendance_app:student_courses' course.id %}'" class="view-button" style="grid-area: box-1">
                             <i class="fa fa-eye" style="font-size:16px"></i>
                         </button>

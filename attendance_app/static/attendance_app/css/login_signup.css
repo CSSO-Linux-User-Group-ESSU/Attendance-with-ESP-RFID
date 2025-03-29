@@ -69,7 +69,7 @@ body {
     max-width: 360px;
     width: 100%;
     padding: 12px;
-    background: #859F3D;
+    background: #4f772d;
     border-radius: 6px;
     border: none;
     cursor: #fff;
@@ -81,8 +81,8 @@ body {
 
 /* Log in hover effect */
 .login-btn:hover {
-    background-color: #859F3D;
-    color:  #fff;
+    background-color: #4f772d;
+    color:  #ffd60a;
     cursor: pointer;
     transition: color 0.3s ease, background 0.3s ease;
     box-shadow: 0 0 5px rgb(0, 0, 0);
@@ -93,11 +93,11 @@ body {
     width: 100%;
     padding: 12px;
     background: #fff;
-    border: 2px solid #859F3D;
+    border: 2px solid #4f772d;
     border-radius: 6px;
     cursor: #fff;
     font-size: 16px;
-    color: #859F3D;
+    color: #4f772d;
     font-weight: 500;
     margin-bottom: 10px;
     transition: 0.5s;
@@ -106,8 +106,25 @@ body {
 /* Hover effect */
 .create-acc-btn:hover {
     background-color: #f3f3f3;
-    color:  #859f3dcb;
+    color:  #4f772d;
     cursor: pointer;
     transition: color 0.3s ease, background 0.3s ease;
     box-shadow: 0 0 5px rgb(0, 0, 0);
+}
+
+
+/* <===== ANIMATION =====> */
+
+@keyframes expand {
+    0%{
+
+    }
+    50%{
+        scale: 2;
+    }
+    100%{
+        transform: rotate(360deg);
+        border-radius: 50%;
+        scale: 2;
+    }
 }

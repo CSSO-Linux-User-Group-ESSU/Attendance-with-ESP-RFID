@@ -27,7 +27,7 @@
 
         <hr style="border: 1px solid lightgrey; width: 100%; margin: 30px 0;">
 
-        <button class="create-acc-btn" onclick="window.location.href='{% url 'attendance_app:signup' %}'">
+        <button id="login-animation" class="create-acc-btn" onclick="window.location.href='{% url 'attendance_app:signup' %}'">
             Create an account
         </button>
 
@@ -36,4 +36,11 @@
 </body>
 </html>
 
+<script>document.addEventListener("DOMContentLoaded", function() {
+    let button = document.getElementById("login-animation");
 
+    button.addEventListener("click", function() {
+        this.classList.toggle("clicked");  // Toggle expansion on click
+    });
+});
+</script>

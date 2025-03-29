@@ -33,6 +33,7 @@
 
 .content-table tbody tr {
     border-bottom: 1px solid #dddddd;
+    transition: color 0.3s ease, background 0.3s ease;
 }
 
 .content-table tbody tr:nth-of-type(even) {
@@ -50,6 +51,7 @@
 
 .content-table tbody tr:hover {
     background-color: #cfcfcff5;
+    transition: color 0.3s ease, background 0.3s ease;
 }
 
 @media (max-width: 1280px) {

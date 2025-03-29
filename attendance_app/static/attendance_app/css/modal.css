@@ -99,7 +99,7 @@
     max-width: 400px;
     width: 100%;
     padding: 0.8em 2em;
-    background: #859F3D;
+    background: #4f772d;
     border-radius: 6px;
     border: none;
     cursor: #fff;
@@ -107,12 +107,12 @@
     font-weight: bold;
     color: #fff;
     margin-bottom: 20px;
-    transition: 0.5s;
+    transition: color 0.3s ease, background 0.3s ease;
 }
-
+/* ffd60a */
 .open-modal-btn button:hover {
-    background-color: #859F3D;
-    color:  #fff;
+    background-color: #4f772d;
+    color:  #ffd60a;
     cursor: pointer;
     transition: color 0.3s ease, background 0.3s ease;
     box-shadow: 0 0 5px rgb(0, 0, 0);
