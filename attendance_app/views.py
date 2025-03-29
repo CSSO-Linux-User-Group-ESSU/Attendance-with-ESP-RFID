@@ -13,6 +13,15 @@ import requests
 import json
 
 
+def student_courses(request, course_id):
+    course = Course.objects.get(id=course_id)
+    students = Student.objects.filter(course=course)
+
+    context = {"students":students, 'course':course}
+
+
+    return render(request, 'attendance_app/students_courses.html', context)
+
 @login_required
 def courses(request):
     courses1 = Course.objects.all()
