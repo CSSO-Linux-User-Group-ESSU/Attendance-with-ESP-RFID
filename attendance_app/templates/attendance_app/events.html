@@ -30,6 +30,7 @@
         <thead>
             <tr>
                 <th data-title="Status">Status</th>
+                <th data-title="Courses Allowed">Courses Allowed</th>
                 <th data-title="Event">Event</th>
                 <th data-title="Organizer">Organizer</th>
                 <th data-title="Date">Date</th>
@@ -51,6 +52,11 @@
                     {% else %}
                     Deadline
                     {% endif %}
+                </td>
+                <td data-title="Courses Allowed">
+                    {% for course in event.courses.all %}
+                        {{ course.name }}
+                    {% endfor %}
                 </td>
                 <td data-title="Event">{{event.name}}</td>
                 <td data-title="Organizer">{{event.instructor}}</td>
