@@ -527,12 +527,15 @@ main h2 {
     position: absolute;
     right: 0;
     background: #fff;
-    backdrop-filter: blur(50px);
-    min-width: 140px;
+    min-width: 200px;
     border-radius: 8px;
     transform: translateY(-10px);
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     box-shadow: -10px 0 10px rgb(0, 0, 0, 0.1);
+
+    svg {
+        fill: #000000;
+    }
 }
 
 .profile-dropdown.active .dropdown-content {
