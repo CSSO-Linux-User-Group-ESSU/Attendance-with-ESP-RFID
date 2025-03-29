@@ -156,14 +156,18 @@
 .modal-content input  { 
     min-width: 20vw;
     font-size: 16px;
-    height: 30px;
-    padding: 1em 1em;
+    height: 35px;
+    padding: 0 1em;
     background: #eee;
     border-radius: 6px;
     border: none;
     outline: none;
     color: #333;
     margin-bottom: 10px;
+}
+
+.modal-content input::placeholder {
+    color: #333;
 }
 
 .file-upload-content input{
