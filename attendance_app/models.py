@@ -1,5 +1,5 @@
 from django.db import models
-from student_app.models import Student
+from student_app.models import Student, Course
 
 
 # Create your models here.
@@ -27,6 +27,7 @@ class Device(models.Model):
 #can be classes
 class Event(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE,null=True,blank=True)
+    courses = models.ManyToManyField(Course, related_name='events')
     name = models.CharField(max_length=200, unique=True)
     instructor = models.CharField(max_length=200)
     status = models.BooleanField(default=True)

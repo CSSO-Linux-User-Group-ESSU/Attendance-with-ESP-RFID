@@ -1,0 +1,56 @@
+{% extends "attendance_app/control_panel.html" %}
+
+{% block content %}
+
+    <h2 class="attendance_dashboard_h2 font-family-overall">Courses</h2>
+
+    <table id="eventTable" class="content-table">
+        <thead>
+            <tr>
+                <th data-title="Course Name">Course Name</th>
+                <th data-title="Action">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                
+                <td data-title="Course Name">{{course.name}}</td>
+                <td data-title="Action" >
+                    <div class="events-action-button-container">
+                        <button onclick="window.location.href='{% url 'attendance_app:student_courses' course.id %}'" class="view-button" style="grid-area: box-1">
+                            <i class="fa fa-eye" style="font-size:16px"></i>
+                        </button>
+                       
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    {% load static %}
+
+    <script src="{% static 'attendance_app/js/modal.js' %}"></script>
+   
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+    <!-- Initialize DataTable -->
+    <script>
+        $(document).ready(function() {
+        $('#eventTable').DataTable({
+            paging: true, // Enable pagination
+            searching: true, // Enable search bar
+            ordering: true, // Enable column sorting
+            pageLength: 10, // Set number of rows per page
+            lengthMenu: [5, 10, 25, 50], // Define page length options
+        });
+    });
+    </script>
+
+{% endblock content %}

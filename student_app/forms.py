@@ -17,5 +17,3 @@ class StudentForm(forms.ModelForm):
             'student_id': 'Student ID',
             'course': 'Course'
         }
-
-

@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from .forms import EventForm, DeviceForm
 from .models import Student, Attendance, Event, Device, SecurityToken
+from student_app.models import Course
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -10,6 +11,30 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 import requests
 import json
+
+
+def student_courses(request, course_id):
+    course = Course.objects.get(id=course_id)
+    students = Student.objects.filter(course=course)
+
+    context = {"students":students, 'course':course}
+
+
+    return render(request, 'attendance_app/students_courses.html', context)
+
+@login_required
+def courses(request):
+    courses1 = Course.objects.all()
+
+    
+
+    return render(
+        request,
+        "attendance_app/courses.html",
+        {
+            "courses": courses1
+        },
+    )
 
 def log_in(request):
     
@@ -366,6 +391,7 @@ def delete_event(request, event_id):
     Event.objects.get(id=event_id).delete()
 
     return redirect("attendance_app:events")
+
 
 
 def delete_day(request, event_id):
