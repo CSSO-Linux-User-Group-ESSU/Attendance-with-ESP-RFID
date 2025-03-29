@@ -648,8 +648,8 @@ main h2 {
         flex-direction: column;
     }
     .container {
-        width: 100%;
-        margin: 1em .1em;
+        min-width: 100vw;
+        margin: 0;
         padding: 0.1;
         flex-wrap: wrap;
     }
@@ -660,6 +660,9 @@ main h2 {
         svg {
             display: flex;
         }
+    }
+    main {
+        width: 100%;
     }
     aside {
         display: flex;
