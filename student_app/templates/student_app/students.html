@@ -3,13 +3,13 @@
 {% block content %}
     <h2 class="attendance_dashboard_h2 font-family-overall">Students</h2>
 
-    {% if messages %}
+    <!-- {% if messages %}
         {% for message in messages %}
             <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
                 {{ message }}
             </div>
         {% endfor %}
-    {% endif %}
+    {% endif %} -->
 
     <div id="attendanceModal" class="modal" style="display: none;">
         <span id="closeModalBtn" class="close">
@@ -43,20 +43,6 @@
         </div>
     </div>
 
-    <!-- <div id="attendanceModal1" class="modal" style="display: none;">
-        <span id="closeModalBtn" class="close">
-            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#fff"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-        </span>
-        
-        <div class="modal-content">
-          <h2 style="text-align:center" class="font-family-overall">Upload from File</h2>
-          <form method="post" enctype="multipart/form-data" class="form-container" action="{% url 'student_app:upload_file' %}">
-            {% csrf_token %}
-            {{ form1.as_p }}
-            <button type="submit">UPLOAD</button>
-        </form>
-        </div>
-    </div> -->
 
     <table id="studentTable" class="content-table">
         <thead>
