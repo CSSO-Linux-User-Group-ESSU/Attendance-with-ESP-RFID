@@ -1,6 +1,7 @@
 .no-scroll {
     overflow: hidden;
     height: 100vh;
+    width: 100vw;
   }
   
 /* Modal Background */
@@ -145,14 +146,14 @@
     margin-bottom: 10px;
 }
 
-.select-course-dropdown {
+.select-course-dropdown input {
     min-width: 20vw;
+    width: 100%;
     font-size: 16px;
     height: 30px;
     padding: 1em 1em;
     background: #eee;
     border-radius: 6px;
-    border: none;
     color: #333;
     margin-bottom: 10px;
     cursor: pointer;
@@ -243,9 +244,10 @@
 
 @media (max-width: 425px) {
     .modal-content {
-        height: 100vh;
-        width: 50vh;
-        padding: 1em 2em;
+        height: 75vh;
+        width: 100%;
+        width: 85vw;
+        padding: 1em 5em;
     }
     .open-modal-btn button {
         width: 85vw;    
