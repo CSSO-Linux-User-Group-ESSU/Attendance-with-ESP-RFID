@@ -154,8 +154,8 @@
 .modal-content select,
 .modal-content textarea,
 .modal-content input  { 
-    min-width: 20vw;
-    font-size: 16px;
+    min-width: 16vw;
+    width: 100%;
     height: 35px;
     padding: 0 1em;
     background: #eee;
@@ -163,7 +163,6 @@
     border: none;
     outline: none;
     color: #333;
-    margin-bottom: 10px;
 }
 
 .modal-content input::placeholder {
@@ -183,8 +182,7 @@
     margin-bottom: 10px;   
 }
 
-.select-course-dropdown input {
-    min-width: 20vw;
+.select-course-dropdown {
     width: 100%;
     font-size: 16px;
     height: 30px;
@@ -265,6 +263,11 @@
     .open-modal-btn button {
         width: 40vw;
     }
+    .modal-content select,
+    .modal-content textarea,
+    .modal-content input  { 
+        min-width: 30vw;
+    }
 }
 
 
@@ -288,5 +291,10 @@
     }
     .open-modal-btn button {
         width: 85vw;    
+    }
+    .modal-content select,
+    .modal-content textarea,
+    .modal-content input  { 
+        min-width: 50vw;
     }
 }

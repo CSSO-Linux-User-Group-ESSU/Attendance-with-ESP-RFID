@@ -38,7 +38,7 @@ header {
     position: sticky;
     top: 0;
     width: 100%;
-    max-height: 100px;
+    min-height: 100px;
     padding: 1em 1em;
     flex: 1;
     border-radius: 0.5em;
@@ -53,7 +53,7 @@ section {
     flex: 4;
     display: flex;
     width: 100%;
-    gap: 1em;
+    gap: .5em;
 }
 
 aside {
@@ -83,7 +83,7 @@ main {
     border: 2px solid #ffffff10;
     width: 100%;
     flex: 3;
-    padding: 1em;
+    padding: 1em 2em;
     gap: 2em;
     border-radius: 0.5em;
     display: flex;
