@@ -233,6 +233,7 @@ def dashboard(request):
 def events(request):
     events1 = Event.objects.all()
     form = EventForm()
+    courses = Course.objects.all()
 
     current_time = timezone.localtime().time()
     current_date = timezone.now().date()
@@ -252,6 +253,7 @@ def events(request):
         {
             "events": events1,
             "form": form,
+            "courses":courses,
             "curr_time": current_time,
             "curr_date": current_date,
         },
@@ -272,35 +274,33 @@ def get_unique_attendances(attendances):
     return unique_attendances1
 
 
-# def add_event(request):
-#     if request.method != "POST":
-#         form = EventForm()
-#     else:
-#         form = EventForm(data=request.POST)
-#         if form.is_valid():
-
-#             form.save()
-#             return redirect("attendance_app:events")
-
-
-#     return render(request, "attendance_app/events.html",{"form":form})
 def add_event(request):
     if request.method == "POST":
         form = EventForm(request.POST)
+        courses = Course.objects.all()
+        selected_courses = request.POST.getlist("courses")
         if form.is_valid():
             event = form.save(commit=False)
 
+            event_name = event.name
+            instructor = event.instructor
+            event_stt = event.start_time
+            event_stop = event.stop_time
+
+
             # If barcode is enabled, remove device association
             if form.cleaned_data.get("barcode_enabled"):
-                event.device = None  # No physical device required
+                event.device = None
+            event = Event.objects.create(name=event_name, instructor=instructor, stop_time=event_stop,start_time=event_stt)
+            event.courses.set(Course.objects.filter(id__in=selected_courses))
 
             event.save()
             return redirect("attendance_app:events")
 
     else:
         form = EventForm()
-
-    return render(request, "attendance_app/events.html", {"form": form})
+        courses = Course.objects.all()
+    return render(request, "attendance_app/events.html", {"form": form, "courses":courses})
 
 
 @login_required
