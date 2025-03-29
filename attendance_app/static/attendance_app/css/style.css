@@ -562,6 +562,11 @@ main h2 {
 }
 
 @media (max-width: 1080px) {
+    aside.close-sidebar {
+        flex: 0.20;
+        width: 60px;
+        padding: 5px;
+    }
     .events-action-button-container {
         display: grid;
         grid-template-columns: 30px 30px;
@@ -690,6 +695,7 @@ main h2 {
     .profile-btn {
         font-size: 50px; 
     }
+}
 
 /* Size of the web pages for tablets */
 @media (max-width: 768px) {
