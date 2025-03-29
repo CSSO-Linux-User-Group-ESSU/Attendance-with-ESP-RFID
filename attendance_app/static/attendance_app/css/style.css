@@ -527,7 +527,7 @@ main h2 {
     position: absolute;
     right: 0;
     background: #fff;
-    min-width: 120px;
+    min-width: 150px;
     border-radius: 8px;
     transform: translateY(-10px);
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
@@ -552,7 +552,7 @@ main h2 {
     align-items: center;
     gap: 1em;
     text-decoration: none;
-    line-height: 15px;
+    line-height: 20px;
 }
 
 .dropdown-content a:hover {
@@ -561,6 +561,69 @@ main h2 {
     border-radius: 4px;
 }
 
+@media (max-width: 1080px) {
+    .events-action-button-container {
+        display: grid;
+        grid-template-columns: 30px 30px;
+        grid-template-rows: 30px 30px;
+        grid-template-areas:
+            "box-2 box-2"
+            "box-1 box-3"
+        ;
+        gap: 1em;
+        justify-content: center;
+        width: 100px;
+        height: 70px;
+        margin-bottom: 1em;
+
+    }
+    .students-action-button-container {
+        display: grid;
+        grid-template-columns: 30px 30px;
+        grid-template-areas:
+            "box-1 box-2"
+        ;
+        gap: 1em;
+        justify-content: center;
+        width: 100px;
+        height: 30px;
+        margin-bottom: 1em;
+    }
+    .device-action-button-container {
+        display: grid;
+        grid-template-columns: 80px 30px;
+        grid-template-areas:
+            "box-1  box-2"
+        ;
+        gap: 1em;
+        justify-content: center;
+        width: 150px;
+        height: 40px;
+        margin-bottom: 1em;
+    }
+    .view-button {
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        font-size: 12px;
+    }
+    .red-button {
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        svg {
+            width: 15px;
+            height: 15px;
+        }
+    }
+    .enable-button,
+    .disable-button {
+        width: 90px;
+        height: 40px;
+        padding: 5px;
+        font-size: 16px;
+    }
+}
 
 /* Size of the web pages for tablets */
 @media (max-width: 850px) {
@@ -627,73 +690,6 @@ main h2 {
     .profile-btn {
         font-size: 50px; 
     }
-    /* .sidebar {
-        height: 420px;
-        
-        left: 35px;
-    } */
-    .events-action-button-container {
-        display: grid;
-        grid-template-columns: 30px 30px;
-        grid-template-rows: 30px 30px;
-        grid-template-areas:
-            "box-2 box-2"
-            "box-1 box-3"
-        ;
-        gap: 1em;
-        justify-content: center;
-        width: 100px;
-        height: 70px;
-        margin-bottom: 1em;
-
-    }
-    .students-action-button-container {
-        display: grid;
-        grid-template-columns: 30px 30px;
-        grid-template-areas:
-            "box-1 box-2"
-        ;
-        gap: 1em;
-        justify-content: center;
-        width: 100px;
-        height: 30px;
-        margin-bottom: 1em;
-    }
-    .device-action-button-container {
-        display: grid;
-        grid-template-columns: 80px 30px;
-        grid-template-areas:
-            "box-1  box-2"
-        ;
-        gap: 1em;
-        justify-content: center;
-        width: 150px;
-        height: 40px;
-        margin-bottom: 1em;
-    }
-    .view-button {
-        width: 40px;
-        height: 40px;
-        padding: 5px;
-        font-size: 12px;
-    }
-    .red-button {
-        width: 40px;
-        height: 40px;
-        padding: 5px;
-        svg {
-            width: 15px;
-            height: 15px;
-        }
-    }
-    .enable-button,
-    .disable-button {
-        width: 90px;
-        height: 40px;
-        padding: 5px;
-        font-size: 16px;
-    }
-}
 
 /* Size of the web pages for tablets */
 @media (max-width: 768px) {
