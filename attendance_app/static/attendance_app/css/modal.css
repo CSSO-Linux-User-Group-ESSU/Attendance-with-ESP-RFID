@@ -35,7 +35,6 @@
     border-radius: 10px;
     border: 2px solid rgb(255, 255, 255, .2);
     background-color: #fff;
-    backdrop-filter: blur(20px);
     color: #333;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
