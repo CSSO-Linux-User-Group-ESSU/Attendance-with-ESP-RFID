@@ -70,6 +70,8 @@ aside {
     transition: 300ms ease-in-out;
     overflow: hidden;
     padding: 5px 1em;
+
+    z-index: 1;
 }
 
 aside.close-sidebar {
@@ -293,7 +295,7 @@ main h2 {
     max-width: 300px;
     width: 100%;
     padding: 12px;
-    background: #859F3D;
+    background: #4f772d;
     border-radius: 6px;
     border: none;
     cursor: #fff;
@@ -305,7 +307,7 @@ main h2 {
 }
 
 .back-button:hover {
-    background-color: #859F3D;
+    background-color: #4f772d;
     color:  #fff;
     cursor: pointer;
     transition: color 0.3s ease, background 0.3s ease;

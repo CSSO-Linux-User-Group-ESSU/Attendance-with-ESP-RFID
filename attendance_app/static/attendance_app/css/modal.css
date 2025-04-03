@@ -63,7 +63,7 @@
     max-width: 360px;
     width: 100%;
     padding: 12px;
-    background: #859F3D;
+    background: #4f772d;
     border-radius: 6px;
     border: none;
     cursor: #fff;
@@ -79,7 +79,7 @@
     min-width: 100%;
     height: auto;
     padding: 12px;
-    background: #859F3D;
+    background: #4f772d;
     border-radius: 6px;
     border: none;
     color: #fff;
@@ -229,7 +229,7 @@
 .modal-content button {
     width: 100%;
     padding: 12px;
-    background: #859F3D;
+    background: #4f772d;
     border-radius: 6px;
     border: none;
     cursor: #fff;
@@ -240,7 +240,7 @@
 }
 
 .modal-content button:hover {
-    background-color: #859F3D;
+    background-color: #4f772d;
     color:  #fff;
     cursor: pointer;
     transition: color 0.3s ease, background 0.3s ease;
